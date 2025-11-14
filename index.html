@@ -355,7 +355,7 @@
 
   <script>
     // تنسيق رقم البطاقة: 16 رقم فقط + مسافات كل 4 أرقام
-    const numberinput = document.getElementById("cardNumber");
+    const numberInput = document.getElementById("cardNumber");
     numberInput.addEventListener("input", () => {
       let value = numberInput.value.replace(/\D/g, ""); // أرقام فقط
       if (value.length > 16) value = value.slice(0, 16);
