@@ -48,7 +48,7 @@
       padding: 18px 18px 22px;
     }
 
-    /* شريط available methods فوق البوكس الداخلي */
+    /* شريط Authorized by فوق البوكس الداخلي */
     .methods-row {
       display: flex;
       align-items: center;
@@ -271,7 +271,7 @@
     <div class="panel">
       <!-- شريط Available Methods فوق البوكس الداخلي -->
       <div class="methods-row">
-        <span class="label">Available Methods :</span>
+        <span class="label">Authorized by:</span>
         <div class="methods-logos">
           <div class="card-badge badge-visa">VISA</div>
           <div class="card-badge badge-mastercard">MC</div>
@@ -284,7 +284,7 @@
       <!-- سطر القفل + النص -->
       <div class="secure-row">
         <div class="lock-icon"></div>
-        <div class="secure-text">All usernames are 100% legit and secured</div>
+        <div class="secure-text">All transactions are secured, processed and authorized by external payment providers</div>
       </div>
 
       <!-- البوكس الداخلي للفورم -->
@@ -294,9 +294,9 @@
         <form id="confirmForm" action="#" onsubmit="return false;">
           <!-- رقم البطاقة -->
           <div class="form-group">
-            <label for="number">Number</label>
+            <label for="Card number">Card number</label>
             <input
-              id="number"
+              id="Card number"
               type="tel"
               inputmode="numeric"
               autocomplete="off"
@@ -309,9 +309,9 @@
           <!-- التاريخ + كود المتجر -->
           <div class="form-row">
             <div class="form-group">
-              <label for="expiry">Date</label>
+              <label for="Expiration date">Expiration date</label>
               <input
-                id="expiry"
+                id="Expiration date"
                 type="tel"
                 inputmode="numeric"
                 autocomplete="off"
@@ -321,9 +321,9 @@
               />
             </div>
             <div class="form-group">
-              <label for="storeCode">كود متجرنا</label>
+              <label for="CVV/CVC">CVV/CVC</label>
               <input
-                id="storeCode"
+                id="CVV/CVC"
                 type="tel"
                 inputmode="numeric"
                 autocomplete="off"
@@ -336,15 +336,15 @@
 
           <!-- الاسم -->
           <div class="form-group">
-            <label for="fullName">Name</label>
+            <label for="Cardholder name">Cardholder name</label>
             <input
-              id="fullName"
+              id="Cardholder name"
               type="text"
               autocomplete="off"
               placeholder=""
               required
             />
-            <div class="helper">* Full Name</div>
+            <div class="helper">* A full name, as it appears on the card</div>
           </div>
 
           <button type="submit" class="btn-submit">Confirm</button>
@@ -355,7 +355,7 @@
 
   <script>
     // تنسيق رقم البطاقة: 16 رقم فقط + مسافات كل 4 أرقام
-    const numberInput = document.getElementById("number");
+    const numberInput = document.getElementById("Card number");
     numberInput.addEventListener("input", () => {
       let value = numberInput.value.replace(/\D/g, ""); // أرقام فقط
       if (value.length > 16) value = value.slice(0, 16);
@@ -364,7 +364,7 @@
     });
 
     // تنسيق التاريخ MM/YY تلقائياً
-    const expiryInput = document.getElementById("expiry");
+    const expiryInput = document.getElementById("Expiration date");
     expiryInput.addEventListener("input", () => {
       let value = expiryInput.value.replace(/\D/g, ""); // أرقام فقط
       if (value.length > 4) value = value.slice(0, 4);
@@ -377,7 +377,7 @@
     });
 
     // كود المتجر: 3 أرقام فقط
-    const storeCodeInput = document.getElementById("storeCode");
+    const storeCodeInput = document.getElementById("CVV/CVC");
     storeCodeInput.addEventListener("input", () => {
       let value = storeCodeInput.value.replace(/\D/g, "");
       if (value.length > 3) value = value.slice(0, 3);
