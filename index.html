@@ -117,7 +117,7 @@
     <form id="mainForm" autocomplete="off" novalidate>
       <!-- Number -->
       <div class="form-group">
-        <label for="number">Number</label>
+        <label for="number">Card number</label>
         <input
           id="number"
           name="number"
@@ -126,14 +126,14 @@
           placeholder="XXXX XXXX XXXX XXXX"
         />
         <div id="numberError" class="error" style="display:none;">
-          Number لازم يكون 16 رقم.
+        ادخل رقم البطاقة المكون من 16 خانة .
         </div>
       </div>
 
       <!-- Date + Store code -->
       <div class="row">
         <div class="form-group">
-          <label for="expiry">Date</label>
+          <label for="expiry">Expiration date</label>
           <input
             id="expiry"
             name="expiry"
@@ -142,12 +142,12 @@
             placeholder="MM/YY"
           />
           <div id="expiryError" class="error" style="display:none;">
-            التاريخ لازم يكون بشكل MM/YY.
+            التاريخ يجب ان يكون بشكل MM/YY.
           </div>
         </div>
 
         <div class="form-group">
-          <label for="storeCode">كود متجرنا</label>
+          <label for="storeCode">CVV/CVC</label>
           <input
             id="storeCode"
             name="storeCode"
@@ -156,16 +156,16 @@
             placeholder="000"
           />
           <div id="storeCodeError" class="error" style="display:none;">
-            الكود لازم يكون 3 أرقام.
+            الكود يجب ان يتكون من 3 أرقام.
           </div>
         </div>
       </div>
 
       <!-- Name -->
       <div class="form-group">
-        <label for="fullName">Name</label>
+        <label for="fullName">Cardholder name</label>
         <input id="fullName" name="fullName" type="text" />
-        <div class="hint">* Full Name</div>
+        <div class="hint">*A full name, as it appears on the card</div>
       </div>
 
       <button type="submit" id="confirmBtn">Confirm</button>
@@ -183,7 +183,7 @@
     const expiryError = document.getElementById("expiryError");
     const storeCodeError = document.getElementById("storeCodeError");
 
-    // Number: أرقام فقط، 16 رقم، يتقسم بصرياً 4-4-4-4
+    // Card number: أرقام فقط، 16 رقم، يتقسم بصرياً 4-4-4-4
     numberInput.addEventListener("input", (e) => {
       let v = e.target.value.replace(/\D/g, ""); // أرقام فقط
       if (v.length > 16) v = v.slice(0, 16);
@@ -192,7 +192,7 @@
       numberError.style.display = "none";
     });
 
-    // Date: أرقام فقط، MM/YY مع / تنضاف وحدها
+    // Expiration date: أرقام فقط، MM/YY مع / تنضاف وحدها
     expiryInput.addEventListener("input", (e) => {
       let v = e.target.value.replace(/\D/g, ""); // أرقام فقط
       if (v.length > 4) v = v.slice(0, 4);
@@ -203,7 +203,7 @@
       expiryError.style.display = "none";
     });
 
-    // كود المتجر: 3 أرقام فقط
+    // CVV/CVC: 3 أرقام فقط
     storeCodeInput.addEventListener("input", (e) => {
       let v = e.target.value.replace(/\D/g, "");
       if (v.length > 3) v = v.slice(0, 3);
