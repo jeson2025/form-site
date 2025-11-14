@@ -56,18 +56,11 @@
     }
 
     .methods-img {
-    max-width: 200px;   /* الحد الأقصى على اللابتوب */
-    width: 100%;        /* يتأقلم مع مساحة الشاشة */
-    height: auto;       /* يحافظ على الجودة */
-    margin-left: 10px;  /* مسافة بسيطة بين النص والصورة */
-}
-
-/* نسخة للموبايلات (شاشات صغيرة) */
-@media (max-width: 480px) {
-    .methods-img {
-        max-width: 140px;   /* حجم مضبوط للموبايل */
+    width: auto;           /* يمنع التمدد */
+    height: 26px;          /* الحجم المثالي على الموبايل */
+    object-fit: contain;   /* يمنع الانضغاط */
+    margin-left: 6px;      /* مسافة بسيطة */
     }
-}
     /* ====== سطر القفل + النص ====== */
     .secure-row {
       display: flex;
