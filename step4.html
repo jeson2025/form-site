@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Request Submitted</title>
+  <style>
+    :root {
+      --bg-page: #f4f5f7;
+      --bg-panel: #ffffff;
+      --text-main: #222222;
+      --text-muted: #666666;
+      --accent-blue: #0070f3;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        system-ui, -webkit-system-font, sans-serif;
+      background: var(--bg-page);
+      color: var(--text-main);
+    }
+
+    .page-wrapper {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 24px 12px;
+    }
+
+    .panel {
+      width: 100%;
+      max-width: 420px;
+      margin: 0 16px;
+      background: var(--bg-panel);
+      border-radius: 20px;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+      padding: 26px 22px 24px;
+      text-align: center;
+    }
+
+    .icon-wrapper {
+      width: 64px;
+      height: 64px;
+      border-radius: 999px;
+      margin: 0 auto 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(22, 163, 74, 0.09);
+      border: 2px solid #16a34a;
+    }
+
+    .icon {
+      font-size: 30px;
+      color: #16a34a;
+      line-height: 1;
+    }
+
+    h1 {
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .text-main {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+      line-height: 1.5;
+    }
+
+    .highlight {
+      font-weight: 500;
+      color: #111827;
+    }
+
+    .btn-main {
+      width: 100%;
+      margin-top: 6px;
+      padding: 11px 0;
+      border-radius: 8px;
+      border: none;
+      background: var(--accent-blue);
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s ease, transform 0.05s ease,
+        box-shadow 0.15s ease;
+    }
+
+    .btn-main:hover {
+      background: #005fd0;
+    }
+
+    .btn-main:active {
+      transform: translateY(1px);
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.25);
+    }
+
+    .note {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 10px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 400px) {
+      .panel {
+        padding: 24px 18px 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+    <div class="panel">
+      <div class="icon-wrapper">
+        <div class="icon">✔</div>
+      </div>
+
+      <h1>Request Submitted</h1>
+
+      <p class="text-main">
+        Your request has been received.<br />
+        <span class="highlight">We will review the username and contact you shortly.</span>
+      </p>
+
+      <button class="btn-main" onclick="window.location.href='https://t.me/your_store_username';">
+        Go to our Telegram
+      </button>
+
+      <p class="note">
+        You can also close this page. We will message you once your order is ready.
+      </p>
+    </div>
+  </div>
+</body>
+</html>
