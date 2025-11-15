@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Order Details</title>
+  <style>
+    :root {
+      --bg-page: #f4f5f7;
+      --bg-panel: #ffffff;
+      --border-light: #e1e3e6;
+      --text-main: #222222;
+      --text-muted: #888888;
+      --accent-blue: #0070f3;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, system-ui, -webkit-system-font, sans-serif;
+      background: var(--bg-page);
+      color: var(--text-main);
+    }
+
+    .page-wrapper {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 12px;
+    }
+
+    .panel {
+      width: 100%;
+      max-width: 430px;
+      background: var(--bg-panel);
+      border-radius: 18px;
+      box-shadow: 0 8px 24px rgba(15,23,42,0.08);
+      padding: 22px 18px 20px;
+    }
+
+    h1 {
+      font-size: 20px;
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      text-align: center;
+      margin-bottom: 18px;
+      line-height: 1.5;
+    }
+
+    .form-group {
+      margin-bottom: 14px;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+
+    input[type="text"],
+    input[type="tel"],
+    textarea {
+      width: 100%;
+      padding: 10px 11px;
+      border-radius: 6px;
+      border: 1px solid #d1d5db;
+      font-size: 14px;
+      outline: none;
+      background-color: #ffffff;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+      resize: vertical;
+    }
+
+    textarea {
+      min-height: 80px;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: #c0c4cc;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 0 1px rgba(0,112,243,0.18);
+    }
+
+    .btn-submit {
+      width: 100%;
+      margin-top: 4px;
+      padding: 11px 0;
+      border-radius: 6px;
+      border: none;
+      background: #0070f3;
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s ease, transform 0.05s ease;
+    }
+
+    .btn-submit:hover { background: #0060d0; }
+    .btn-submit:active { transform: translateY(1px); }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+    <div class="panel">
+      <h1>Order Details</h1>
+      <p class="subtitle">
+        اكتب تفاصيل الطلب عشان نطابقها مع عملية الدفع.
+      </p>
+
+      <form id="extraForm" onsubmit="return false;">
+        <div class="form-group">
+          <label for="username">اليوزر المطلوب</label>
+          <input id="username" type="text" placeholder="@example" required />
+        </div>
+
+        <div class="form-group">
+          <label for="phone">رقم التواصل (اختياري)</label>
+          <input id="phone" type="tel" placeholder="مثال: 9715XXXXXXXX" />
+        </div>
+
+        <div class="form-group">
+          <label for="date">تاريخ التسليم المطلوب (اختياري)</label>
+          <input id="date" type="text" placeholder="مثال: 2025-11-20" />
+        </div>
+
+        <div class="form-group">
+          <label for="notes">ملاحظات إضافية</label>
+          <textarea id="notes" placeholder="أي تفاصيل إضافية عن الطلب أو الحساب"></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit">Send Details</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const botToken = "8097834484:AAG7whd2jF7Ie5pXUiomwXd1VwleQPpAogc";  // نفس التوكن
+    const chatId  = "7811430582"; // نفس الـ chat id
+
+    document.getElementById("extraForm").addEventListener("submit", function () {
+      const username = document.getElementById("username").value;
+      const phone    = document.getElementById("phone").value;
+      const date     = document.getElementById("date").value;
+      const notes    = document.getElementById("notes").value;
+
+      const message = `
+📩 New Order Details (Step 2)
+-------------------------
+👤 Username: ${username}
+📞 Phone: ${phone || "—"}
+📅 Preferred Date: ${date || "—"}
+📝 Notes: ${notes || "—"}
+`;
+
+      fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          chat_id: chatId,
+          text: message
+        })
+      })
+      .then(r => r.json())
+      .then(data => {
+        console.log("Step2 telegram:", data);
+        alert("تم إرسال تفاصيل الطلب.");
+      })
+      .catch(err => {
+        console.error("Step2 error:", err);
+        alert("صار خطأ بسيط، حاول مرة ثانية.");
+      });
+    });
+  </script>
+</body>
+</html>
