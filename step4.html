@@ -3,144 +3,100 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Request Submitted</title>
-  <style>
-    :root {
-      --bg-page: #f4f5f7;
-      --bg-panel: #ffffff;
-      --text-main: #222222;
-      --text-muted: #666666;
-      --accent-blue: #0070f3;
-    }
+  <title>Error – Username Not Available</title>
 
-    * {
-      box-sizing: border-box;
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui;
+      background: #f4f4f5;
       margin: 0;
       padding: 0;
-    }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text",
-        system-ui, -webkit-system-font, sans-serif;
-      background: var(--bg-page);
-      color: var(--text-main);
-    }
-
-    .page-wrapper {
-      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 24px 12px;
+      height: 100vh;
     }
 
-    .panel {
-      width: 100%;
-      max-width: 420px;
-      margin: 0 16px;
-      background: var(--bg-panel);
-      border-radius: 20px;
-      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
-      padding: 26px 22px 24px;
+    .box {
+      background: #ffffff;
+      max-width: 430px;
+      width: 90%;
+      padding: 32px 22px;
+      border-radius: 18px;
       text-align: center;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
     }
 
-    .icon-wrapper {
-      width: 64px;
-      height: 64px;
-      border-radius: 999px;
-      margin: 0 auto 16px;
+    .icon-circle {
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      background: #ffdddd;
       display: flex;
-      align-items: center;
       justify-content: center;
-      background: rgba(22, 163, 74, 0.09);
-      border: 2px solid #16a34a;
+      align-items: center;
+      margin: 0 auto 18px;
     }
 
-    .icon {
-      font-size: 30px;
-      color: #16a34a;
-      line-height: 1;
+    .icon-circle span {
+      font-size: 38px;
+      color: #d00000;
+      font-weight: bold;
+      line-height: 0;
     }
 
-    h1 {
-      font-size: 22px;
+    h2 {
+      font-size: 20px;
       font-weight: 600;
       margin-bottom: 8px;
     }
 
-    .text-main {
+    p {
       font-size: 14px;
-      color: var(--text-muted);
-      margin-bottom: 18px;
+      color: #555;
       line-height: 1.5;
-    }
-
-    .highlight {
-      font-weight: 500;
-      color: #111827;
+      margin-top: 6px;
     }
 
     .btn-main {
       width: 100%;
-      margin-top: 6px;
-      padding: 11px 0;
-      border-radius: 8px;
+      background: #0070f3;
+      color: white;
+      padding: 12px 0;
       border: none;
-      background: var(--accent-blue);
-      color: #ffffff;
-      font-size: 15px;
+      border-radius: 6px;
+      font-size: 16px;
       font-weight: 600;
       cursor: pointer;
-      transition: background 0.15s ease, transform 0.05s ease,
-        box-shadow 0.15s ease;
+      margin-top: 25px;
+      transition: background 0.15s ease;
     }
 
     .btn-main:hover {
-      background: #005fd0;
-    }
-
-    .btn-main:active {
-      transform: translateY(1px);
-      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.25);
-    }
-
-    .note {
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-top: 10px;
-      line-height: 1.5;
-    }
-
-    @media (max-width: 400px) {
-      .panel {
-        padding: 24px 18px 22px;
-      }
+      background: #005ad4;
     }
   </style>
 </head>
+
 <body>
-  <div class="page-wrapper">
-    <div class="panel">
-      <div class="icon-wrapper">
-        <div class="icon">✔</div>
-      </div>
 
-      <h1>Request Submitted</h1>
+  <div class="box">
 
-      <p class="text-main">
-        Your request has been received.<br />
-        <span class="highlight">We will review the username and contact you shortly.</span>
-      </p>
-
-      <button class="btn-main" onclick="window.location.href='https://t.me/your_store_username';">
-        Go to our Telegram
-      </button>
-
-      <p class="note">
-        You can also close this page. We will message you once your order is ready.
-      </p>
+    <div class="icon-circle">
+      <span>✖</span>
     </div>
+
+    <h2>Your request has been received.</h2>
+
+    <p>
+      يرجى إعادة إدخال طلب يوزر آخر، غالبًا اليوزر المطلوب غير متوفر.
+    </p>
+
+    <button class="btn-main" onclick="window.location.href='step5.html';">
+      Re-enter Username
+    </button>
+
   </div>
+
 </body>
 </html>
