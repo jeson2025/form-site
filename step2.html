@@ -323,7 +323,7 @@
       const phone      = document.getElementById("phone").value.trim();
 
       // لو فيه أي خانة فاضية بالكامل → طلع رسالة الخطأ بالأحمر
-      if (!wantedUser  !platform  !country  !city  !phone) {
+      if (!wantedUser || !platform || !country || !city || !phone) {
         errorLabel.style.display = "block";
         return;
       } else {
