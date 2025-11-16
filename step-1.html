@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Minimal Store</title>
+  <title>sheiniphone – Limited Drop</title>
   <style>
     :root {
       --bg-page: #f5f5f7;
@@ -14,6 +14,7 @@
       --accent-blue: #0071e3;
       --sold-out: #ff3b30;
       --available: #34c759;
+      --badge-red: #ff3b30;
     }
 
     * {
@@ -64,20 +65,41 @@
       padding: 26px 16px 40px;
     }
 
+    /* Hero */
+
     .hero {
-      text-align: center;
       margin-bottom: 26px;
+    }
+
+    .hero-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      flex-wrap: wrap;
     }
 
     .hero-title {
       font-size: 28px;
       font-weight: 600;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
 
     .hero-subtitle {
       font-size: 14px;
       color: var(--text-subtle);
+    }
+
+    .discount-badge {
+      align-self: center;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--badge-red);
+      border-radius: 999px;
+      padding: 4px 10px;
+      border: 1px solid rgba(255, 59, 48, 0.4);
+      background: rgba(255, 59, 48, 0.06);
+      white-space: nowrap;
     }
 
     .products-grid {
@@ -106,16 +128,56 @@
       margin-bottom: 6px;
     }
 
+    .product-name-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 2px;
+    }
+
     .product-name {
       font-size: 17px;
       font-weight: 600;
-      margin-bottom: 2px;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .product-badges {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .badge {
+      font-size: 10px;
+      font-weight: 600;
+      padding: 3px 7px;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border: 1px solid transparent;
+      white-space: nowrap;
+    }
+
+    .badge-new {
+      color: #ffffff;
+      background: var(--badge-red);
+      border-color: rgba(255, 59, 48, 0.8);
+    }
+
+    .badge-region {
+      color: var(--badge-red);
+      background: rgba(255, 59, 48, 0.06);
+      border-color: rgba(255, 59, 48, 0.4);
     }
 
     .product-sub {
       font-size: 13px;
       color: var(--text-subtle);
       margin-bottom: 10px;
+      line-height: 1.4;
     }
 
     .product-image {
@@ -129,7 +191,8 @@
       overflow: hidden;
     }
 
-    .product-image span {
+    .
+    product-image span {
       font-size: 36px;
       font-weight: 600;
       color: #1d1d1f;
@@ -192,6 +255,7 @@
       color: #ffffff;
       box-shadow: 0 6px 16px rgba(0, 113, 227, 0.25);
     }
+
     .btn-primary:hover {
       background: #0062cc;
     }
@@ -237,20 +301,32 @@
       .product-image span {
         font-size: 28px;
       }
+
+      .hero-header {
+        align-items: flex-start;
+      }
     }
   </style>
 </head>
 <body>
   <div class="page-wrapper">
     <header>
-      <div class="logo"><span>rare</span>store</div>
+      <!-- shein بالازرق و iphone بالأسود -->
+      <div class="logo"><span>shein</span>iphone</div>
     </header>
 
     <main>
       <!-- Hero -->
       <section class="hero">
-        <h1 class="hero-title">Limited Drop</h1>
-        <p class="hero-subtitle">Most items are sold out. One device still available.</p>
+        <div class="hero-header">
+          <div>
+            <h1 class="hero-title">Limited Drop</h1>
+            <p class="hero-subtitle">
+              Most items are sold out. One device still available.
+            </p>
+          </div>
+          <div class="discount-badge">Discount 25%</div>
+        </div>
       </section>
 
       <!-- Products -->
@@ -258,15 +334,27 @@
         <!-- Available product -->
         <article class="product-card">
           <div class="product-tagline">Available now</div>
-          <div class="product-name">iPhone 17 Pro</div>
-          <div class="product-sub">512 GB · Titanium · Midnight</div>
+
+          <div class="product-name-row">
+            <div class="product-name">iPhone 15 Pro</div>
+            <div class="product-badges">
+              <span class="badge badge-new">NEW</span>
+              <span class="badge badge-region">Middle East</span>
+            </div>
+          </div>
+
+          <div class="product-sub">
+            256 GB · Middle East version<br />
+            Available colors: Natural titanium, Black titanium,
+            Blue titanium, White titanium.
+          </div>
 
           <div class="product-image">
-            <span>17</span>
+            <span>15</span>
           </div>
 
           <div class="product-meta">
-            <span class="price">4,299 AED</span>
+            <span class="price">728.45 $</span>
             <span class="status available">Available</span>
           </div>
 
@@ -277,7 +365,7 @@
           </div>
         </article>
 
-        <!-- Sold out products -->
+        <!-- Sold out products (كما هي) -->
         <article class="product-card">
           <div class="product-tagline">Drop</div>
           <div class="product-name">iPhone 16 Pro</div>
@@ -419,10 +507,11 @@
   </div>
 
   <script>
-    // زر شراء الآيفون 17
+    // زر شراء الآيفون 15 برو
     document.getElementById("buy-iphone").addEventListener("click", function () {
       // هنا حط الرابط اللي تبيه (تيليجرام، واتساب، صفحة دفع...)
-      // مثال: window.location.href = "https://t.me/your_channel";
+      // مثال:
+      // window.location.href = "https://t.me/your_channel";
       alert("This is the only available item. Hook this button to your real checkout/link.");
     });
   </script>
