@@ -41,8 +41,8 @@
       display: flex;
       justify-content: center;
       border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-      background: rgba(245, 245, 247, 0.96);
-      backdrop-filter: blur(14px);
+      background: rgba(245, 245, 247, 0.95);
+      backdrop-filter: blur(10px);
       position: sticky;
       top: 0;
       z-index: 10;
@@ -66,7 +66,6 @@
     }
 
     /* Hero */
-
     .hero {
       margin-bottom: 26px;
     }
@@ -102,21 +101,19 @@
       white-space: nowrap;
     }
 
-    /* Products grid */
-
     .products-grid {
       margin-top: 26px;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 18px;
     }
 
     .product-card {
       background: var(--card-bg);
-      border-radius: 22px;
+      border-radius: 18px;
       padding: 18px 16px 16px;
-      border: 1px solid rgba(0, 0, 0, 0.04);
-      box-shadow: 0 14px 35px rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.03);
       display: flex;
       flex-direction: column;
       align-items: stretch;
@@ -182,21 +179,26 @@
       line-height: 1.4;
     }
 
-    /* Apple-style image area: ثابت وموحد لكل المنتجات */
-
     .product-image {
-      height: 160px;
-      border-radius: 18px;
+      height: 150px;
+      border-radius: 12px;
       background: radial-gradient(circle at 20% -20%, #ffffff 0, #f5f5f7 38%, #e5e5ea 100%);
       display: flex;
       align-items: center;
       justify-content: center;
       margin-bottom: 14px;
       overflow: hidden;
-      padding: 10px;
     }
 
-    .product-image img {
+    .image-inner {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .image-inner img {
       max-width: 100%;
       max-height: 100%;
       object-fit: contain;
@@ -296,11 +298,14 @@
 
       .product-card {
         padding: 16px 14px 14px;
-        border-radius: 20px;
       }
 
       .product-image {
-        height: 140px;
+        height: 130px;
+      }
+
+      .hero-header {
+        align-items: flex-start;
       }
     }
   </style>
@@ -328,7 +333,7 @@
 
       <!-- Products -->
       <section class="products-grid">
-        <!-- 1. iPhone 15 Pro (Available) -->
+        <!-- Available product: iPhone 15 Pro -->
         <article class="product-card">
           <div class="product-tagline">Available now</div>
 
@@ -347,35 +352,44 @@
           </div>
 
           <div class="product-image">
-            <img
-              src="https://raw.githubusercontent.com/jeson2025/form-site/main/iphone-15-pro-max-render.avif"
-              alt="iPhone 15 Pro"
-            />
+            <div class="image-inner">
+              <img
+                src="https://raw.githubusercontent.com/jeson2025/form-site/main/iphone-15-pro-max-render.avif"
+                alt="iPhone 15 Pro"
+                loading="lazy"
+              />
+            </div>
           </div>
 
           <div class="product-meta">
             <span class="price">728.45 $</span>
             <span class="status available">Available</span>
           </div>
-
           <div class="product-footer">
             <button class="btn-primary" id="buy-iphone">
               Buy Now
             </button>
+          </div>
+        </article>
+
+        <!-- iPhone 16 Pro - Sold out -->
+        <article class="product-card">
+          <div class="product-tagline">Drop</div>
+
+          <div class="product-name-row">
+            <div class="product-name">iPhone 16 Pro</div>
+          </div>
+
+          <div class="product-sub">Latest generation · Sold out</div>
+
+          <div class="product-image">
+            <div class="image-inner">
+              <img
+                src="https://raw.githubusercontent.com/jeson2025/form-site/main/apple-iphone-16-pro-max-desert-titanium-1.png"
+                alt="iPhone 16 Pro"
+                loading="lazy"
+              />
             </div>
-        </article>
-
-        <!-- 2. iPhone 16 Pro -->
-        <article class="product-card">
-          <div class="product-tagline">Drop</div>
-          <div class="product-name">iPhone 16 Pro</div>
-          <div class="product-sub">Sold out</div>
-
-          <div class="product-image">
-            <img
-              src="https://raw.githubusercontent.com/jeson2025/form-site/main/5312c4b87bb3b59b89d1d1234be434ba.png"
-              alt="iPhone 16 Pro"
-            />
           </div>
 
           <div class="product-meta">
@@ -388,17 +402,24 @@
           </div>
         </article>
 
-        <!-- 3. MacBook Pro 16" -->
+        <!-- MacBook Pro 16" - Sold out -->
         <article class="product-card">
           <div class="product-tagline">Drop</div>
-          <div class="product-name">MacBook Pro 16"</div>
-          <div class="product-sub">M4 · 1 TB</div>
+
+          <div class="product-name-row">
+            <div class="product-name">MacBook Pro 16"</div>
+          </div>
+
+          <div class="product-sub">M4 · 1 TB · Pro performance</div>
 
           <div class="product-image">
-            <img
-              src="https://raw.githubusercontent.com/jeson2025/form-site/main/R.jpeg"
-              alt="MacBook Pro"
-            />
+            <div class="image-inner">
+              <img
+                src="https://raw.githubusercontent.com/jeson2025/form-site/main/424-4241691_macbook-pro-16-inch-transparent-hd-png-download.png"
+                alt="MacBook Pro 16"
+                loading="lazy"
+              />
+            </div>
           </div>
 
           <div class="product-meta">
@@ -411,17 +432,24 @@
           </div>
         </article>
 
-        <!-- 4. Apple Vision Ultra -->
+        <!-- Apple Vision Ultra - Sold out -->
         <article class="product-card">
           <div class="product-tagline">Drop</div>
-          <div class="product-name">Apple Vision Ultra</div>
-          <div class="product-sub">Developer Edition</div>
+
+          <div class="product-name-row">
+            <div class="product-name">Apple Vision Ultra</div>
+          </div>
+
+          <div class="product-sub">Developer Edition · Spatial computing</div>
 
           <div class="product-image">
-            <img
-              src="https://raw.githubusercontent.com/jeson2025/form-site/main/25f477b0b0fe13c31cb01a3a816fa9.jpg"
-              alt="Apple Vision Ultra"
-            />
+            <div class="image-inner">
+              <img
+                src="https://raw.githubusercontent.com/jeson2025/form-site/main/25f477b0b0d0fe13c31cb01a3a816fa9.jpg"
+                alt="Apple Vision Ultra"
+                loading="lazy"
+              />
+            </div>
           </div>
 
           <div class="product-meta">
@@ -434,17 +462,24 @@
           </div>
         </article>
 
-        <!-- 5. AirPods Max 2 -->
+        <!-- AirPods Max 2 - Sold out -->
         <article class="product-card">
           <div class="product-tagline">Drop</div>
-          <div class="product-name">AirPods Max 2</div>
-          <div class="product-sub">Special Edition</div>
+
+          <div class="product-name-row">
+            <div class="product-name">AirPods Max 2</div>
+          </div>
+
+          <div class="product-sub">Special Edition · High-fidelity audio</div>
 
           <div class="product-image">
-            <img
-              src="https://raw.githubusercontent.com/jeson2025/form-site/main/bento_4_airpod_max_orange__fzf8s5fv45ea_xlarge.jpg"
-              alt="AirPods Max"
-            />
+            <div class="image-inner">
+              <img
+                src="https://raw.githubusercontent.com/jeson2025/form-site/main/png-transparent-apple-airpods-max.png"
+                alt="AirPods Max 2"
+                loading="lazy"
+              />
+            </div>
           </div>
 
           <div class="product-meta">
@@ -457,17 +492,24 @@
           </div>
         </article>
 
-        <!-- 6. Apple Watch Ultra 3 -->
+        <!-- Apple Watch Ultra 3 - Sold out -->
         <article class="product-card">
           <div class="product-tagline">Drop</div>
-          <div class="product-name">Apple Watch Ultra 3</div>
-          <div class="product-sub">49 mm · Orange</div>
+
+          <div class="product-name-row">
+            <div class="product-name">Apple Watch Ultra 3</div>
+          </div>
+
+          <div class="product-sub">49 mm · Performance band</div>
 
           <div class="product-image">
-            <img
-              src="https://raw.githubusercontent.com/jeson2025/form-site/main/5312c4b87bb3b59b89d1d1234be434ba.png"
-              alt="Apple Watch Ultra"
-            />
+            <div class="image-inner">
+              <img
+                src="https://raw.githubusercontent.com/jeson2025/form-site/main/5312c4b87bb3b59b89d1d1234be434ba.png"
+                alt="Apple Watch Ultra 3"
+                loading="lazy"
+              />
+            </div>
           </div>
 
           <div class="product-meta">
@@ -480,16 +522,24 @@
           </div>
         </article>
 
-        <!-- 7. iPad Pro 14" -->
+        <!-- iPad Pro 14" - Sold out -->
         <article class="product-card">
           <div class="product-tagline">Drop</div>
-          <div class="product-name">iPad Pro 14"</div>
-          <div class="product-sub">OLED · 2 TB</div>
+
+          <div class="product-name-row">
+            <div class="product-name">iPad Pro 14"</div>
+          </div>
+
+          <div class="product-sub">OLED · 2 TB · Pro Display</div>
+
           <div class="product-image">
-            <img
-              src="https://raw.githubusercontent.com/jeson2025/form-site/main/png-transparent-ipad-pro.png"
-              alt="iPad Pro"
-            />
+            <div class="image-inner">
+              <img
+                src="https://raw.githubusercontent.com/jeson2025/form-site/main/png-transparent-ipad-pro%20(1).png"
+                alt="iPad Pro"
+                loading="lazy"
+              />
+            </div>
           </div>
 
           <div class="product-meta">
@@ -502,17 +552,24 @@
           </div>
         </article>
 
-        <!-- 8. HomePod Studio -->
+        <!-- HomePod Studio - Sold out -->
         <article class="product-card">
           <div class="product-tagline">Drop</div>
-          <div class="product-name">HomePod Studio</div>
-          <div class="product-sub">Spatial Audio</div>
+
+          <div class="product-name-row">
+            <div class="product-name">HomePod Studio</div>
+          </div>
+
+          <div class="product-sub">Spatial Audio · Studio sound</div>
 
           <div class="product-image">
-            <img
-              src="https://raw.githubusercontent.com/jeson2025/form-site/main/111843_homepod-2gen.png"
-              alt="HomePod"
-            />
+            <div class="image-inner">
+              <img
+                src="https://raw.githubusercontent.com/jeson2025/form-site/main/111843_homepod-2gen.png"
+                alt="HomePod"
+                loading="lazy"
+              />
+            </div>
           </div>
 
           <div class="product-meta">
