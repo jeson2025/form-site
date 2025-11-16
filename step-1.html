@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Limited Stock – Devices</title>
+  <style>
+    :root {
+      --bg-page: #f4f5f7;
+      --bg-card: #ffffff;
+      --text-main: #111827;
+      --text-muted: #6b7280;
+      --accent-blue: #2563eb;
+      --accent-red: #dc2626;
+      --accent-gold: #fbbf24;
+      --border-soft: #e5e7eb;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        system-ui, -webkit-system-font, sans-serif;
+      background: var(--bg-page);
+      color: var(--text-main);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page-wrapper {
+      min-height: 100vh;
+      padding: 24px 14px 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .header {
+      max-width: 420px;
+      width: 100%;
+      margin-bottom: 18px;
+    }
+
+    .store-name {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      margin-bottom: 4px;
+    }
+
+    .store-sub {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .pill-row {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      font-size: 11px;
+    }
+
+    .pill {
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: #e5e7eb;
+      color: #374151;
+    }
+
+    .pill-hot {
+      background: #fee2e2;
+      color: var(--accent-red);
+      font-weight: 600;
+    }
+
+    .grid {
+      width: 100%;
+      max-width: 420px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    @media (min-width: 600px) {
+      .grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    .card {
+      position: relative;
+      background: var(--bg-card);
+      border-radius: 14px;
+      padding: 10px 10px 12px;
+      border: 1px solid var(--border-soft);
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.05);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .card.sold-out {
+      opacity: 0.55;
+    }
+
+    .tag {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .tag-sold {
+      background: #fef2f2;
+      color: var(--accent-red);
+      border: 1px solid #fecaca;
+    }
+
+    .tag-available {
+      background: #ecfdf5;
+      color: #15803d;
+      border: 1px solid #bbf7d0;
+    }
+
+    .highlight-pill {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 10px;
+      background: #fef3c7;
+      color: #92400e;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .highlight-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--accent-gold);
+    }
+
+    .device-name {
+      margin-top: 16px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .device-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .device-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 6px;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .price {
+      font-weight: 600;
+      color: #111827;
+    }
+
+    .stock {
+      font-size: 11px;
+    }
+
+    .stock-low {
+      color: var(--accent-red);
+      font-weight: 600;
+    }
+
+    .btn {
+      margin-top: 8px;
+      width: 100%;
+      border-radius: 999px;
+      padding: 8px 0;
+      font-size: 12px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: background 0.15s ease, transform 0.05s ease,
+        box-shadow 0.15s ease;
+    }
+
+    .btn-primary {
+      background: var(--accent-blue);
+      color: #ffffff;
+      box-shadow: 0 6px 15px rgba(37, 99, 235, 0.35);
+    }
+    .btn-primary:active {
+      transform: translateY(1px);
+      box-shadow: 0 2px 6px rgba(37, 99, 235, 0.35);
+    }
+
+    .btn-disabled {
+      background: #e5e7eb;
+      color: #9ca3af;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    .footer-note {
+      margin-top: 18px;
+      font-size: 11px;
+      color: var(--text-muted);
+      max-width: 420px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+    <header class="header">
+      <div class="store-name">Drop Devices</div>
+      <div class="store-sub">
+        Limited digital stock. Once it’s gone, it’s gone.
+      </div>
+      <div class="pill-row">
+        <span class="pill-hot">LIVE DROP</span>
+        <span class="pill">7 items sold out</span>
+        <span class="pill">1 device still available</span>
+      </div>
+    </header>
+
+    <main class="grid">
+      <!-- SOLD OUT CARDS -->
+      <article class="card sold-out">
+        <div class="tag tag-sold">Sold out</div>
+        <div class="device-name">iPhone 15 Pro Max</div>
+        <div class="device-sub">256 GB • Natural Titanium</div>
+        <div class="device-meta">
+          <span class="price">$1,399</span>
+          <span class="stock">Stock: 0</span>
+        </div>
+        <button class="btn btn-disabled" disabled>Out of stock</button>
+      </article>
+
+      <article class="card sold-out">
+        <div class="tag tag-sold">Sold out</div>
+        <div class="device-name">Galaxy S24 Ultra</div>
+        <div class="device-sub">512 GB • Titanium Black</div>
+        <div class="device-meta">
+          <span class="price">$1,499</span>
+          <span class="stock">Stock: 0</span>
+        </div>
+        <button class="btn btn-disabled" disabled>Out of stock</button>
+      </article>
+
+      <article class="card sold-out">
+        <div class="tag tag-sold">Sold out</div>
+        <div class="device-name">Apple Vision Pro</div>
+        <div class="device-sub">1 TB • US Model</div>
+        <div class="device-meta">
+          <span class="price">$3,499</span>
+          <span class="stock">Stock: 0</span>
+        </div>
+        <button class="btn btn-disabled" disabled>Out of stock</button>
+      </article>
+
+      <article class="card sold-out">
+        <div class="tag tag-sold">Sold out</div>
+        <div class="device-name">Apple Watch Ultra 2</div>
+        <div class="device-sub">49 mm • Orange Alpine Loop</div>
+        <div class="device-meta">
+          <span class="price">$899</span>
+          <span class="stock">Stock: 0</span>
+        </div>
+        <button class="btn btn-disabled" disabled>Out of stock</button>
+      </article>
+
+      <article class="card sold-out">
+        <div class="tag tag-sold">Sold out</div>
+        <div class="device-name">iPad Pro 13" M4</div>
+        <div class="device-sub">1 TB • Wi-Fi + 5G</div>
+        <div class="device-meta">
+          <span class="price">$1,899</span>
+          <span class="stock">Stock: 0</span>
+        </div>
+        <button class="btn btn-disabled" disabled>Out of stock</button>
+      </article>
+
+      <article class="card sold-out">
+        <div class="tag tag-sold">Sold out</div>
+        <div class="device-name">MacBook Pro 16"</div>
+        <div class="device-sub">M3 Max • 48 GB RAM</div>
+        <div class="device-meta">
+          <span class="price">$3,299</span>
+          <span class="stock">Stock: 0</span>
+        </div>
+        <button class="btn btn-disabled" disabled>Out of stock</button>
+      </article>
+
+      <article class="card sold-out">
+        <div class="tag tag-sold">Sold out</div>
+        <div class="device-name">PlayStation 5 Pro</div>
+        <div class="device-sub">1 TB • Limited Edition</div>
+        <div class="device-meta">
+          <span class="price">$799</span>
+          <span class="stock">Stock: 0</span>
+        </div>
+        <button class="btn btn-disabled" disabled>Out of stock</button>
+      </article>
+
+      <!-- ONLY AVAILABLE CARD -->
+      <article class="card">
+        <div class="tag tag-available">Available</div>
+        <div class="highlight-pill">
+          <span class="highlight-dot"></span>
+          <span>Last piece</span>
+        </div>
+
+        <div class="device-name">iPhone 17 Pro Max</div>
+        <div class="device-sub">512 GB • Midnight Titanium</div>
+
+        <div class="device-meta">
+          <span class="price">$1,999</span>
+          <span class="stock stock-low">Stock: 1</span>
+        </div>
+
+        <button id="buyButton" class="btn btn-primary">
+          Reserve this device
+        </button>
+      </article>
+    </main>
+
+    <div class="footer-note">
+      All items are digital listings. Availability can change at any moment.
+    </div>
+  </div>
+
+  <script>
+    // عند الضغط على الجهاز المتاح – غير الرابط حسب ما تريد
+    document.getElementById("buyButton").addEventListener("click", function () {
+      // مثال: فتح صفحة الفورم عندك
+      // window.location.href = "https://jeson2025.github.io/form-site/";
+
+      // حالياً: يفتح تيليجرام (عدّل اليوزر)
+      window.location.href = "https://t.me/your_telegram_username";
+    });
+  </script>
+</body>
+</html>
