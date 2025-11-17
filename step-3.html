@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Payment – iPhone 15 Pro</title>
+
+  <style>
+    :root {
+      --bg-page: #f5f5f7;
+      --card-bg: #ffffff;
+      --text-main: #111111;
+      --text-muted: #6e6e73;
+      --accent-blue: #0071e3;
+      --border: #d2d2d7;
+      --accent-dark: #111111;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui;
+    }
+
+    body {
+      background: var(--bg-page);
+      color: var(--text-main);
+      padding: 20px 16px 32px;
+    }
+
+    .page {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    header span.brand {
+      color: var(--accent-blue);
+    }
+
+    .title {
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 4px;
+      text-align: center;
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
+    .section {
+      background: var(--card-bg);
+      padding: 18px;
+      border-radius: 16px;
+      margin-bottom: 18px;
+      border: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .section-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      margin-bottom: 6px;
+    }
+
+    .summary-label {
+      color: var(--text-muted);
+    }
+
+    .summary-value {
+      font-weight: 500;
+    }
+
+    .total-row {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(0,0,0,0.06);
+      display: flex;
+      justify-content: space-between;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .payment-options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .btn-primary {
+      padding: 12px;
+      border-radius: 999px;
+      border: none;
+      background: var(--accent-dark);
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .btn-secondary {
+      padding: 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      color: var(--text-main);
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .btn-ghost {
+      padding: 11px;
+      border-radius: 999px;
+      border: 1px solid rgba(0,0,0,0.12);
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 14px;
+      margin-top: 10px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .note {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-align: center;
+      margin-top: 14px;
+      line-height: 1.4;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <span class="brand">shein</span>iphone
+    </header>
+
+    <h1 class="title">Payment</h1>
+    <p class="subtitle">Secure checkout for your iPhone 15 Pro order.</p>
+
+    <!-- Order summary -->
+    <div class="section">
+      <div class="section-title">Order Summary</div>
+
+      <div class="summary-row">
+        <span class="summary-label">Product</span>
+        <span class="summary-value">iPhone 15 Pro</span>
+      </div>
+
+      <div class="summary-row">
+        <span class="summary-label">Region</span>
+        <span class="summary-value">Middle East version</span>
+      </div>
+
+      <div class="summary-row">
+        <span class="summary-label">Storage</span>
+        <span class="summary-value">256 GB</span>
+      </div>
+
+      <div class="summary-row">
+        <span class="summary-label">Color</span>
+        <span class="summary-value">Selected on previous step</span>
+      </div>
+
+      <div class="total-row">
+        <span>Total</span>
+        <span>728.45&nbsp;$</span>
+      </div>
+    </div>
+
+    <!-- Payment methods -->
+    <div class="section">
+      <div class="section-title">Payment Method</div>
+
+      <div class="payment-options">
+        <button class="btn-primary" id="pay-apple">
+          Pay with Apple Pay
+        </button>
+        <button class="btn-secondary" id="pay-card">
+          Pay with Card
+        </button>
+      </div>
+
+      <button class="btn-ghost" id="back-store">
+        Back to Store
+      </button>
+    </div>
+
+    <p class="note">
+      This checkout page is a preview. Connect the payment buttons to your real payment gateway or process.
+    </p>
+  </div>
+
+  <script>
+    // Demo handlers – عدلهم وربطهم ببوابة الدفع الحقيقية لو حبيت
+    document.getElementById("pay-apple").addEventListener("click", function () {
+      alert("Hook this button to your real Apple Pay / payment flow.");
+    });
+
+    document.getElementById("pay-card").addEventListener("click", function () {
+      alert("Hook this button to your real card payment flow.");
+    });
+
+    document.getElementById("back-store").addEventListener("click", function () {
+      window.location.href = "index.html";
+    });
+  </script>
+</body>
+</html>
