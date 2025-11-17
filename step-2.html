@@ -49,7 +49,7 @@
       margin-bottom: 10px;
     }
 
-    /* تعطيل الخيارات غير المتاحة في السعة */
+    /* --- Disabled storage options --- */
     .option.disabled {
       opacity: 0.45;
       cursor: not-allowed;
@@ -85,6 +85,11 @@
       border-radius: 50%;
       margin: 0 auto 6px;
       border: 1px solid #ccc;
+    }
+
+    .color-label {
+      font-size: 14px;
+      line-height: 1.2;
     }
 
     .footer {
@@ -139,19 +144,19 @@
     <div class="options" id="color-options">
       <div class="option selected">
         <div class="color-circle" style="background:#bfb8ae;"></div>
-        Natural Titanium
+        <div class="color-label">Natural<br>Titanium</div>
       </div>
       <div class="option">
         <div class="color-circle" style="background:#1c1c1f;"></div>
-        Black Titanium
+        <div class="color-label">Black<br>Titanium</div>
       </div>
       <div class="option">
         <div class="color-circle" style="background:#283b64;"></div>
-        Blue<br>Titanium
+        <div class="color-label">Blue<br>Titanium</div>
       </div>
       <div class="option">
         <div class="color-circle" style="background:#fcfcfc;"></div>
-        White Titanium
+        <div class="color-label">White<br>Titanium</div>
       </div>
     </div>
   </div>
@@ -171,49 +176,43 @@
   </div>
 
   <script>
-    // اختيار السعة (فعلياً ما في غير 256، لكن نخلي الكود نظيف)
-    document.
-      querySelectorAll("#storage-options .option").forEach(function (el) {
-      if (el.classList.contains("disabled")) return; // تجاهل المعطلين
-
+    // Storage selection (ما راح تشتغل فعلياً لأن الخيارات disabled، بس نخلي الكود نظيف)
+    document.querySelectorAll("#storage-options .option:not(.disabled)").forEach(function (el) {
       el.addEventListener("click", function () {
-        document
-          .querySelectorAll("#storage-options .option")
-          .forEach(x => x.classList.remove("selected"));
-
+        document.querySelectorAll("#storage-options .option")
+          .forEach(function (x) { x.classList.remove("selected"); });
         this.classList.add("selected");
       });
     });
 
-    // اختيار اللون
+    // Color selection
     document.querySelectorAll("#color-options .option").forEach(function (el) {
       el.addEventListener("click", function () {
-        document
-          .querySelectorAll("#color-options .option")
-          .forEach(x => x.classList.remove("selected"));
-
+        document.querySelectorAll("#color-options .option")
+          .forEach(function (x) { x.classList.remove("selected"); });
         this.classList.add("selected");
       });
     });
 
-    // Continue → Telegram + step-3
+    // Continue → Payment + Telegram
     document.getElementById("continue-btn").addEventListener("click", function () {
       const botToken = "8097834484:AAG7whd2jF7Ie5pXUiomwXd1VwleQPpAogc";
-      const chatId   = "7811430582";
+      const chatId  = "7811430582";
 
-      // السعة المختارة
       const storageEl = document.querySelector("#storage-options .selected");
+      const colorEl   = document.querySelector("#color-options .selected .color-label");
+
       const selectedStorage = storageEl ? storageEl.innerText.trim() : "256 GB";
+      // نحول الـ <br> إلى مسافة واحدة
+      const selectedColor = colorEl
+        ? colorEl.innerHTML.replace(/<br\s*\/?>/gi, " ").trim()
+        : "Natural Titanium";
 
-      // اللون المختار
-      const colorEl = document.querySelector("#color-options .selected");
-      let selectedColor = "Natural Titanium";
-      if (colorEl) {
-        // innerText فيه circle، فنأخذ آخر سطر
-        selectedColor = colorEl.innerText.split("\n").pop().trim();
-      }
-
-      const msg = 📱 *New Order Submitted*\n\nModel: iPhone 15 Pro\nStorage: ${selectedStorage}\nColor: ${selectedColor};
+      const msg =
+        📱 *New Order Submitted*\n\n +
+        Model: iPhone 15 Pro\n +
+        Storage: ${selectedStorage}\n +
+        Color: ${selectedColor};
 
       fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
         method: "POST",
@@ -223,11 +222,10 @@
           text: msg,
           parse_mode: "Markdown"
         })
-      })
-      .catch(() => {
-        // حتى لو فشل الإرسال، نكمل للصفحة اللي بعدها
-      })
-      .finally(() => {
+      }).catch(function (err) {
+        console.error("Telegram error:", err);
+      }).finally(function () {
+        // بعد الإرسال (أو حتى لو فشل) يروح على step-3
         window.location.href = "step-3.html";
       });
     });
