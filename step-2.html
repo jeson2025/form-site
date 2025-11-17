@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Select Options – iPhone 15 Pro</title>
+
+  <style>
+    :root {
+      --bg-page: #f5f5f7;
+      --card-bg: #ffffff;
+      --text-main: #111;
+      --text-muted: #6e6e73;
+      --accent-blue: #0071e3;
+      --border: #d2d2d7;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui;
+    }
+
+    body {
+      background: var(--bg-page);
+      color: var(--text-main);
+      padding: 20px;
+    }
+
+    header {
+      text-align: center;
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    .section {
+      background: var(--card-bg);
+      padding: 18px;
+      border-radius: 16px;
+      margin-bottom: 20px;
+      border: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .option {
+      flex: 1;
+      min-width: 110px;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      text-align: center;
+      font-size: 14px;
+      cursor: pointer;
+      transition: 0.15s;
+    }
+
+    .option.selected {
+      border-color: var(--accent-blue);
+      background: rgba(0,113,227,0.08);
+    }
+
+    .color-circle {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      margin: 0 auto 6px;
+      border: 1px solid #ccc;
+    }
+
+    .footer {
+      margin-top: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .btn-primary {
+      padding: 12px;
+      background: var(--accent-blue);
+      color: white;
+      border-radius: 999px;
+      text-align: center;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .btn-back {
+      padding: 12px;
+      background: transparent;
+      color: var(--text-muted);
+      border-radius: 999px;
+      border: 1px solid rgba(0,0,0,0.15);
+      text-align: center;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <header>iPhone 15 Pro – Customize</header>
+
+  <!-- Storage -->
+  <div class="section">
+    <div class="section-title">Select Storage</div>
+    <div class="options" id="storage-options">
+      <div class="option">128 GB</div>
+      <div class="option selected">256 GB</div>
+      <div class="option">512 GB</div>
+      <div class="option">1 TB</div>
+    </div>
+  </div>
+
+  <!-- Colors -->
+  <div class="section">
+    <div class="section-title">Select Color</div>
+    <div class="options" id="color-options">
+      <div class="option selected">
+        <div class="color-circle" style="background:#bfb8ae;"></div>
+        Natural Titanium
+      </div>
+      <div class="option">
+        <div class="color-circle" style="background:#1c1c1f;"></div>
+        Black Titanium
+      </div>
+      <div class="option">
+        <div class="color-circle" style="background:#283b64;"></div>
+        Blue Titanium
+      </div>
+      <div class="option">
+        <div class="color-circle" style="background:#fcfcfc;"></div>
+        White Titanium
+      </div>
+    </div>
+  </div>
+
+  <!-- Summary -->
+  <div class="section">
+    <div class="section-title">Summary</div>
+    <p style="font-size:14px;color:var(--text-muted);">
+      You are purchasing: <strong>iPhone 15 Pro · Middle East Version</strong><br>
+      Options will be applied to your order automatically.
+    </p>
+  </div>
+
+  <div class="footer">
+    <div class="btn-primary" id="continue-btn">Continue to Payment</div>
+    <div class="btn-back" onclick="window.history.back();">Back</div>
+  </div>
+
+  <script>
+
+    // Storage selection
+    document.querySelectorAll("#storage-options .option").forEach(function(el) {
+      el.addEventListener("click", function() {
+        document.querySelectorAll("#storage-options .option")
+          .forEach(x => x.classList.remove("selected"));
+        this.
+          classList.add("selected");
+      });
+    });
+
+    // Color selection
+    document.querySelectorAll("#color-options .option").forEach(function(el) {
+      el.addEventListener("click", function() {
+        document.querySelectorAll("#color-options .option")
+          .forEach(x => x.classList.remove("selected"));
+        this.classList.add("selected");
+      });
+    });
+
+    // Continue → Payment page
+    document.getElementById("continue-btn").addEventListener("click", function() {
+      window.location.href = "payment.html"; // غيّرها إذا بدك صفحة ثانية
+    });
+
+  </script>
+
+</body>
+</html>
