@@ -9,7 +9,7 @@
     :root {
       --bg-page: #f5f5f7;
       --card-bg: #ffffff;
-      --text-main: #111;
+      --text-main: #111111;
       --text-muted: #6e6e73;
       --accent-blue: #0071e3;
       --border: #d2d2d7;
@@ -40,44 +40,43 @@
       padding: 18px;
       border-radius: 16px;
       margin-bottom: 20px;
-      border: 1px solid rgba(0,0,0,0.06);
+      border: 1px solid rgba(0, 0, 0, 0.06);
     }
 
-    ...
-.section-title {
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 10px;
-}
+    .section-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
 
-/* --- Disabled storage options --- */
-.option.disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
-  pointer-events: none;
-}
+    /* Disabled storage options */
+    .option.disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
 
-.options {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
+    .options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
 
-.option {
-  flex: 1;
-  min-width: 110px;
-  padding: 12px;
-  border-radius: 12px;
-  border: 1px solid var(--border);
-  text-align: center;
-  font-size: 14px;
-  cursor: pointer;
-  transition: 0.15s;
-}
+    .option {
+      flex: 1;
+      min-width: 110px;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      text-align: center;
+      font-size: 14px;
+      cursor: pointer;
+      transition: 0.15s;
+    }
 
     .option.selected {
       border-color: var(--accent-blue);
-      background: rgba(0,113,227,0.08);
+      background: rgba(0, 113, 227, 0.08);
     }
 
     .color-circle {
@@ -111,12 +110,11 @@
       background: transparent;
       color: var(--text-muted);
       border-radius: 999px;
-      border: 1px solid rgba(0,0,0,0.15);
+      border: 1px solid rgba(0, 0, 0, 0.15);
       text-align: center;
       font-size: 15px;
       cursor: pointer;
     }
-
   </style>
 </head>
 
@@ -127,12 +125,12 @@
   <!-- Storage -->
   <div class="section">
     <div class="section-title">Select Storage</div>
-   <div class="options" id="storage-options">
-  <div class="option disabled">128 GB</div>
-  <div class="option selected">256 GB</div>
-  <div class="option disabled">512 GB</div>
-  <div class="option disabled">1 TB</div>
-</div>
+    <div class="options" id="storage-options">
+      <div class="option disabled">128 GB</div>
+      <div class="option selected">256 GB</div>
+      <div class="option disabled">512 GB</div>
+      <div class="option disabled">1 TB</div>
+    </div>
   </div>
 
   <!-- Colors -->
@@ -173,62 +171,60 @@
   </div>
 
   <script>
+    // Storage selection (مع منع الضغط على disabled)
+    document.querySelectorAll("#storage-options .option").
+      forEach(function (el) {
+      el.addEventListener("click", function () {
+        if (this.classList.contains("disabled")) return;
 
-    // Storage selection
-    document.querySelectorAll("#storage-options .option").forEach(function(el) {
-      el.addEventListener("click", function() {
-        document.querySelectorAll("#storage-options .option")
-          .forEach(x => x.classList.remove("selected"));
-        this.
-          classList.add("selected");
-      });
-    });
+        document
+          .querySelectorAll("#storage-options .option")
+          .forEach((x) => x.classList.remove("selected"));
 
-    // Color selection
-    document.querySelectorAll("#color-options .option").forEach(function(el) {
-      el.addEventListener("click", function() {
-        document.querySelectorAll("#color-options .option")
-          .forEach(x => x.classList.remove("selected"));
         this.classList.add("selected");
       });
     });
 
-    // Continue → Payment page
-    // Continue → Payment page
-document.getElementById("continue-btn").addEventListener("click", function () {
+    // Color selection
+    document.querySelectorAll("#color-options .option").forEach(function (el) {
+      el.addEventListener("click", function () {
+        document
+          .querySelectorAll("#color-options .option")
+          .forEach((x) => x.classList.remove("selected"));
 
-  const botToken = "8097834484:AAG7whd2jF7Ie5pXUiomwXd1VwleQPpAogc"; 
-  const chatId = "7811430582";
+        this.classList.add("selected");
+      });
+    });
 
-  // Get selected storage
-  const selectedStorage = document.querySelector("#storage-options .selected")?.innerText || "256 GB";
+    // Continue → send to Telegram + go to step-3
+    document.getElementById("continue-btn").addEventListener("click", function () {
+      const botToken = "8097834484:AAG7whd2jF7Ie5pXUiomwXd1VwleQPpAogc";
+      const chatId = "7811430582";
 
-  // Get selected color
-  const selectedColor = document.querySelector("#color-options .selected")?.innerText.trim() || "Natural Titanium";
+      const selectedStorage =
+        document.querySelector("#storage-options .selected")?.innerText.trim() ||
+        "256 GB";
 
-  // Message to Telegram
-  const msg =
-    📱 *New Order Submitted*\n\n +
-    Model: iPhone 15 Pro\n +
-    Storage: ${selectedStorage}\n +
-    Color: ${selectedColor};
+      const selectedColor =
+        document.querySelector("#color-options .selected")?.innerText.trim() ||
+        "Natural Titanium";
 
-  // Send to Telegram
-  fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      chat_id: chatId,
-      text: msg,
-      parse_mode: "Markdown"
-    })
-  });
+      const msg = 📱 *New Order Submitted*\n\nModel: iPhone 15 Pro\nStorage: ${selectedStorage}\nColor: ${selectedColor};
 
-  // Redirect
-  window.location.href = "step-3.html";
-
-});
-
+      fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          chat_id: chatId,
+          text: msg,
+          parse_mode: "Markdown",
+        }),
+      }).catch((e) => {
+        console.error("Telegram error:", e);
+      }).finally(() => {
+        window.location.href = "step-3.html";
+      });
+    });
   </script>
 
 </body>
