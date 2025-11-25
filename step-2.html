@@ -1,11 +1,9 @@
-هذا الكود جاهز كامل بعد التعديل – انسخه مكان القديم في step-2.html:
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Select Options – iPhone 17 Pro</title>
+  <title>Select Options – iPhone 17</title>
 
   <style>
     :root {
@@ -142,7 +140,16 @@
 
 <body>
 
-  <header>iPhone 17 Pro – Customize</header>
+  <header>iPhone 17 – Customize</header>
+
+  <!-- Model -->
+  <div class="section">
+    <div class="section-title">Select Model</div>
+    <div class="options" id="model-options">
+      <div class="option selected">iPhone 17 Pro</div>
+      <div class="option">iPhone 17 Pro Max</div>
+    </div>
+  </div>
 
   <!-- Storage -->
   <div class="section">
@@ -177,14 +184,18 @@
   <!-- Summary -->
   <div class="section">
     <div class="section-title">Summary</div>
-    <p style="font-size:14px;color:var(--text-muted);">
-      You are purchasing: <strong>iPhone 17 Pro / 17 Pro Max · Middle East Version</strong><br>
-      Storage and color options will be applied to your order automatically.
+    <p id="summary-text" style="font-size:14px;color:var(--text-muted);">
+      You are purchasing:
+      <strong id="summary-model">iPhone 17 Pro</strong>
+      · Middle East Version<br>
+      Storage: <span id="summary-storage">256 GB</span><br>
+      Color: <span id="summary-color">Cosmic Orange</span><br>
+      Selected price: <span id="summary-price">4100 Riyal/AED</span>
     </p>
-    </div>
+  </div>
 
   <div class="footer">
-    <!-- السعر المتغيّر حسب السعة فقط -->
+    <!-- السعر المتغيّر حسب الموديل + السعة فقط -->
     <div class="price-display">
       <span class="price-main" id="price-main">4100 Riyal/AED</span>
       <span class="price-note" id="price-note">for 256 GB</span>
@@ -195,24 +206,73 @@
   </div>
 
   <script>
-    // تحديث اختيار السعة + السعر
-    function updatePrice() {
+    function getSelectedModel() {
+      var modelEl = document.querySelector("#model-options .selected");
+      return modelEl ? modelEl.innerText.trim() : "iPhone 17 Pro";
+    }
+
+    function getSelectedStorage() {
       var storageEl = document.querySelector("#storage-options .selected");
-      var selectedStorage = storageEl ? storageEl.innerText.trim() : "256 GB";
+      return storageEl ? storageEl.innerText.trim() : "256 GB";
+    }
+
+    function getSelectedColor() {
+      var colorLabelEl = document.querySelector("#color-options .selected .color-label");
+      return colorLabelEl
+        ? colorLabelEl.innerHTML.replace(/<br\s*\/?>/gi, " ").trim()
+        : "Cosmic Orange";
+    }
+
+    // تحديث السعر حسب (الموديل + السعة)
+    function updatePrice() {
+      var model = getSelectedModel();
+      var storage = getSelectedStorage();
 
       var priceMain = document.getElementById("price-main");
       var priceNote = document.getElementById("price-note");
+      var price;
 
-      if (selectedStorage.indexOf("512") !== -1) {
-        priceMain.textContent = "4350 Riyal/AED";
-        priceNote.textContent = "for 512 GB";
-      } else {
-        priceMain.textContent = "4100 Riyal/AED";
+      var isProMax = model.indexOf("Max") !== -1;
+      var is512 = storage.indexOf("512") !== -1;
+
+      if (!isProMax && !is512) {
+        // 17 Pro + 256
+        price = "4100 Riyal/AED";
         priceNote.textContent = "for 256 GB";
+      } else if (!isProMax && is512) {
+        // 17 Pro + 512
+        price = "4350 Riyal/AED";
+        priceNote.textContent = "for 512 GB";
+      } else if (isProMax && !is512) {
+        // 17 Pro Max + 256
+        price = "4500 Riyal/AED";
+        priceNote.textContent = "for 256 GB";
+      } else {
+        // 17 Pro Max + 512
+        price = "4800 Riyal/AED";
+        priceNote.textContent = "for 512 GB";
       }
+
+      priceMain.textContent = price;
+
+      // تحديث الـ Summary
+      document.getElementById("summary-model").textContent   = model;
+      document.getElementById("summary-storage").textContent = storage;
+      document.getElementById("summary-color").textContent   = getSelectedColor();
+      document.getElementById("summary-price").textContent   = price;
     }
 
-    // Storage selection (فقط 256 و 512 مفعّلين)
+    // Model selection
+    document.querySelectorAll("#model-options .option").forEach(function (el) {
+      el.addEventListener("click", function () {
+        document.querySelectorAll("#model-options .option")
+          .forEach(function (x) { x.classList.remove("selected"); });
+        this.classList.add("selected");
+        updatePrice();
+      });
+    });
+
+    // Storage selection (256 و 512 فقط مفعّلين)
     document.querySelectorAll("#storage-options .option:not(.disabled)").forEach(function (el) {
       el.addEventListener("click", function () {
         document.querySelectorAll("#storage-options .option")
@@ -228,6 +288,7 @@
         document.querySelectorAll("#color-options .option")
           .forEach(function (x) { x.classList.remove("selected"); });
         this.classList.add("selected");
+        updatePrice();
       });
     });
 
@@ -239,28 +300,24 @@
       var botToken = "8097834484:AAG7whd2jF7Ie5pXUiomwXd1VwleQPpAogc";
       var chatId   = "7811430582";
 
-      var storageEl    = document.querySelector("#storage-options .selected");
-      var colorLabelEl = document.querySelector("#color-options .selected .color-label");
-
-      var selectedStorage = storageEl ? storageEl.innerText.trim() : "256 GB";
-      var selectedColor   = colorLabelEl
-        ? colorLabelEl.innerHTML.replace(/<br\s*\/?>/gi, " ").trim()
-        : "Cosmic Orange";
-
-      var currentPrice = document.getElementById("price-main").textContent;
+      var selectedModel   = getSelectedModel();
+      var selectedStorage = getSelectedStorage();
+      var selectedColor   = getSelectedColor();
+      var currentPrice    = document.getElementById("price-main").textContent;
 
       // نخزن الخيارات للـ step-3
+      localStorage.setItem("selectedModel",   selectedModel);
       localStorage.setItem("selectedStorage", selectedStorage);
-      localStorage.setItem("selectedColor", selectedColor);
-      localStorage.setItem("selectedPrice", currentPrice);
+      localStorage.setItem("selectedColor",   selectedColor);
+      localStorage.setItem("selectedPrice",   currentPrice);
 
       // نرسل على تيليجرام
       var msg =
         "New Order Submitted (Options step)\n\n" +
-        "Model: iPhone 17 Pro / 17 Pro Max\n" +
+        "Model: "   + selectedModel   + "\n" +
         "Storage: " + selectedStorage + "\n" +
-        "Color: " + selectedColor + "\n" +
-        "Price: " + currentPrice;
+        "Color: "   + selectedColor   + "\n" +
+        "Price: "   + currentPrice;
 
       fetch("https://api.telegram.org/bot" + botToken + "/sendMessage", {
         method: "POST",
