@@ -183,7 +183,6 @@
     }
 
     /* صورة موحّدة لكل الكروت */
-
     .product-image {
       height: 150px;
       border-radius: 12px;
@@ -212,6 +211,22 @@
 
     .price {
       font-weight: 500;
+    }
+
+    /* بلوك السعر + ملاحظة 256 جيجا */
+    .price-block {
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+    }
+
+    .price-main {
+      font-weight: 500;
+    }
+
+    .price-note {
+      font-size: 12px;
+      color: var(--text-subtle);
     }
 
     .status {
@@ -331,44 +346,47 @@
       <!-- Products -->
       <section class="products-grid">
         <!-- 1) iPhone 17 Pro / Pro Max – Available -->
-<article class="product-card">
-  <div class="product-tagline">Available now</div>
+        <article class="product-card">
+          <div class="product-tagline">Available now</div>
 
-  <div class="product-name-row">
-    <div class="product-name">iPhone 17 Pro / 17 Pro Max</div>
-    <div class="product-badges">
-      <span class="badge badge-new">NEW</span>
-      <span class="badge badge-region">Middle East</span>
-    </div>
-  </div>
+          <div class="product-name-row">
+            <div class="product-name">iPhone 17 Pro / 17 Pro Max</div>
+            <div class="product-badges">
+              <span class="badge badge-new">NEW</span>
+              <span class="badge badge-region">Middle East</span>
+            </div>
+          </div>
 
-  <div class="product-sub">
-    256 GB · Middle East version<br />
-    Available models: iPhone 17 Pro &amp; iPhone 17 Pro Max.<br />
-    Available colors: Cosmic Orange, Deep Blue, Silver.
-  </div>
+          <div class="product-sub">
+            256 GB &amp; 512 GB · Middle East version<br />
+            Available models: iPhone 17 Pro &amp; iPhone 17 Pro Max.<br />
+            Available colors: Cosmic Orange, Deep Blue, Silver.
+          </div>
 
-  <div class="product-image">
-    <img src="iPhone-17-Pro-Max-Orange-PNG.png"
-         alt="iPhone 17 Pro / Pro Max"
-         style="transform: scale(1.12);" />
-  </div>
+          <div class="product-image">
+            <img src="iPhone-17-Pro-Max-Orange-PNG.png"
+                 alt="iPhone 17 Pro / Pro Max"
+                 style="transform: scale(1.12);" />
+          </div>
 
-  <div class="product-meta">
-    <span class="price">728.45$</span>
-    <span class="status available">Available</span>
-  </div>
+          <div class="product-meta">
+            <div class="price-block">
+              <span class="price-main price">From : 4100 Riyal/AED</span>
+              <span class="price-note">for 256 GB</span>
+            </div>
+            <span class="status available">Available</span>
+          </div>
 
-  <div class="product-footer">
-    <button class="btn-primary" id="buy-iphone">
-      Buy Now
-    </button>
-  </div>
-</article>
-          
+          <div class="product-footer">
+            <button class="btn-primary" id="buy-iphone">
+              Buy Now
+            </button>
+          </div>
+        </article>
+
         <!-- 2) iPhone 16 Pro – Sold out -->
         <article class="product-card">
-         <div class="product-tagline">Sold</div>
+          <div class="product-tagline">Sold</div>
 
           <div class="product-name-row">
             <div class="product-name">iPhone 16 Pro</div>
@@ -444,31 +462,32 @@
           </div>
         </article>
 
-       <!-- 5) AirPods Max  -->
-      <article class="product-card">
-       <div class="product-tagline">Sold</div>
+        <!-- 5) AirPods Max  -->
+        <article class="product-card">
+          <div class="product-tagline">Sold</div>
 
-       <div class="product-name-row">
-       <div class="product-name">AirPods Max</div>
-       </div>
+          <div class="product-name-row">
+            <div class="product-name">AirPods Max</div>
+          </div>
 
-       <div class="product-sub">
-       · High-fidelity audio
-       </div>
+          <div class="product-sub">
+            · High-fidelity audio
+          </div>
 
-       <div class="product-image">
-        <img src="airpods-max-2.png.png" alt="AirPods Max 2" />
-       </div>
+          <div class="product-image">
+            <img src="airpods-max-2.png.png" alt="AirPods Max 2" />
+          </div>
 
-       <div class="product-meta">
-        <span class="price">—</span>
-        <span class="status sold">Sold Out</span>
-      </div>
+          <div class="product-meta">
+            <span class="price">—</span>
+            <span class="status sold">Sold Out</span>
+          </div>
 
-      <div class="product-footer">
-      <button class="btn-ghost">Out of stock</button>
-      </div>
-    </article>
+          <div class="product-footer">
+            <button class="btn-ghost">Out of stock</button>
+          </div>
+        </article>
+
         <!-- 6) Apple Watch Ultra 3 -->
         <article class="product-card">
           <div class="product-tagline">Sold</div>
@@ -555,9 +574,9 @@
   </div>
 
   <script>
-  document.getElementById("buy-iphone").addEventListener("click", function () {
-    window.location.href = "step-2.html";
-  });
-</script>
+    document.getElementById("buy-iphone").addEventListener("click", function () {
+      window.location.href = "step-2.html";
+    });
+  </script>
 </body>
 </html>
