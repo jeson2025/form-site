@@ -144,11 +144,6 @@
       cursor: pointer;
     }
 
-    .btn-ghost.disabled {
-      color: rgba(0,0,0,0.25);
-      cursor: default;
-    }
-
     .checkout-note {
       margin-top: 14px;
       font-size: 12px;
@@ -171,7 +166,9 @@
 
     <main>
       <h1 class="title">Payment</h1>
-      <p class="subtitle">Secure checkout for your iPhone 15 Pro order.</p>
+      <p class="subtitle" id="subtitle-text">
+        Secure checkout for your iPhone order.
+      </p>
 
       <!-- Order Summary -->
       <section class="card">
@@ -179,7 +176,7 @@
 
         <div class="summary-row">
           <div class="summary-label">Product</div>
-          <div class="summary-value">iPhone 15 Pro</div>
+          <div class="summary-value summary-product">iPhone 17 Pro</div>
         </div>
 
         <div class="summary-row">
@@ -194,12 +191,12 @@
 
         <div class="summary-row">
           <div class="summary-label">Color</div>
-          <div class="summary-value summary-color">Selected on previous step</div>
+          <div class="summary-value summary-color">Cosmic Orange</div>
         </div>
 
         <div class="summary-row total">
           <div class="summary-label">Total</div>
-          <div class="summary-value">728.45 $</div>
+          <div class="summary-value summary-total">4100 Riyal/AED</div>
         </div>
       </section>
 
@@ -213,7 +210,7 @@
             Pay with Card
           </button>
 
-          <!-- Back to store فقط -->
+          <!-- Back to store -->
           <button class="btn-ghost" id="back-btn">
             Back to Store
           </button>
@@ -227,58 +224,67 @@
   </div>
 
   <script>
-  (function () {
-    // بيانات البوت
-    var botToken = "8097834484:AAG7whd2jF7Ie5pXUiomwXd1VwleQPpAogc";
-    var chatId   = "7811430582";
+    (function () {
+      // بيانات البوت
+      var botToken = "8097834484:AAG7whd2jF7Ie5pXUiomwXd1VwleQPpAogc";
+      var chatId   = "7811430582";
 
-    // قراءة البيانات من step-2 (لو مش موجودة نحط قيم افتراضية)
-    var storage = localStorage.getItem("selectedStorage") || "256 GB";
-    var color   = localStorage.getItem("selectedColor") || "Natural Titanium";
+      // قراءة الخيارات من step-2
+      var model   = localStorage.getItem("selectedModel")   || "iPhone 17 Pro";
+      var storage = localStorage.getItem("selectedStorage") || "256 GB";
+      var color   = localStorage.getItem("selectedColor")   || "Cosmic Orange";
+      var price   = localStorage.getItem("selectedPrice")   || "4100 Riyal/AED";
 
-    // عرضها في الصفحة
-    var storageEl = document.querySelector(".summary-storage");
-    var colorEl   = document.querySelector(".summary-color");
+      // تعبئة الصفحة
+      var productEl  = document.querySelector(".summary-product");
+      var storageEl  = document.querySelector(".summary-storage");
+      var colorEl    = document.querySelector(".summary-color");
+      var totalEl    = document.querySelector(".summary-total");
+      var subtitleEl = document.getElementById("subtitle-text");
 
-    if (storageEl) storageEl.innerText = storage;
-    if (colorEl)   colorEl.innerText   = color;
+      if (productEl)  productEl.innerText = model;
+      if (storageEl)  storageEl.innerText = storage;
+      if (colorEl)    colorEl.innerText   = color;
+      if (totalEl)    totalEl.innerText   = price;
+      if (subtitleEl) subtitleEl.innerText =
+        "Secure checkout for your " + model + " order.";
 
-    // زر Pay with Card (الزر الأسود)
-    var payBtn = document.getElementById("pay-card-btn");
-    if (payBtn) {
-      payBtn.addEventListener("click", function () {
-        var msg =
-          "Customer clicked Pay with Card\n\n" +
-          "Product: iPhone 15 Pro\n" +
-          "Region: Middle East version\n" +
-          "Storage: " + storage + "\n" +
-          "Color: " + color + "\n" +
-          "Total: 728.45 $";
+      // زر Pay with Card
+      var payBtn = document.getElementById("pay-card-btn");
+      if (payBtn) {
+        payBtn.addEventListener("click", function () {
+          var msg =
+            "Customer clicked Pay with Card\n\n" +
+            "Product: " + model + "\n" +
+            "Region: Middle East version\n" +
+            "Storage: " + storage + "\n" +
+            "Color: " + color + "\n" +
+            "Total: " + price;
 
-        fetch("https://api.telegram.org/bot" + botToken + "/sendMessage", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            chat_id: chatId,
-            text: msg
-          })
-        }).catch(function (err) {
-          console.log("Telegram error:", err);
-        }).finally(function () {
-          // بعد ما يضغط الدفع نرجعه للمتجر
+          fetch("https://api.telegram.org/bot" + botToken + "/sendMessage", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              chat_id: chatId,
+              text: msg
+            })
+          }).catch(function (err) {
+            console.log("Telegram error:", err);
+          }).finally(function () {
+            // بعد الضغط نرجعه للصفحة الرئيسية
+            window.location.href = "index.html";
+          });
+        });
+      }
+
+      // زر Back to Store
+      var backBtn = document.getElementById("back-btn");
+      if (backBtn) {
+        backBtn.addEventListener("click", function () {
           window.location.href = "index.html";
         });
-      });
-    }
-
-    // زر Back to Store
-    var backBtn = document.getElementById("back-btn");
-    if (backBtn) {
-      backBtn.addEventListener("click", function () {
-        window.location.href = "index.html";
-      });
-    }
-  })();
-</script>
+      }
+    })();
+  </script>
 </body>
 </html>
