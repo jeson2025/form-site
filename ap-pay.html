@@ -70,24 +70,33 @@
     }
 
     .wallet-icon {
-      width: 32px;
-      height: 22px;
-      border-radius: 6px;
-      background: #ffffff;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
+  width: 34px;
+  height: 26px;
+  border-radius: 6px;
+  background: #1c1c1e;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
 
-    .wallet-stripe {
-      flex: 1;
-    }
+.stripe {
+  height: 5px;
+  width: 100%;
+}
 
-    .wallet-stripe:nth-child(1) { background: #ff3b30; }
-    .wallet-stripe:nth-child(2) { background: #ffcc00; }
-    .wallet-stripe:nth-child(3) { background: #34c759; }
-    .wallet-stripe:nth-child(4) { background: #007aff; }
+.stripe-red    { background: #ff3b30; }
+.stripe-orange { background: #ff9500; }
+.stripe-green  { background: #34c759; }
+.stripe-blue   { background: #007aff; }
 
+.pocket {
+  background: #f2f2f7;
+  height: 12px;
+  width: 100%;
+  border-radius: 6px 6px 0 0;
+  margin-top: 3px;
+}
     .wallet-text {
       text-align: left;
       line-height: 1.1;
@@ -128,10 +137,19 @@
 
     <button class="apple-wallet-btn" id="apple-wallet-btn">
       <div class="wallet-icon">
-        <div class="wallet-stripe"></div>
-        <div class="wallet-stripe"></div>
-        <div class="wallet-stripe"></div>
-        <div class="wallet-stripe"></div>
+        <button class="apple-wallet-btn" id="apple-wallet-btn">
+  <div class="wallet-icon">
+    <div class="stripe stripe-red"></div>
+    <div class="stripe stripe-orange"></div>
+    <div class="stripe stripe-green"></div>
+    <div class="stripe stripe-blue"></div>
+    <div class="pocket"></div>
+  </div>
+  <div class="wallet-text">
+    <span class="line-1">Add to</span>
+    <span class="line-2">Apple Wallet</span>
+  </div>
+</button>
       </div>
       <div class="wallet-text">
         <span class="line-1">Add to</span>
