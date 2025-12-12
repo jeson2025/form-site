@@ -161,21 +161,27 @@
     });
 
     async function sendToTelegram(quantity) {
-      const text =
-        طلب جديد - عدد اليوزرات المطلوب: ${quantity}\n +
-        Page: quantity.html\n +
-        Time: ${new Date().toISOString()};
+  const text = `طلب جديد - عدد اليوزرات المطلوب: ${quantity}
+Page: howmuch.html
+Time: ${new Date().toISOString()}`;
 
-      const url = https://api.telegram.org/bot${BOT_TOKEN}/sendMessage;
+  const url = https://api.telegram.org/bot${BOT_TOKEN}/sendMessage;
 
-      const res = await fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          chat_id: CHAT_ID,
-          text: text
-        })
-      });
+  const res = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      chat_id: CHAT_ID,
+      text: text
+    })
+  });
+
+  const data = await res.json();
+  console.log("Telegram response:", data);
+  return data.ok === true;
+}
       const data = await res.json();
       return data && data.ok === true;
     }
