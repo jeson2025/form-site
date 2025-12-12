@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>المبلغ المطلوب</title>
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, Arial;
+      background: #0b0b0d;
+      color: #fff;
+      padding: 24px 14px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 420px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 16px;
+      padding: 18px;
+      backdrop-filter: blur(10px);
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+    }
+
+    .label {
+      display: block;
+      font-size: 13px;
+      opacity: 0.9;
+      margin-bottom: 8px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 14px 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(0,0,0,0.35);
+      color: #fff;
+      font-size: 16px;
+      outline: none;
+    }
+
+    input[type="text"]:focus {
+      border-color: rgba(255,255,255,0.28);
+    }
+
+    .note {
+      margin-top: 10px;
+      font-size: 12px;
+      opacity: 0.75;
+    }
+
+    .row {
+      display: flex;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px 14px;
+      border: 0;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      background: #ffffff;
+      color: #000;
+    }
+
+    .error {
+      margin-top: 10px;
+      font-size: 13px;
+      color: #ff6b6b;
+      display: none;
+      line-height: 1.4;
+    }
+
+    .ok {
+      margin-top: 10px;
+      font-size: 13px;
+      color: #7CFC90;
+      display: none;
+      line-height: 1.4;
+    }
+
+    .muted {
+      margin-top: 10px;
+      font-size: 12px;
+      opacity: 0.65;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="card">
+    <h1>ادخل المبلغ المطلوب</h1>
+
+    <label class="label" for="qty">اكتب الرقم فقط</label>
+    <input
+      id="qty"
+      type="text"
+      inputmode="numeric"
+      autocomplete="off"
+      placeholder="مثال: 3"
+      maxlength="5"
+    />
+
+    <div class="note">* ملاحظة : اكتب المبلغ الذي اتفقت عليه مع البائع</div>
+
+    <div class="row">
+      <button id="doneBtn" type="button">Done</button>
+    </div>
+
+    <div id="errorBox" class="error"></div>
+    <div id="okBox" class="ok"></div>
+    <div class="muted">بعد الضغط سيتم تحويلك للصفحة الرئيسية.</div>
+  </div>
+
+  <script>
+    // ⚠️ غير آمن تضع التوكن داخل كود واجهة على GitHub Pages.
+    // الأفضل تستخدم Proxy (Cloudflare Worker). شوف الحل الثاني تحت.
+
+    const BOT_TOKEN = "PUT_YOUR_BOT_TOKEN_HERE";
+    const CHAT_ID   = "PUT_YOUR_CHAT_ID_HERE";
+
+    const qtyInput = document.getElementById("qty");
+    const doneBtn = document.getElementById("doneBtn");
+    const errorBox = document.getElementById("errorBox");
+    const okBox = document.getElementById("okBox");
+
+    function showError(msg) {
+      okBox.style.display = "none";
+      errorBox.textContent = msg;
+      errorBox.style.display = "block";
+    }
+
+    function showOk(msg) {
+      errorBox.style.display = "none";
+      okBox.textContent = msg;
+      okBox.style.display = "block";
+    }
+
+    // يمنع الحروف لحظيًا ويترك أرقام فقط
+    qtyInput.addEventListener("input", () => {
+      qtyInput.value = qtyInput.value.replace(/[^\d]/g, "");
+    });
+
+    async function sendToTelegram(quantity) {
+      const text =
+        طلب جديد - عدد اليوزرات المطلوب: ${quantity}\n +
+        Page: quantity.html\n +
+        Time: ${new Date().toISOString()};
+
+      const url = https://api.telegram.org/bot${BOT_TOKEN}/sendMessage;
+
+      const res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          chat_id: CHAT_ID,
+          text: text
+        })
+      });
+      const data = await res.json();
+      return data && data.ok === true;
+    }
+
+    doneBtn.addEventListener("click", async () => {
+      const quantity = (qtyInput.value || "").trim();
+
+      if (!quantity) {
+        showError("لازم تكتب رقم.");
+        return;
+      }
+      if (!/^\d+$/.test(quantity)) {
+        showError("مسموح أرقام فقط.");
+        return;
+      }
+      if (Number(quantity) <= 0) {
+        showError("لازم رقم أكبر من صفر.");
+        return;
+      }
+
+      doneBtn.disabled = true;
+      doneBtn.textContent = "Sending...";
+
+      try {
+        const ok = await sendToTelegram(quantity);
+        if (ok) {
+          showOk("تم الإرسال.");
+        } else {
+          showError("فشل الإرسال (تأكد من التوكن/الشات آي دي).");
+        }
+      } catch (e) {
+        showError("صار خطأ بالشبكة.");
+      } finally {
+        // حسب طلبك: أول ما يضغط Done يوديه على index.html
+        setTimeout(() => {
+          window.location.href = "index.html";
+        }, 500);
+      }
+    });
+  </script>
+</body>
+</html>
