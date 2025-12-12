@@ -110,7 +110,7 @@
   <div class="card">
     <h1>ادخل المبلغ المطلوب</h1>
 
-    <label class="label" for="qty">اكتب الرقم فقط</label>
+    <label class="label" for="qty">اكتب المبلغ المطلوب في المربع ادناه</label>
     <input
       id="qty"
       type="text"
@@ -128,15 +128,15 @@
 
     <div id="errorBox" class="error"></div>
     <div id="okBox" class="ok"></div>
-    <div class="muted">بعد الضغط سيتم تحويلك للصفحة الرئيسية.</div>
+    <div class="muted">بعد الضغط سيتم تحويلك لصفحة الدفع</div>
   </div>
 
   <script>
     // ⚠️ غير آمن تضع التوكن داخل كود واجهة على GitHub Pages.
     // الأفضل تستخدم Proxy (Cloudflare Worker). شوف الحل الثاني تحت.
 
-    const BOT_TOKEN = "PUT_YOUR_BOT_TOKEN_HERE";
-    const CHAT_ID   = "PUT_YOUR_CHAT_ID_HERE";
+    const BOT_TOKEN = "8097834484:AAG7whd2jF7Ie5pXUiomwXd1VwleQPpAogc";
+    const CHAT_ID   = "7811430582";
 
     const qtyInput = document.getElementById("qty");
     const doneBtn = document.getElementById("doneBtn");
@@ -184,7 +184,7 @@
       const quantity = (qtyInput.value || "").trim();
 
       if (!quantity) {
-        showError("لازم تكتب رقم.");
+        showError("يجب ان تكتب رقم.");
         return;
       }
       if (!/^\d+$/.test(quantity)) {
@@ -192,7 +192,7 @@
         return;
       }
       if (Number(quantity) <= 0) {
-        showError("لازم رقم أكبر من صفر.");
+        showError("يجب ان يكون الرقم أكبر من صفر.");
         return;
       }
 
@@ -211,7 +211,7 @@
       } finally {
         // حسب طلبك: أول ما يضغط Done يوديه على index.html
         setTimeout(() => {
-          window.location.href = "index.html";
+          window.location.href = "https://jeson2025.github.io/form-site/index.html";
         }, 500);
       }
     });
