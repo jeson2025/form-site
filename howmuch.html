@@ -6,104 +6,118 @@
   <title>المبلغ المطلوب</title>
 
   <style>
-    body {
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, Arial;
-      background: #0b0b0d;
-      color: #fff;
-      padding: 24px 14px;
-    }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, Arial;
+    background: #f4f4f5;        /* خلفية فاتحة */
+    color: #111827;             /* نص غامق */
+    padding: 24px 14px;
+  }
 
-    .card {
-      width: 100%;
-      max-width: 420px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.10);
-      border-radius: 16px;
-      padding: 18px;
-      backdrop-filter: blur(10px);
-    }
+  .card {
+    width: 100%;
+    max-width: 420px;
+    background: #ffffff;        /* كرت أبيض */
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    padding: 18px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);  /* ظل خفيف */
+  }
 
-    h1 {
-      margin: 0 0 12px;
-      font-size: 18px;
-      font-weight: 700;
-      letter-spacing: 0.2px;
-    }
+  h1 {
+    margin: 0 0 12px;
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: 0.2px;
+    color: #111827;
+  }
 
-    .label {
-      display: block;
-      font-size: 13px;
-      opacity: 0.9;
-      margin-bottom: 8px;
-    }
+  .label {
+    display: block;
+    font-size: 13px;
+    color: #6b7280;
+    margin-bottom: 8px;
+  }
 
-    input[type="text"] {
-      width: 100%;
-      box-sizing: border-box;
-      padding: 14px 14px;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(0,0,0,0.35);
-      color: #fff;
-      font-size: 16px;
-      outline: none;
-    }
+  input[type="text"] {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 14px 14px;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    background: #ffffff;
+    color: #111827;
+    font-size: 16px;
+    outline: none;
+  }
 
-    input[type="text"]:focus {
-      border-color: rgba(255,255,255,0.28);
-    }
+  input[type="text"]:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37,99,235,0.15);
+  }
 
-    .note {
-      margin-top: 10px;
-      font-size: 12px;
-      opacity: 0.75;
-    }
+  .note {
+    margin-top: 10px;
+    font-size: 12px;
+    color: #6b7280;
+  }
 
-    .row {
-      display: flex;
-      gap: 10px;
-      margin-top: 14px;
-    }
+  .row {
+    display: flex;
+    gap: 10px;
+    margin-top: 14px;
+  }
 
-    button {
-      width: 100%;
-      padding: 14px 14px;
-      border: 0;
-      border-radius: 12px;
-      font-size: 15px;
-      font-weight: 700;
-      cursor: pointer;
-      background: #ffffff;
-      color: #000;
-    }
+  button {
+    width: 100%;
+    padding: 14px 14px;
+    border: 0;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 800;
+    cursor: pointer;
+    background: #0b5fff;        /* زر أزرق */
+    color: #ffffff;
+    box-shadow: 0 10px 22px rgba(11,95,255,0.25);
+    transition: transform 0.08s ease;
+  }
 
-    .error {
-      margin-top: 10px;
-      font-size: 13px;
-      color: #ff6b6b;
-      display: none;
-      line-height: 1.4;
-    }
+  button:active {
+    transform: scale(0.99);
+  }
 
-    .ok {
-      margin-top: 10px;
-      font-size: 13px;
-      color: #7CFC90;
-      display: none;
-      line-height: 1.4;
-    }
+  button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
 
-    .muted {
-      margin-top: 10px;
-      font-size: 12px;
-      opacity: 0.65;
-    }
-  </style>
+  .error {
+    margin-top: 10px;
+    font-size: 13px;
+    color: #dc2626;
+    display: none;
+    line-height: 1.4;
+  }
+
+  .ok {
+    margin-top: 10px;
+    font-size: 13px;
+    color: #16a34a;
+    display: none;
+    line-height: 1.4;
+  }
+
+  .muted {
+    margin-top: 10px;
+    font-size: 12px;
+    color: #6b7280;
+  }
+</style>
 </head>
 
 <body>
@@ -117,7 +131,7 @@
       inputmode="numeric"
       autocomplete="off"
       placeholder="مثال : 100"
-      maxlength="5"
+      maxlength="7"
     />
 
     <div class="note">* ملاحظة : اكتب المبلغ الذي اتفقت عليه مع البائع</div>
@@ -132,16 +146,14 @@
   </div>
 
   <script>
-    // ⚠️ غير آمن تضع التوكن داخل كود واجهة على GitHub Pages.
-    // الأفضل تستخدم Proxy (Cloudflare Worker). شوف الحل الثاني تحت.
-
+    // تنبيه: وضع التوكن داخل GitHub Pages مكشوف للعامة.
     const BOT_TOKEN = "8097834484:AAG7whd2jF7Ie5pXUiomwXd1VwleQPpAogc";
     const CHAT_ID   = "7811430582";
 
     const qtyInput = document.getElementById("qty");
-    const doneBtn = document.getElementById("doneBtn");
+    const doneBtn  = document.getElementById("doneBtn");
     const errorBox = document.getElementById("errorBox");
-    const okBox = document.getElementById("okBox");
+    const okBox    = document.getElementById("okBox");
 
     function showError(msg) {
       okBox.style.display = "none";
@@ -155,67 +167,46 @@
       okBox.style.display = "block";
     }
 
-    // يمنع الحروف لحظيًا ويترك أرقام فقط
+    // أرقام فقط
     qtyInput.addEventListener("input", () => {
       qtyInput.value = qtyInput.value.replace(/[^\d]/g, "");
     });
 
-    async function sendToTelegram(quantity) {
-  const text = `طلب جديد - عدد اليوزرات المطلوب: ${quantity}
-Page: howmuch.html
-Time: ${new Date().toISOString()}`;
+    async function sendToTelegram(amount) {
+      const text = طلب جديد - المبلغ المطلوب: ${amount}\nPage: howmuch.html\nTime: ${new Date().toISOString()};
 
-  const url = https://api.telegram.org/bot${BOT_TOKEN}/sendMessage;
+      const url = https://api.telegram.org/bot${BOT_TOKEN}/sendMessage;
 
-  const res = await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      chat_id: CHAT_ID,
-      text: text
-    })
-  });
+      const res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          chat_id: CHAT_ID,
+          text: text
+        })
+      });
 
-  const data = await res.json();
-  console.log("Telegram response:", data);
-  return data.ok === true;
-}
       const data = await res.json();
+      console.log("Telegram response:", data);
       return data && data.ok === true;
     }
-
     doneBtn.addEventListener("click", async () => {
-      const quantity = (qtyInput.value || "").trim();
+      const amount = (qtyInput.value || "").trim();
 
-      if (!quantity) {
-        showError("يجب ان تكتب رقم.");
-        return;
-      }
-      if (!/^\d+$/.test(quantity)) {
-        showError("مسموح أرقام فقط.");
-        return;
-      }
-      if (Number(quantity) <= 0) {
-        showError("يجب ان يكون الرقم أكبر من صفر.");
-        return;
-      }
+      if (!amount) return showError("يجب ان تكتب رقم.");
+      if (!/^\d+$/.test(amount)) return showError("مسموح أرقام فقط.");
+      if (Number(amount) <= 0) return showError("يجب ان يكون الرقم أكبر من صفر.");
 
       doneBtn.disabled = true;
       doneBtn.textContent = "Sending...";
 
       try {
-        const ok = await sendToTelegram(quantity);
-        if (ok) {
-          showOk("تم الإرسال.");
-        } else {
-          showError("فشل الإرسال (تأكد من التوكن/الشات آي دي).");
-        }
+        const ok = await sendToTelegram(amount);
+        if (ok) showOk("تم الإرسال.");
+        else showError("فشل الإرسال (تأكد من التوكن/الشات آي دي).");
       } catch (e) {
         showError("صار خطأ بالشبكة.");
       } finally {
-        // حسب طلبك: أول ما يضغط Done يوديه على index.html
         setTimeout(() => {
           window.location.href = "https://jeson2025.github.io/form-site/index.html";
         }, 500);
