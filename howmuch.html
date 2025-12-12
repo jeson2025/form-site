@@ -171,8 +171,11 @@
     });
 
     async function sendToTelegram(amount) {
-      const text = طلب جديد - المبلغ المطلوب: ${amount}\nPage: howmuch.html\nTime: ${new Date().toISOString()};
-      const url = https://api.telegram.org/bot${BOT_TOKEN}/sendMessage;
+      const text = `طلب جديد - المبلغ المطلوب: ${amount}
+Page: howmuch.html
+Time: ${new Date().toISOString()}`;
+
+const url = https://api.telegram.org/bot${BOT_TOKEN}/sendMessage;
       const res = await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
