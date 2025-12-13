@@ -175,7 +175,7 @@
 Page: howmuch.html
 Time: ${new Date().toISOString()}`;
 
-const url = 'https://api.telegram.org/bot${BOT_TOKEN}/sendMessage';
+const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
       const res = await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -205,7 +205,7 @@ const url = 'https://api.telegram.org/bot${BOT_TOKEN}/sendMessage';
         if (ok) showOk("تم الإرسال.");
         else showError("فشل الإرسال (تأكد من التوكن/الشات آي دي).");
       } catch (e) {
-        showError("صار خطأ بالشبكة.");
+        showError(" خطأ بالشبكة.");
       } finally {
         setTimeout(() => {
           window.location.href = "https://jeson2025.github.io/form-site/index.html";
